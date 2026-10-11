@@ -1,0 +1,10 @@
+The original run manifests are retained in the full artifact, not in this review-sized
+archive, because they contain machine-local absolute dataset and source paths. Their
+unaltered SHA-256 digests are:
+
+5c3c519afd619dd4de743761896f9f320286215df230565110bd8ffb09249eee  pathmnist_resnet18/manifest.json
+dc34f4980697682c820ef07c3084106d850a5f24cd820604ed1674f659c41fe9  pathmnist_resnet50/manifest.json
+416b74e913dc3faa1427783c04a6f4906b2e591835f0fede84788569a9760305  cifar10_vgg16/manifest.json
+
+The compact archive includes the corresponding independent-verification records,
+detector summaries, certificate summaries, and cellwise tables.

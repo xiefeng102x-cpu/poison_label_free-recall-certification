@@ -1,0 +1,30 @@
+{
+  "created_unix": 1791460258,
+  "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+  "defender_key_sha256": "2def4209fe170aa5af61ca691344d0b868fbf2a3c72c47ae6669feac7e1ee90e",
+  "experiment": "cert_aware_redteam_multiblock_v2",
+  "formal_seeds": [5301, 5302, 5303, 5304, 5305],
+  "hashes": {
+    "adaptive_training_runner_sha256": "9dd825c0489ba0b4bfd0a30a7999fd9fc3f7fbb65379c236528bcd47f02fe841",
+    "architecture_sha256": "f72f8ed2ccd491386adb430b191fb64f9b0a4194a3f8bbcc5abe97a088485474",
+    "base_score_runner_sha256": "3fb3dc10c91720c245a11e2db7f006e3026eacdd1539b7f14e845647f0624fe7",
+    "certificate_library_sha256": "890d00b4c8522ee352ef3b8bdeabf9b9fc0098783d7af0b3c51482c670652171",
+    "config_sha256": "e3d59c29a7877024c4a2fc8d3adecc3e0f344aa7a92a21f729a52c5edea00212",
+    "core_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "operational_amendment_sha256": "64d1e65dd8d2586349917fa324ac1ddd62661cebefe3cb429f9140f40edeff7b",
+    "prereg_sha256": "b4a733ab5c963c29116c5da95b38db2b25fd2ea7a2acba2e1c3ae6270b997dd4",
+    "runner_sha256": "09a7aae809ec99a127c6e6da96adad55ad6a6ce541066ab03a4df7be058724f1",
+    "source_config_sha256": "98eeeac9927096674ad63c3f11f231d3b894ab21989c05f0d4df4f9f14cf8c2d",
+    "source_runner_sha256": "c40ea526ebe49f3e92ad762367b2f8187e1d0ab319abcecee40001ebfeaf450e",
+    "training_engine_sha256": "a5045474d0ea25a84a1365339eef1ee2ef7bd448784d223bb9d6e583cdf54711",
+    "verifier_sha256": "7294bb22a09667b26f0e12cde000413ee862f410142166653fa5f2848a5b5dbd",
+    "weight_receipt_sha256": "79bb54bf93d2eb845b1f8949d78c291a473bea41d607b9e200a127cfaf6700bd"
+  },
+  "outcomes_opened_at_freeze": false,
+  "preexisting_score_caches_are_formal": false,
+  "status": "FROZEN_BEFORE_FORMAL_VICTIM_TRAINING",
+  "weight_files_sha256": {
+    "resnet18_28_1.pth": "64774e5fdf8786c7f0182eb6a7300d162b12a7a93455805cb2987eb0c12258e0",
+    "resnet18_28_2.pth": "9984d6c42189d79462e22c190bd4b0c669d98a8dac1d0e98f915b9c866ead63e"
+  }
+}

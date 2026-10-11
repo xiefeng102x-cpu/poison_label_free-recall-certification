@@ -1,0 +1,24 @@
+{
+  "allowed_schema": [
+    "protocol",
+    "trial_token",
+    "k",
+    "conformal_rank",
+    "candidate_count",
+    "flagged_count"
+  ],
+  "config_sha256": "fa5207769bf7d734ffdfec28b00afcf6e0e917dba95b609348efcc379bc014fd",
+  "created_unix": 1791499231.420995,
+  "evaluation_sha256": "1050ac9bb69bff0657cb7c7fe822cbe91d6436418d3b82510a03e3e3455ed733",
+  "issuer_observations_sha256": "21e197f6cdb00ad8da2e1b61e7b7390ebd99acc9b5e5a65123c3850005b22182",
+  "key_commitment_sha256": "952967c341f7a7fdc9b0f3811d227a20682ee59b705a0847bc697ef44c0da2dd",
+  "prohibited_fields_absent": true,
+  "protocol": "pathmnist_blind",
+  "registrar_sha256": "9dfc06782a17c0193748e6f47afec0147a7f36dfabe545b0dac9aacb8a04f688",
+  "rows": 30000,
+  "score_sha256": "4ffae843d158e9bda7cfe2e59961fb285744caeadf1e2ca42b61016917c58427",
+  "source_manifest_sha256": "5c3c519afd619dd4de743761896f9f320286215df230565110bd8ffb09249eee",
+  "source_manifest_status": "COMPLETE_BLIND_END_TO_END_CERTIFICATE",
+  "status": "ISSUER_OBSERVATIONS_SEALED",
+  "trial_map_sha256": "cdf4676574cebb4dd721dd21ca4b9a9fb4fa7810f25fd40c14e8dba9aecf24f9"
+}

@@ -1,0 +1,27 @@
+{
+  "experiment_id": "paper14_phase_a_mnist5q_real_v1",
+  "dataset": "MNIST_5q",
+  "data_root": "data/Mnist/detail_single_samle",
+  "seeds": [42, 43, 44],
+  "n_qubits": 5,
+  "n_layers": 12,
+  "pair": "t7_vs_t1",
+  "poison_ratio": 0.3,
+  "checkpoints": {
+    "encoding": 0,
+    "middle": 6,
+    "output": 12
+  },
+  "max_pairs_per_seed": 180,
+  "split_seed": 20260927,
+  "split_fractions": {
+    "train": 0.6,
+    "validation": 0.2,
+    "test": 0.2
+  },
+  "detectors": ["logistic", "rbf_svm"],
+  "c_grid": [0.01, 0.1, 1.0, 10.0],
+  "bootstrap_repetitions": 2000,
+  "permutation_repetitions": 1000,
+  "random_seed": 20260927
+}

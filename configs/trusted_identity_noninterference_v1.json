@@ -1,0 +1,47 @@
+{
+  "protocol_id": "trusted_identity_noninterference_v1",
+  "dataset": "PathMNIST",
+  "source": "results/pathmnist_certaware_redteam_source_v2",
+  "candidate_pool": "results/cert_aware_redteam_multiblock_v2/sealed_member_pools.csv",
+  "formal_seeds": [5301, 5302, 5303, 5304, 5305],
+  "detectors": ["cf_cmd_u", "target_centroid", "crossfit_spectral", "activation_clustering", "que_score"],
+  "folds": [0, 1],
+  "trusted_member_budgets": [120, 500, 2000],
+  "draws": {"120": 200, "500": 200, "2000": 1000},
+  "attacker_corruption_budget": 512,
+  "shadow_key_count": 64,
+  "ridge_penalty": 1.0,
+  "attack_methods": [
+    "public_hash",
+    "same_detector_low",
+    "same_detector_high",
+    "multiscore_extreme",
+    "shadow_frequency",
+    "shadow_ridge"
+  ],
+  "negative_control": "oracle_key",
+  "primary_endpoint": {
+    "k": 2000,
+    "familywise_cells": 60,
+    "familywise_alpha": 0.05,
+    "precision_lift_equivalence_margin": 0.025,
+    "auroc_equivalence_margin": 0.01,
+    "maximum_mean_target_corruption": 0.1
+  },
+  "attacker_observables": [
+    "all_five_post_training_detector_scores",
+    "all_five_conventional_flags",
+    "sample_identifiers",
+    "victim_and_fold_identifiers",
+    "verified_clean_candidate_universe",
+    "public_selection_algorithm",
+    "64_public_shadow_keys"
+  ],
+  "attacker_exclusions": [
+    "defender_secret_key",
+    "formal_trusted_member_draws",
+    "key_dependent_side_channels"
+  ],
+  "formal_ack": "OPEN_TRUSTED_IDENTITY_NONINTERFERENCE_V1",
+  "output": "results/trusted_identity_noninterference_v1"
+}

@@ -1,0 +1,79 @@
+{
+  "protocol_id": "pathmnist_prospective_protocol_correct_v2",
+  "status": "FROZEN_BEFORE_VICTIM_TRAINING_AND_CERTIFICATE_ISSUANCE",
+  "formal_seeds": [8301, 8302, 8303, 8304, 8305],
+  "weight_map": {
+    "8301": "resnet18_28_1.pth",
+    "8302": "resnet18_28_2.pth",
+    "8303": "resnet18_28_1.pth",
+    "8304": "resnet18_28_2.pth",
+    "8305": "resnet18_28_1.pth"
+  },
+  "dataset": "/private/tmp/paper14-data/pathmnist.npz",
+  "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+  "architecture": "official-weight PathMNIST 28x28 ResNet-18",
+  "training": {
+    "condition": "suspect_only",
+    "epochs": 5,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "learning_rate": 0.0003,
+    "device": "mps",
+    "torch_version": "2.7.1",
+    "deterministic_algorithms": true
+  },
+  "attack": {
+    "family": "BadNets_all_to_one",
+    "target_class": 8,
+    "poison_count": 4500,
+    "trigger": "solid_white_4x4_bottom_right",
+    "selection_seed_formula": "20260930 + victim_seed"
+  },
+  "eligibility": {
+    "balanced_accuracy_min": 0.75,
+    "attack_success_rate_min": 0.8,
+    "report_all_seeds_without_replacement": true
+  },
+  "crossfit": {
+    "folds": 2,
+    "partition_seed_formula": "20301000 + victim_seed",
+    "population": "training rows assigned to target class 8"
+  },
+  "detectors": [
+    "cf_cmd_u",
+    "target_centroid",
+    "crossfit_spectral",
+    "activation_clustering",
+    "que_score"
+  ],
+  "common": {
+    "alpha": 0.05,
+    "tau": 0.8,
+    "alpha_cap": 0.1,
+    "fpr_mode": "tight"
+  },
+  "pathmnist_blind": {
+    "source": "results/pathmnist_prospective_protocol_correct_v2_source",
+    "output": "results/pathmnist_prospective_protocol_correct_v2",
+    "trusted_pool_size_per_victim_fold": 3000,
+    "trusted_member_budgets": [120, 500, 2000],
+    "draws_per_cell": 200,
+    "delta_family": 0.05,
+    "familywise_cell_count": 10,
+    "delta_per_cell": 0.005,
+    "declared_intervals_per_fold": {
+      "primary": [1800, 2700],
+      "stress": [1125, 4500]
+    }
+  },
+  "primary_endpoint": "familywise false-GO rate under the primary declared interval",
+  "failure_recognition_target": 0.9,
+  "issuer_public_fields": [
+    "protocol",
+    "trial_token",
+    "k",
+    "conformal_rank",
+    "candidate_count",
+    "flagged_count"
+  ]
+}

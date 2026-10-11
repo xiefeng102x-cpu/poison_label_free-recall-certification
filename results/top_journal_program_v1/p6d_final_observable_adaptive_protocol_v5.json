@@ -1,0 +1,73 @@
+{
+  "protocol_id": "p6d_final_observable_adaptive_protocol_v5_confidence_guard",
+  "version": 5,
+  "frozen_at": "2026-10-06",
+  "status": "PRE_REGISTERED_DEVELOPMENT_NOT_RUN",
+  "purpose": "Prospectively test whether confidence-driven poison-member selection plus a validation utility guard closes the attack-viability gap of the final-observable adaptive attack without changing the detector.",
+  "interpretation_boundary": [
+    "The completed v4 block motivated attack viability as the development target, but no v4 seed, score, epoch or per-seed failure pattern may be used to select a v5 configuration.",
+    "Development seeds may select exactly one of the three frozen confidence rules using validation quantities only.",
+    "Confirmation seeds remain inaccessible until the development bundle, selection receipt, source hashes and go/no-go rule are frozen.",
+    "A failed or ineligible confirmation attack remains in the intention-to-evaluate denominator and is never replaced."
+  ],
+  "seed_audit": {
+    "previously_consumed_or_reserved": "42--133",
+    "development_seeds": [134, 135, 136],
+    "confirmation_seeds": [137, 138, 139, 140, 141, 142, 143, 144, 145, 146],
+    "replacement_seeds": []
+  },
+  "attack_lock": {
+    "dataset": "BloodMNIST binary target/source task used by P6-D v3/v4",
+    "victim_architecture": "the same local-angle projector victim used by P6-D v3/v4",
+    "trigger": "the same PCA-additive trigger construction used by P6-D v3/v4",
+    "detector": "unchanged final-observable CF-CMD-U channel, folds, calibration law and alpha",
+    "evasion_weight": 0.5,
+    "attack_epochs": 12,
+    "batch_size": 64,
+    "poison_member_count": 60,
+    "confidence_definition": "clean-victim softmax probability of the attacker target class on every triggered non-target training member",
+    "confidence_rules": {
+      "hard60": "select the 60 lowest target-confidence members; deterministic ties use ascending training index",
+      "uncertain60": "select the 60 members closest to target confidence 0.5; deterministic ties use ascending training index",
+      "stratified60": "select 60 deterministic order statistics evenly across the full target-confidence ranking"
+    },
+    "epoch_utility_guard": {
+      "minimum_validation_balanced_clean_accuracy": 0.92,
+      "minimum_validation_attack_success_rate": 0.90,
+      "selection_rule": "among guarded epochs minimize exact detector TPR, then maximize mean poison p-value, normalized utility margin and prefer the earlier epoch; if none pass, maximize normalized utility margin before detector TPR"
+    }
+  },
+  "development_selection": {
+    "grid": ["hard60", "uncertain60", "stratified60"],
+    "test_firewall": "all three rules are ranked using validation quantities only; only the selected rule may read development test features",
+    "configuration_ranking": "guarded-seed count descending, worst normalized utility margin descending, guarded mean TPR ascending, worst validation ASR descending, fixed lexical rule order",
+    "confirmation_go_rule": [
+      "all three selected-rule development victims meet test balanced clean accuracy >= 0.90 and test ASR >= 0.80",
+      "at least two of three selected-rule development victims have detector TPR < 0.90 and FPR <= 0.05",
+      "independent replay and all integrity tests pass"
+    ]
+  },
+  "confirmation_primary": {
+    "minimum_attack_viable_seeds": 8,
+    "attack_viability": "test balanced clean accuracy >= 0.90 and test ASR >= 0.80",
+    "adaptive_evasion_supported_if": [
+      "at least 8 of 10 attacks are viable",
+      "one-sided exact sign-test p-value for viable-seed TPR < 0.90 is <= 0.05",
+      "upper 95% seed-cluster bootstrap bound for mean viable-seed TPR is < 0.90",
+      "upper 95% seed-cluster bootstrap bound for mean viable-seed FPR is <= 0.05"
+    ],
+    "detector_robustness_supported_if": [
+      "at least 8 of 10 attacks are viable",
+      "lower 95% seed-cluster bootstrap bound for mean viable-seed TPR is >= 0.90",
+      "upper 95% seed-cluster bootstrap bound for mean viable-seed FPR is <= 0.05"
+    ],
+    "otherwise": "INCONCLUSIVE_MIXED",
+    "insufficient_attack_viability": "INSUFFICIENT_ATTACK_VIABILITY"
+  },
+  "source_audit": {
+    "development_runner": "src/run_p6d_final_observable_adaptive_v5.py",
+    "development_runner_sha256": "145c2fb63557617375cb0f4b772e67213054cb8543102014c309906697625f77",
+    "upstream_v3_runner_sha256": "587e4cba4b7bac3ea5d404120c020d41cfe9fd5dd8e54301f0f54fa050019a56",
+    "dataset_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc"
+  }
+}

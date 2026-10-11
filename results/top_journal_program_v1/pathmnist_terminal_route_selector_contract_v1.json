@@ -1,0 +1,42 @@
+{
+  "contract": "pathmnist_terminal_route_selector_v2_receipt_gate_v1",
+  "status": "FROZEN_BEFORE_V2_TERMINAL_RECEIPT",
+  "frozen_at": "2026-10-04T10:28:47+08:00",
+  "frozen_before_v2_terminal_receipt": true,
+  "performance_endpoints_inspected": false,
+  "scientific_decision_rules_changed": false,
+  "route_conditions_changed": false,
+  "pooling_permissions_changed": false,
+  "selector": "src/select_pathmnist_terminal_route_v2.py",
+  "selector_sha256": "2210db9c00afa52414020978770285c0372ab8acb541ee58391d6fdcde3ba73a",
+  "base_contract": "results/top_journal_program_v1/pathmnist_terminal_claim_integration_contract_v1.json",
+  "base_contract_sha256": "71e09c3fb678fad1024d822b929aca8379d61372c24d5e1441cb10d5d85f79c0",
+  "tifs_template": "results/top_journal_program_v1/tifs_pathmnist_terminal_integration_template_v1.json",
+  "tifs_template_sha256": "5e40fb48bac2d0cd96cf106fdc1218ca88553f167b1d3dd435f4b064f8cfa36d",
+  "v2_replay_amendment": "results/top_journal_program_v1/pathmnist_terminal_replay_dataset_lifetime_amendment_2026-10-04.json",
+  "v2_replay_amendment_sha256": "c6b07bb544931bc4bc928b07cd6b0af3db8d8ddbbc0e913401077a295eabd83c",
+  "expected_v2_replay_receipt": "results/top_journal_program_v1/pathmnist_terminal_staged_replay_v2_receipt_2026-10-04.json",
+  "output_route_receipt": "results/top_journal_program_v1/pathmnist_terminal_route_selection_v2_receipt.json",
+  "receipt_gate": {
+    "required_status": "PASS",
+    "required_formal_evidence": true,
+    "required_failures": [],
+    "required_verified_seeds": [103, 104, 105, 106, 107],
+    "required_verified_method_rows": 25,
+    "require_top_level_evidence_hash_match": true,
+    "require_dataset_acquisition_binding": true
+  },
+  "sealed_order": [
+    "validate the V2 replay receipt and control-plane hashes",
+    "if validation fails, select R0 without parsing the formal manifest",
+    "only after validation passes, parse the formal manifest eligibility and primary point gate",
+    "select exactly one of R1, R2, or R3 under the unchanged base contract",
+    "persist the route receipt before manuscript or claim integration"
+  ],
+  "ordered_routes": [
+    "R0_INVALID_OR_INCOMPLETE",
+    "R1_INSUFFICIENT_ELIGIBLE_VICTIMS",
+    "R2_ELIGIBLE_PRIMARY_GATE_FAIL",
+    "R3_ELIGIBLE_PRIMARY_GATE_PASS"
+  ]
+}

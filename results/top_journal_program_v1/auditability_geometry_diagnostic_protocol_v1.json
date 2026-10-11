@@ -1,0 +1,112 @@
+{
+  "protocol_id": "paper14_auditability_geometry_diagnostic_v1",
+  "status": "FROZEN_BEFORE_GEOMETRY_ENDPOINTS",
+  "frozen_date": "2026-10-02",
+  "purpose": "Retrospective label-informed mechanism diagnosis using only archived feature caches, checkpoints and the hash-matched local dataset; no victim training, detector tuning or confirmatory efficacy claim.",
+  "sources": {
+    "phase_a": {
+      "root": "results/phase_a_mnist5q_real_v1",
+      "manifest_sha256": "88fe6660547b673d5df657576e39309cc05a7245e9f7a0de47855b4b5a3a4a54",
+      "splits_sha256": "950231f1c8e201dd12231d41c0ba342defaeeeef6b83543e80c25a52b19cd312",
+      "seeds": [42, 43, 44],
+      "checkpoints": ["middle", "output"],
+      "representations": ["Z", "XYZ", "Full"],
+      "views": ["suspect_absolute", "paired_checkpoint_drift"]
+    },
+    "bloodmnist_whitebox": {
+      "root": "results/bloodmnist_whitebox_adaptive_confirmation_v1",
+      "manifest_sha256": "78e76c2609c2d9ac64a1de78e2369d8a6fc70ccbcc9f9f1773e166602cd077c6",
+      "victim_metrics_sha256": "1892eb738b8c6e2e170142fc31b741ea51de87f8830495d02e9f22ede01ea228",
+      "dataset_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+      "seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+      "modes": [
+        "checkpoint_drift_representation_matching",
+        "multi_direction_coherence_breaking",
+        "joint_input_internal_detector_evasion"
+      ],
+      "primary_observation": "checkpoint_drift_xz16",
+      "primary_population": "stored_test_eligible_victims",
+      "secondary_population": "all_archived_victims"
+    }
+  },
+  "estimands": {
+    "phase_a": [
+      "regularized_train_coherence",
+      "test_mean_shift_ratio",
+      "train_test_direction_cosine",
+      "train_test_direction_instability_ratio",
+      "test_linear_auc"
+    ],
+    "bloodmnist_whitebox": [
+      "ridge_coherence",
+      "mean_shift_ratio",
+      "mean_resultant_length",
+      "poison_to_clean_radial_ratio",
+      "energy_distance_v_statistic",
+      "rbf_mmd2_biased",
+      "crossfit_fisher_auc",
+      "crossfit_rbf_auc"
+    ]
+  },
+  "fixed_methods": {
+    "ridge_fraction_of_mean_clean_variance": 0.1,
+    "cross_validation_folds": 5,
+    "cross_validation_seed": 20261002,
+    "rbf_svc_c": 1.0,
+    "rbf_gamma": "one_over_two_times_training_pooled_median_nonzero_squared_distance_after_training_standardization",
+    "bootstrap_draws": 10000,
+    "bootstrap_seed": 20261002,
+    "bootstrap_unit": "seed",
+    "confidence_level": 0.95
+  },
+  "metric_definitions": {
+    "ridge_coherence": "sqrt(delta_transpose_times_inverse_clean_covariance_plus_ridge_times_delta), with population moments over the archived candidate-clean and poison samples",
+    "mean_shift_ratio": "euclidean_norm_of_poison_minus_clean_mean divided by clean_root_mean_square_radius_about_its_mean",
+    "mean_resultant_length": "norm of the mean unit vector from the clean mean to each poison observation; zero-length vectors contribute the zero vector",
+    "poison_to_clean_radial_ratio": "median poison radius about the clean mean divided by median clean radius about the clean mean",
+    "energy_distance_v_statistic": "two_mean_cross_euclidean_distance minus both within-sample mean Euclidean distances, including diagonals and clipped at zero for roundoff",
+    "rbf_mmd2_biased": "biased V-statistic after pooled feature standardization; gamma is one over twice the pooled median nonzero squared distance",
+    "crossfit_fisher_auc": "out-of-fold AUC from a clean-covariance ridge Fisher direction fit only on each training fold and oriented by the training poison-minus-clean mean",
+    "crossfit_rbf_auc": "out-of-fold decision-function AUC from a class-balanced RBF SVC; standardization, gamma and model fit use only each training fold",
+    "phase_a_test_mean_shift_ratio": "test attack-minus-clean mean norm divided by the test-clean root-mean-square radius",
+    "phase_a_direction_instability_ratio": "norm of train delta minus test delta divided by train delta norm"
+  },
+  "primary_contrast": {
+    "left": "multi_direction_coherence_breaking",
+    "right": "checkpoint_drift_representation_matching",
+    "pairing": "common stored-test-eligible seeds",
+    "metrics": [
+      "mean_shift_ratio",
+      "mean_resultant_length",
+      "rbf_mmd2_biased",
+      "crossfit_fisher_auc",
+      "crossfit_rbf_auc"
+    ]
+  },
+  "decision_rule": {
+    "mean_shift_relative_max": 0.75,
+    "resultant_length_paired_delta_max": -0.1,
+    "residual_nonlinear_auc_ci_low_min": 0.6,
+    "labels": {
+      "cancellation_with_residual_signal": "FIRST_ORDER_CANCELLATION_WITH_RESIDUAL_NONLINEAR_AUDITABILITY",
+      "broad_suppression": "BROAD_XZ_OBSERVABLE_SUPPRESSION_FOR_THIS_PROBE",
+      "mixed": "NO_CLEAN_CANCELLATION_DIAGNOSIS"
+    }
+  },
+  "claim_boundaries": [
+    "The analysis is retrospective and label-informed.",
+    "The primary BloodMNIST population is fixed by previously stored CA/ASR eligibility; this protocol does not reopen victim selection.",
+    "Cross-validated AUC measures diagnostic information in the fixed XZ16 checkpoint-drift channel, not deployable detector performance.",
+    "Empirical regularized coherence is not the population quantity and does not prove the sub-Gaussian constants in Proposition A.5.",
+    "MMD and energy distance distinguish distributional discrepancy from first-moment cancellation but do not identify a causal backdoor mechanism.",
+    "No PathMNIST artifact is read, modified or interpreted by this diagnostic."
+  ],
+  "forbidden_actions": [
+    "retrain_any_victim",
+    "tune_metrics_after_endpoint_inspection",
+    "replace_or_drop_stored_seeds",
+    "use_test_labels_for_model_or_detector_selection",
+    "reinterpret_retrospective_geometry_as_confirmatory_detector_efficacy",
+    "inspect_pathmnist_partial_outputs"
+  ]
+}

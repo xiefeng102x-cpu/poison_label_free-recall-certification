@@ -1,0 +1,16 @@
+{
+  "created_unix": 1791467420.329955,
+  "defender_key_sha256": "c3106f4d69381f419812b8153f2d8aa6a41c9e34db692471557ecbfabd79f6df",
+  "hashes": {
+    "blind_scores_sha256": "4a65c08f6503ce0eeac596c2a0475d0517db7fa1e00ecd4ce074fcc5c1f234e8",
+    "candidate_pool_sha256": "523e9086580064f507a88c063f1ffc2f98934ce3712a70b5c03407be367c93a7",
+    "config_sha256": "46362eb40fb140b7d628d9e81c6571f0d1984768516bbf049e6a7c1a61a04948",
+    "freezer_sha256": "151a5ab3f7d8a2b8db7ab6a1843072fbe06202e606033c3ce4bf740e53c4ba3e",
+    "prereg_sha256": "2d284c4a9abc93c509de31afb806b30301c7315465e62aaf3beaa46f43524db0",
+    "runner_sha256": "fecbf81508850fa1a4147e88bbd08b161efa2ecf537e2b4cb3f48d6b9cd8dc22",
+    "source_manifest_sha256": "7dfa93e97cfd4c4b2cf7f693b019340aacb2e58e7088aaed91b78e3d9de3f864",
+    "verifier_sha256": "ce916917db49645b18c0f9bf3499a12c6fcb7792bfbeaf4986bb42fe2fdb281c"
+  },
+  "status": "FROZEN_BEFORE_FORMAL_IDENTITY_DRAW",
+  "target_identities_opened_at_freeze": false
+}

@@ -1,0 +1,159 @@
+{
+  "attack": {
+    "candidate_cohort": "all clean records in the 90% training split plus one copy of every selected poison record",
+    "decision_unit": "unique training record; each selected source image contributes one additional poison record",
+    "name": "fixed_patch_all_to_one",
+    "patch_alpha": 1.0,
+    "patch_rgb_uint8": [
+      255,
+      217,
+      13
+    ],
+    "patch_size": 4,
+    "poison_fraction_per_non_target_training_class": 0.1,
+    "poison_selection_rng": "numpy.default_rng(2026101600 + seed + source_class * 131)",
+    "target_class": 2
+  },
+  "compatibility_revision": {
+    "code_change": "to_tensor now calls contiguous() immediately after NHWC-to-NCHW permute; runner also accepts this v1.1 protocol id and exposes an audited one-step MPS forward/backward self-test",
+    "failed_run_log_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb/run.log",
+    "failed_run_log_sha256": "f896890431c2369cc45459b5d6368f98c2fa0b6981639f9a2ddcc9262fecd122",
+    "failure_record_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb/EXECUTION_FAILURE_MPS_LAYOUT.json",
+    "failure_record_sha256": "8c90c923eeea25bb8744ef7737607d7eba072c84095305a2f470dd417bfa7bb3",
+    "mps_forward_backward_self_test_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb/MPS_FORWARD_BACKWARD_SELF_TEST.json",
+    "mps_forward_backward_self_test_sha256": "c54b5e7c6dadc8c30a2f8f9996f81cb8c603cddace2cdf003b8021e787fc232a",
+    "new_runner_sha256": "06381624dd4e8b30e2cd799cca693b983714821f1fc652b4237b9e61e154037b",
+    "old_runner_sha256": "4b22eba22f03de8e455655e6545b6e773c8d2f055bb2a99197fdd494c31cf590",
+    "previous_protocol_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/configs/tifs_native_gtsrb_confirmation_v1.json",
+    "previous_protocol_sha256": "80d727c5311574e83c32eacc141387b28fe1642e9e35fe0a223b2adcbb488513",
+    "revision": "v1.1",
+    "scientific_parameters_and_seeds_unchanged": true,
+    "scientific_projection_sha256": "3024c0105b8ba94932d738c405b7ccb5b0ebe3383f39e983e774fd2a0fc8cd39",
+    "scope": "execution-only MPS tensor-layout compatibility"
+  },
+  "dataset": {
+    "archives": [
+      {
+        "file": "gtsrb/GTSRB-Training_fixed.zip",
+        "md5": "513f3c79a4c5141765e10e952eaa2478",
+        "sha256": "df4144942083645bd60b594de348aa6930126c3e0e5de09e39611630abf8455a"
+      },
+      {
+        "file": "gtsrb/GTSRB_Final_Test_Images.zip",
+        "md5": "c7e4e6327067d32654124b0fe9e82185",
+        "sha256": "48ba6fab7e877eb64eaf8de99035b0aaecfbc279bee23e35deca4ac1d0a837fa"
+      },
+      {
+        "file": "gtsrb/GTSRB_Final_Test_GT.zip",
+        "md5": "fe31e9c9270bbcd7b84b7f21a9d9d9e5",
+        "sha256": "f94e5a7614d75845c74c04ddb26b8796b9e483f43541dd95dd5b726504e16d6d"
+      }
+    ],
+    "class_count": 43,
+    "name": "GTSRB",
+    "resize": [
+      32,
+      32
+    ],
+    "root_relative_to_paper14": "data/gtsrb_official",
+    "test_rows": 12630,
+    "train_rows": 26640
+  },
+  "detectors": {
+    "matched_baselines": [
+      "target_centroid_distance",
+      "crossfit_spectral"
+    ],
+    "primary": {
+      "alpha": 0.05,
+      "crossfit_rng": "numpy.default_rng(20271001 + seed)",
+      "name": "CF-CMD-U"
+    }
+  },
+  "development_provenance": {
+    "mps_smoke_receipt_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb_development/device_smoke_mps.json",
+    "mps_smoke_receipt_sha256": "3868c94a3ff0b6ba471839bcfd25e06c1bd2d197f6bf0000d7715c51cd9a9304",
+    "protocol_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/configs/tifs_native_gtsrb_development_v1.json",
+    "protocol_sha256": "ee66c722dfafe8ed542b0cd6cd3f2b34359b12d9926d6e38c1afaa5363a1d1a5",
+    "qualified_metrics": {
+      "attack_success_rate": 0.9996632996632997,
+      "balanced_clean_accuracy": 0.843423384343253,
+      "clean_accuracy": 0.8844813935075218
+    },
+    "smoke_checkpoint_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb_development/models/seed_100_suspect.pt",
+    "smoke_checkpoint_sha256": "ee479c654cbe25b89951af5c065fa4ea5fceaf60f25501e595025b7d9b7a234d",
+    "smoke_manifest_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb_development/manifest.json",
+    "smoke_manifest_sha256": "baf998b32c5c838bff592c08452dfbdda265b51746d736db53b6bbfe0c89451a",
+    "smoke_receipt_path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/results/tifs_native_cifar_gtsrb_v1/gtsrb_development/receipts/seed_100.json",
+    "smoke_receipt_sha256": "ae59f711b893883decbf9a556731764f95a1c26bc6135286f8eecb43dd6f8edc"
+  },
+  "execution": {
+    "actual_device_must_be_recorded_per_seed": true,
+    "checkpoint_state_storage": "cpu",
+    "cli_requirement": "--device mps",
+    "fallback": "fail",
+    "formal_device": "mps"
+  },
+  "freeze_method": "programmatic datetime.now(timezone.utc).astimezone().isoformat(); execution-only compatibility revision; refuse overwrite",
+  "frozen_at": "2026-10-06T18:24:43.354785+08:00",
+  "minimum_eligible_victims": 8,
+  "no_seed_replacement": true,
+  "primary_detector_gate": {
+    "pooled_target_clean_fpr_max": 0.05,
+    "pooled_tpr_min": 0.9
+  },
+  "protocol_id": "tifs_native_gtsrb_confirmation_v1_1",
+  "runner": {
+    "path": "<USER_HOME>/Desktop/study/tex/Blackdoor/Blackdoor_1/paper14/src/run_tifs_native_gtsrb.py",
+    "sha256": "06381624dd4e8b30e2cd799cca693b983714821f1fc652b4237b9e61e154037b"
+  },
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110
+  ],
+  "split": {
+    "split_rng": "numpy.default_rng(2026100600 + seed + class_id * 1009)",
+    "train_fraction_per_class": 0.9,
+    "validation_used_for": "best-epoch selection by balanced clean accuracy only"
+  },
+  "stage": "confirmation",
+  "stopping_rule": {
+    "aggregate_detector_metrics_over_eligible_victims_only": true,
+    "attempt_all_frozen_seeds": true,
+    "no_hyperparameter_or_threshold_retuning_after_any_confirmation_outcome": true,
+    "qualification": "confirmation is complete after all 10 frozen seeds are attempted; primary gate is evaluated only if at least 8 victims are eligible",
+    "report_ineligible_and_failed_seeds_without_replacement": true,
+    "resume_only_at_completed_seed_boundaries": true
+  },
+  "trusted_split": {
+    "calibration_rows": 250,
+    "reference_rows": 250,
+    "reserved_rows": 250,
+    "rng": "numpy.default_rng(2026102600 + seed)",
+    "source": "official GTSRB test split, target class only",
+    "target_class_rows": 750
+  },
+  "victim": {
+    "architecture": "GTSRBTinyCNN-43",
+    "batch_size": 512,
+    "checkpoint_selection": "highest validation balanced accuracy; earliest epoch breaks ties",
+    "epochs": 12,
+    "learning_rate": 0.002,
+    "loss": "cross entropy with inverse-square-root clean-class-frequency weights",
+    "optimizer": "AdamW",
+    "representation": "64-D tanh penultimate feature",
+    "weight_decay": 0.0001
+  },
+  "victim_eligibility": {
+    "attack_success_rate_min": 0.8,
+    "test_balanced_clean_accuracy_min": 0.65
+  }
+}

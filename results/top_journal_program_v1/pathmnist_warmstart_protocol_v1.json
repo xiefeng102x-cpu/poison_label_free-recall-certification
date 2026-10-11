@@ -1,0 +1,80 @@
+{
+  "protocol_id": "p6b_pathmnist_coordinate_aligned_warmstart_v1",
+  "frozen_before_finetuning": true,
+  "frozen_date": "2026-09-29",
+  "purpose": "Test the coordinate-aligned condition of the checkpoint-auditability theory while reducing compute and avoiding another poison-parameter search.",
+  "frozen_inputs": {
+    "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+    "core_implementation_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "common_runner_sha256": "9e13264bfb3e87bfcb8fc9b0b8918625a1a2d85267016e3be73e7d3bf5fa2a6d",
+    "v2_runner_sha256": "b1bc3afb463ff9adca0cce06ddf692035bc9c4a0e573e06c7604a5b9af6a4441",
+    "warmstart_runner_sha256": "3da873d61d5bfb9e35f5bf81a6335e41a527ad5f9abb4f888e450fc0b267cd8c",
+    "source_protocol_sha256": "7659cfa8646e350ac471e81a2ab7b059ab3a1dfe2aa453f4d65d8b85a19ef64f",
+    "source_manifest_sha256": "6405374b9c7e6e9baf9d225c4c3897c5d4bfc41b5f708c072a06e3e924ae708c",
+    "source_receipts_sha256": "8dfe63233420219b9c8f1c6585bf13b8d8595b6e91ede5421dc4096777700529"
+  },
+  "source_clean_checkpoints": {
+    "seeds": [
+      86,
+      87
+    ],
+    "selection": "the archived clean checkpoints from the frozen PathMNIST V2 development run",
+    "known_external_balanced_accuracy": {
+      "86": 0.7559462547,
+      "87": 0.781709257
+    },
+    "status": "previously observed development checkpoints; this pilot is not confirmation"
+  },
+  "unchanged_data_attack_and_detector": {
+    "training_subset": "same fixed balanced 27,000-row PathMNIST subset",
+    "attack": "V2 BadNets all-to-one: 810 overwritten rows (3%), target class 8, 5x5 white bottom-right patch",
+    "test": "full official external-center PathMNIST test split",
+    "views": [
+      "suspect_hidden64",
+      "clean_to_suspect_hidden64_drift"
+    ],
+    "methods": [
+      "cf_cmd_u",
+      "backdoorbench_scan",
+      "backdoorbench_spectral"
+    ],
+    "victim_gates": "external-center balanced CA at least 0.75 and test ASR at least 0.80",
+    "detection_performance_is_a_gate": false
+  },
+  "warmstart_finetuning": {
+    "initialization": "bit-identical archived clean checkpoint for the same seed",
+    "coordinate_alignment_check": "the fine-tuning initial state SHA-256 must equal the source clean state SHA-256",
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "batch_size": 512,
+    "epochs": 3,
+    "checkpoint_selection": "fixed final epoch 3; no early stopping or outcome-based epoch selection",
+    "shuffle_seed_formula": "20280930 + seed",
+    "augmentation_seed_formula": "20290930 + seed",
+    "augmentation": "independent horizontal and vertical flips with probability 0.5",
+    "runtime_cap_seconds_per_seed": 600
+  },
+  "gate": {
+    "requirements": [
+      "both archived source clean models meet the 0.75 external-center CA gate",
+      "both warm-start suspect victims meet CA and ASR gates",
+      "initial suspect state exactly matches the source clean state",
+      "all defined detector scores are finite",
+      "compressed sample artifacts replay",
+      "both seeds finish within 600 seconds"
+    ],
+    "pass_action": "authorize writing, but not running, a separate fresh-seed confirmation protocol",
+    "fail_action": "stop PathMNIST lightweight-victim expansion; do not tune epochs, learning rate, poison fraction or patch size on these seeds"
+  },
+  "interpretation": {
+    "theory_link": "Unlike independently trained clean/suspect pairs, this warm-start construction preserves a shared parameter coordinate system and directly exercises the stated conditional drift proposition.",
+    "scope": "development-only mechanistic and feasibility pilot",
+    "forbidden_claims": [
+      "fresh-seed confirmation",
+      "standard training-from-scratch backdoor robustness",
+      "deployable clean checkpoints are always available",
+      "paired drift superiority without a passed comparison gate"
+    ]
+  }
+}

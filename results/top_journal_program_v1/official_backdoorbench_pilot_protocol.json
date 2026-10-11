@@ -1,0 +1,74 @@
+{
+  "protocol": "official_backdoorbench_feature_pilot_v1",
+  "frozen_before_execution": true,
+  "amendments": [
+    {
+      "date": "2026-09-29",
+      "trigger": "The first preflight aborted before writing outputs because SciPy removed the upstream sym_pos keyword.",
+      "change": "Permit and require recording the semantics-preserving sym_pos=True to assume_a='pos' runtime alias.",
+      "design_or_threshold_change": false
+    }
+  ],
+  "purpose": "Interface and applicability audit of pinned upstream BackdoorBench primitives on the shared BloodMNIST checkpoint-drift representation.",
+  "development_seeds": [52, 54],
+  "confirmation_seeds_if_interface_gate_passes": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "scenarios": [
+    "fixed_attack_local_angle",
+    "whitebox_representation_matching_local_angle",
+    "fixed_attack_residual_reupload"
+  ],
+  "view": "checkpoint_drift_xz16",
+  "victim_eligibility": {
+    "minimum_balanced_ca": 0.9,
+    "minimum_asr": 0.8
+  },
+  "candidate_pool": {
+    "trusted_reference_per_class": 200,
+    "target_class_clean": 600,
+    "source_class_clean_after_poison_replacement": 540,
+    "poison_relabelled_to_target": 60,
+    "candidate_order": ["target_clean", "source_clean", "poison"]
+  },
+  "methods": {
+    "backdoorbench_spectral": {
+      "percentile": 85.0,
+      "note": "Pinned BackdoorBench per-class spectral block."
+    },
+    "backdoorbench_scan": {
+      "class_threshold": "exp(2)",
+      "note": "Direct calls to SCAn global/local models; binary-class degeneracy is recorded, not repaired."
+    },
+    "backdoorbench_spectre_oracle_target": {
+      "pca_dimension": 16,
+      "contamination_counts": {"source": 0, "target": 60},
+      "note": "Target-aware oracle poison budget favors the baseline."
+    },
+    "backdoorbench_spectre_oracle_all_classes": {
+      "pca_dimension": 16,
+      "contamination_counts": {"source": 60, "target": 60},
+      "note": "Same oracle budget applied to every class to expose assumption sensitivity."
+    }
+  },
+  "upstream": {
+    "repository": "https://github.com/SCLBD/BackdoorBench",
+    "commit": "f02e3534645f0ee63d6848653062cd6c0d6c400d",
+    "license": "CC BY-NC 4.0"
+  },
+  "dataset_npz_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+  "expansion_gate": {
+    "performance_independent": true,
+    "requirements": [
+      "All six development victims meet the frozen CA/ASR eligibility thresholds.",
+      "Every method completes without exception or non-finite exposed score.",
+      "Candidate and reference counts match the frozen pool definition.",
+      "A repeated SCAn call on the first configuration returns identical flags and scores.",
+      "Receipts identify the pinned upstream commit, symbol and all decision parameters."
+    ]
+  },
+  "interpretation_constraints": [
+    "This is a feature-level adapter audit, not a claim of bit-identical end-to-end BackdoorBench execution.",
+    "SPECTRE oracle-budget variants must be labelled as advantaged baselines.",
+    "SCAn conclusions on a binary task must explicitly discuss its across-class anomaly-score degeneracy.",
+    "A runtime-only SciPy compatibility alias from removed sym_pos=True to assume_a='pos' is permitted and must be recorded; it does not change the requested positive-definite solve."
+  ]
+}

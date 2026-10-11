@@ -1,0 +1,134 @@
+{
+  "H1": {
+    "cells": 3480,
+    "holm_rejections": 0,
+    "maximum_observed_false_go_rate": 0.065,
+    "minimum_unadjusted_pvalue": 0.20351565401154334
+  },
+  "H4": {
+    "low_recall_certificate_rows": 30,
+    "low_recall_victims": 13,
+    "ratio1_all_false_go_rates_le_delta": true,
+    "ratio1_groups": 3,
+    "ratio1_max_cell_false_go_rate": 0.045,
+    "ratio1_max_group_false_go_rate": 0.03333333333333333,
+    "ratio1_max_group_go_rate": 0.07666666666666666,
+    "ratio1_pooled_false_go_rate": 0.0036666666666666666
+  },
+  "coverage": {
+    "attacks": [
+      "adaptive_blend",
+      "adaptive_patch",
+      "badnets",
+      "blended",
+      "sig"
+    ],
+    "certificate_rows": 870,
+    "datasets": [
+      "bloodmnist",
+      "cifar10"
+    ],
+    "methods": [
+      "activation_clustering",
+      "cf_cmd",
+      "cf_cmd_u",
+      "crossfit_spectral",
+      "scan_style",
+      "spectral_signatures",
+      "spectre_que",
+      "target_centroid_distance"
+    ],
+    "redraws": 174000,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82
+    ]
+  },
+  "created_at": "2026-10-07T14:04:08.099641+08:00",
+  "input_checks": {
+    "adaptive_cfcmdu": {
+      "folds": 4,
+      "loose_result_sha256": "5b4791b04358b7941a614df2ef53adb00cc3fc87f9184bf7d46493abb8b5ac9e",
+      "result_rows": 108,
+      "score_rows": 17820,
+      "score_sha256": "3874c56847beb6a73118ce864ba94087ebc3e274b9e3fee7528e676035a3f8c5",
+      "tight_result_sha256": "5b4791b04358b7941a614df2ef53adb00cc3fc87f9184bf7d46493abb8b5ac9e",
+      "victims": 27
+    },
+    "adaptive_global_baselines": {
+      "folds": 1,
+      "loose_result_sha256": "34c93193738db85546457a8999d833604e4e17afd8afbe2fe419cb12c2ff11ee",
+      "result_rows": 216,
+      "score_rows": 71280,
+      "score_sha256": "01da52b710b0c1bfbd4d8857a445f2c9b094c6617e6df7a387f087b83636b37e",
+      "tight_result_sha256": "8f09f273004448590dc089d1f6de6c6dbcf3de4615ead5734b986b1fdae28470",
+      "victims": 108
+    },
+    "bloodmnist_cross_attack": {
+      "folds": 4,
+      "loose_result_sha256": "eb05037a3eb9639d163af4aefbf8de26a562cc53aa379b87776cef80e40061d5",
+      "result_rows": 396,
+      "score_rows": 63000,
+      "score_sha256": "34d01f5cba7e6d75a97bdd00256bb82cac018281aa1d50d67484e7a7cc7e2bbc",
+      "tight_result_sha256": "eb05037a3eb9639d163af4aefbf8de26a562cc53aa379b87776cef80e40061d5",
+      "victims": 99
+    },
+    "cifar10_crossfit": {
+      "folds": 2,
+      "loose_result_sha256": "9c83dfe4fbe20e18b8ef3c0307cfca2b41edf31f3865944c89dae5b84b6a8bc2",
+      "result_rows": 120,
+      "score_rows": 235000,
+      "score_sha256": "21b27b27501571d23c2e8325a87818abe739b863a98ac3109d0109090a895d79",
+      "tight_result_sha256": "bfe362b624546ef33166edbd54785313a3af7370dde0b39046e42e4b5c9793af",
+      "victims": 20
+    },
+    "cifar10_global_baseline": {
+      "folds": 1,
+      "loose_result_sha256": "9a3f649018f27ca6c5a50472b195f812f2acd2dd3b8aebdcc649fa805e4eb356",
+      "result_rows": 30,
+      "score_rows": 117500,
+      "score_sha256": "37477728148e64ae171e18879ddb11a2c1eaaa390fbf8547dee3653ec3fdc4f5",
+      "tight_result_sha256": "9a1409792ff494d18575dbb2621674cb3d7fd52dde29d2c5f83986823be07eca",
+      "victims": 10
+    }
+  },
+  "limitations": [
+    "No new victim was trained; all score maps and victims are archived paper14 artifacts.",
+    "Fresh clean rows are unavailable in these archived tables, so H2/H2b are not tested.",
+    "GTSRB is excluded because only one development victim exists and its detector output is empty.",
+    "PathMNIST v2 has only two ineligible development victims and no per-sample score table.",
+    "The extension is retrospective because all source victims and detector scores predate this certificate handoff.",
+    "H4 evidence is restricted to naturally occurring weak archived detector cells, not a prospectively generated failure grid.",
+    "Because every trusted-set redraw changes the threshold and realized recall, H4 is evaluated by per-redraw false-GO frequency; grouping rows only by mean recall makes raw GO rate ambiguous.",
+    "Dataset coverage is BloodMNIST plus CIFAR-10; GTSRB and PathMNIST are not confirmation-complete."
+  ],
+  "status": "PASS_WITH_SCOPE_LIMITS"
+}

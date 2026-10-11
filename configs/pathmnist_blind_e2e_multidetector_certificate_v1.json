@@ -1,0 +1,66 @@
+{
+  "protocol_id": "pathmnist_blind_e2e_multidetector_certificate_v1",
+  "frozen_before_unblinding": true,
+  "formal_seeds": [1201, 1202, 1203, 1204, 1205],
+  "weight_map": {
+    "1201": "resnet18_28_1.pth",
+    "1202": "resnet18_28_2.pth",
+    "1203": "resnet18_28_1.pth",
+    "1204": "resnet18_28_2.pth",
+    "1205": "resnet18_28_1.pth"
+  },
+  "dataset": "/private/tmp/paper14-data/pathmnist.npz",
+  "architecture": "official PathMNIST 28x28 ResNet-18",
+  "training": {
+    "condition": "suspect_only",
+    "epochs": 5,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "learning_rate": 0.0003,
+    "device": "mps",
+    "torch_version": "2.7.1",
+    "deterministic_algorithms": true
+  },
+  "attack": {
+    "family": "BadNets_all_to_one",
+    "target_class": 8,
+    "poison_count": 4500,
+    "trigger": "solid_white_4x4_bottom_right",
+    "selection_seed_formula": "20260930 + victim_seed"
+  },
+  "eligibility": {
+    "balanced_accuracy_min": 0.75,
+    "attack_success_rate_min": 0.8
+  },
+  "crossfit": {
+    "folds": 2,
+    "partition_seed_formula": "20301000 + victim_seed",
+    "population": "training rows assigned to target class 8"
+  },
+  "detectors": [
+    "cf_cmd_u",
+    "target_centroid",
+    "crossfit_spectral",
+    "activation_clustering",
+    "que_score"
+  ],
+  "certificate": {
+    "alpha": 0.05,
+    "tau": 0.8,
+    "alpha_cap": 0.1,
+    "delta_family": 0.05,
+    "delta_per_fold": 0.025,
+    "trusted_member_budgets": [120, 500, 2000],
+    "draws_per_cell": 200,
+    "fpr_mode": "tight",
+    "declared_intervals_per_fold": {
+      "primary": [1800, 2700],
+      "stress": [1125, 4500]
+    },
+    "tie_break_seed_base": 20302000,
+    "trusted_draw_seed_base": 20303000
+  },
+  "primary_endpoint": "false_GO_rate_under_primary_declared_interval",
+  "failure_recognition_target": 0.9,
+  "output": "results/pathmnist_blind_e2e_multidetector_certificate_v1"
+}

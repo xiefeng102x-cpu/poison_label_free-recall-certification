@@ -1,0 +1,78 @@
+{
+  "protocol_id": "multiclass_agpd_adapter_protocol_v1",
+  "frozen_at": "2026-09-29",
+  "purpose": "P6-E modern official-code baseline applicability on the already-trained eight-class BloodMNIST victims; no victim retraining and no CF-CMD tuning",
+  "dataset": {
+    "name": "BloodMNIST v2 NPZ",
+    "path": "<TMP>/blood-ca-data/bloodmnist.npz",
+    "sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+    "classes": 8,
+    "split_policy": "preserve archived train/validation/test splits"
+  },
+  "victims": {
+    "source_protocol": "multiclass_backdoorbench_pilot_protocol.json",
+    "source_protocol_sha256": "9026dcc6a8349b21aa48147fbb4ba9bf079ebfc45c5c87a7b2b3ec805b356e46",
+    "source_runner_sha256": "81098cb7ea7cae3f49013080a1de8f0d78a1e838458f6f9b084e39999ebb5b6e",
+    "attack": "all-to-one 3x3 white BadNets patch",
+    "target_class": 6,
+    "poison_count": 600,
+    "architecture": "MulticlassBloodCNN",
+    "development_seeds": [72, 73],
+    "confirmation_seeds": [74, 75, 76, 77, 78],
+    "checkpoint_policy": "load the archived suspect checkpoints and verify seed receipts; do not retrain or alter weights"
+  },
+  "upstream": {
+    "name": "BackdoorBench AGPD",
+    "commit": "f02e3534645f0ee63d6848653062cd6c0d6c400d",
+    "agpd_py_sha256": "7a95e420d7594c565da5c583baed75a24269140ced3780d86aee812567ab5693",
+    "agpd_utils_py_sha256": "1db1eaca4e6f4e982c1ba85c841670abb98d0567caecae69b5a852ed9109e2bf",
+    "cifar10_config_sha256": "a32085fa5fefea49be4fc8fa9695d25c11f635a056c63c2d13fe4961259f707b",
+    "scope": "feature-level architecture adapter using the upstream activation-gradient, class-anomaly, and progressive-filtering equations; not a bit-identical end-to-end BackdoorBench run"
+  },
+  "adapter": {
+    "implementation": "src/agpd_feature_adapter.py",
+    "implementation_sha256": "28b01f176177c7ff3e301cf52127f91a1df223d223fa050aa96c4c022d69b2e8",
+    "layers": ["features_net.0", "features_net.3"],
+    "gradient": "gradient of the assigned-class logit with respect to each convolution output, spatially averaged per sample",
+    "clean_reference": "12 correctly classified validation samples per class, sampled without replacement and then sorted with NumPy default_rng(20270929 + victim_seed); 96 total",
+    "class_anomaly_threshold": 7.38905609893065,
+    "fallback_rho_threshold": 0.3,
+    "progressive_tau": 0.5,
+    "progressive_window": 10,
+    "tau_reason": "the pinned upstream YAML omits tau; 0.5 is frozen before any run as the symmetric cutoff after upstream min-max normalization",
+    "declared_compatibility_repairs": [
+      "accept an explicit ordered convolution-layer list instead of hard-coded ResNet/VGG names",
+      "use torch.autograd.grad on the assigned-class-logit sum with respect to the convolution output, which is mathematically equivalent to the upstream backward-hook gradient-output statistic",
+      "apply the 0.3 fallback over all available declared layers when fewer than four layers exist",
+      "if fewer than ten Jensen-Shannon updates exist, use one window spanning all available updates; always retain at least the initial farthest sample",
+      "when a progressive-filtering denominator is numerically zero, assign the neutral ratio 0.5"
+    ],
+    "forbidden_changes": [
+      "no seed-specific tau, layer, target-class, reference-size, or stopping-rule tuning",
+      "no poison labels in scoring or threshold selection",
+      "no clean checkpoint or drift view",
+      "no performance-driven expansion decision"
+    ]
+  },
+  "development_gate": {
+    "both_archived_victims_eligible": true,
+    "all_checkpoint_and_dataset_hashes_match": true,
+    "reference_has_at_least_12_correctly_classified_samples_per_class": true,
+    "all_layer_class_gradients_finite": true,
+    "all_index_mappings_and_confusions_replay": true,
+    "runtime_per_seed_minutes_at_most": 20,
+    "expansion_rule": "run all five confirmation seeds only if every non-performance gate passes on both development seeds"
+  },
+  "reported_outputs": [
+    "victim CA and ASR copied and independently checked from archived checkpoints",
+    "selected layer, target classes, per-layer rho and one-sided MAD anomaly scores",
+    "per-sample original index, original label, assigned label, poison truth, and AGPD flag",
+    "TPR, all-clean FPR, target-clean FPR, precision, and seed-level ranges",
+    "upstream hashes, adapter hash, checkpoint hashes, runtime, and declared repair activations"
+  ],
+  "interpretation": {
+    "positive": "modern activation-gradient baseline is applicable under the declared feature-level adapter",
+    "negative": "a failed gate is an applicability or implementation-fidelity result, not proof that AGPD is generally ineffective",
+    "comparison": "compare operating points with SCAn/Spectral/SPECTRE descriptively; do not claim unified dominance because information and threshold assumptions differ"
+  }
+}

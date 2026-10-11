@@ -1,0 +1,32 @@
+{
+  "protocol_id": "cf_cmd_phase3_whitebox_adaptive_v1_1",
+  "parent_protocol": "phase3_adaptive_protocol.json",
+  "frozen_at": "2026-09-28",
+  "amendment_reason": "The v1 joint attack moved its universal trigger by less than 0.0002 in PCA Linf because a shared global gradient clip suppressed the trigger parameter. It was numerically degenerate and is retained only as an implementation diagnostic.",
+  "unchanged_components": [
+    "dataset, splits, pilot seeds and fresh-seed block",
+    "three pre-registered evasion weights",
+    "victim and detector gates",
+    "reference/calibration/candidate construction",
+    "representation-matching and multi-direction attacks"
+  ],
+  "pilot_seeds": [42, 46, 51],
+  "tuning_seed": 42,
+  "validation_seeds": [46, 51],
+  "fresh_confirmation_seeds_if_promoted": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "evasion_weights": [0.1, 1.0, 10.0],
+  "joint_attack_revision": {
+    "trigger": "fixed PCA trigger plus bounded sample-conditioned correction",
+    "corrector": "diagonal affine function of the source PCA coordinates followed by tanh",
+    "pca_trigger_linf": 0.8,
+    "per_coordinate_correction_linf": 0.2,
+    "projector_gradient_clip": 1.0,
+    "trigger_corrector_gradient_clip": 1.0,
+    "trigger_corrector_learning_rate": 0.002,
+    "train_test_transfer": "the same corrector parameters are applied to validation and test source samples",
+    "validity": "report correction magnitude and do not count the v1 universal-trigger diagnostic as a distinct attack"
+  },
+  "selection": "seed 42 selects an eligible checkpoint/config with lowest dual-view poison TPR, then lowest XZ16 poison TPR; the chosen weight is reused unchanged on seeds 46 and 51",
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "promotion_rule": "at least two of three eligible pilot victims and pooled primary TPR below 0.90 or pooled primary FPR above 0.05"
+}

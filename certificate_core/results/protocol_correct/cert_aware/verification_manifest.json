@@ -1,0 +1,7 @@
+{
+  "issuer_seal_preserved": true,
+  "protocol": "certificate_aware_redteam",
+  "status": "PASS_PROTOCOL_CORRECT_INDEPENDENT_REPLAY",
+  "verification_report_sha256": "ccfd0cfc0c564cc6d9c8580f04dd1e80255dfc4f361e518160e162eab6075c03",
+  "verified_unix": 1791500025.071753
+}

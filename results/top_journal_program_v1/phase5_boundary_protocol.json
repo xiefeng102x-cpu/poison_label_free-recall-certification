@@ -1,0 +1,16 @@
+{
+  "protocol_id": "cf_cmd_phase5_boundary_v1",
+  "frozen_at": "2026-09-28",
+  "dataset": "BloodMNIST",
+  "models": "saved fixed-attack local-angle checkpoints from seeds 62--71",
+  "eligible_seed_rule": "balanced CA at least 0.90 and ASR at least 0.80",
+  "candidate_poison_fractions": [0.01, 0.03, 0.05, 0.1, 0.2, 0.3],
+  "trusted_reference_contamination": [0.0, 0.01, 0.03, 0.05, 0.1],
+  "measurement_shots": ["exact", 128, 512, 2048],
+  "measurement_model": "independent binomial X/Z expectation estimates for clean and attacked checkpoints",
+  "methods": ["original_whitened_cf_cmd", "covariance_free_cf_cmd_u"],
+  "poison_pool": "held-out triggered training-source samples not restricted to the 60 samples used to train the victim",
+  "reference_contamination_model": "replace validation-target reference items with triggered validation-source items while preserving pool size 200",
+  "detector_gate": {"minimum_pooled_tpr": 0.9, "maximum_pooled_fpr": 0.05},
+  "interpretation": "retrospective operating-boundary analysis, not a new method-selection dataset"
+}

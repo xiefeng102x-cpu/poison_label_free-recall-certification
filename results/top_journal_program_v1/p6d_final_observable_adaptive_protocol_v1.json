@@ -1,0 +1,294 @@
+{
+  "protocol_id": "p6d_final_observable_adaptive_protocol_v1",
+  "frozen_at": "2026-09-30",
+  "status": "PRE_REGISTERED_NOT_RUN",
+  "purpose": "Resolve the current two-eligible-victim CF-CMD-U white-box gap with an attack trained against the published final observable and decision channel, while keeping development and confirmation strictly separated.",
+  "evidence_boundary": {
+    "published_final_endpoint": "CF-CMD-U on paired clean-to-attacked local-angle checkpoint-difference XZ16, without whitening, with four-fold sample exclusion and one-sided clean-calibration rank p-values at alpha 0.05",
+    "current_gap": "The seeds 62--71 white-box block has only two eligible victims (68 and 69), so its 0.925 TPR and 0.0667 FPR are Grade-D inconclusive and support neither robustness nor a stable adaptive failure.",
+    "why_a_new_attack_is_needed": "The existing attacker selects epochs using covariance_free_xz16 but trains a first/two-moment representation-matching surrogate. P6-D instead differentiates through the final XZ16 checkpoint-drift channel, its frozen folds, sample-excluded directions, calibration scores, and the empirical-rank decision boundary.",
+    "not_a_result": "This file freezes a future experiment. It adds no efficacy evidence and must not be cited as an executed result.",
+    "audited_artifacts": [
+      {
+        "path": "results/top_journal_program_v1/covariance_free_confirmation_protocol.json",
+        "sha256": "28eff53e1315c5d0f8c1294ea64d987ee182be1f886dbe138ecabbdc40a57427",
+        "role": "published final CF-CMD-U endpoint"
+      },
+      {
+        "path": "results/top_journal_program_v1/cfcmdu_whitebox_recovery_pilot_protocol.json",
+        "sha256": "e6356d128139e95a321c6ddb76571e26588c533d7cb7ae238270cf4132d54403",
+        "role": "prior three-seed recovery-pilot rule"
+      },
+      {
+        "path": "src/run_bloodmnist_covariance_free_confirmation.py",
+        "sha256": "c45f9de765f27cd81c3abeb5e6ca4725b127b69f8389d5c4cb39721cbef4e3d9",
+        "role": "CF-CMD-U confirmation runner"
+      },
+      {
+        "path": "src/run_bloodmnist_mechanism_ablations.py",
+        "sha256": "5e18f88d429d32f74905c1d1e350325abf39a7058110d7a2a23729a9d372ae94",
+        "role": "canonical custom_crossfit final-score implementation"
+      },
+      {
+        "path": "src/run_bloodmnist_whitebox_adaptive_pilot.py",
+        "sha256": "065bcedddcae8655bbd611ebb6e0beb081399282b5beb498279b6896a74837d9",
+        "role": "prior adaptive training and surrogate implementation"
+      },
+      {
+        "path": "results/bloodmnist_covariance_free_confirmation_v1/victim_metrics.csv",
+        "sha256": "f80cb854d5157d5c484d7d6c0002184dc3c1759318281f4634a7c30f144fe9fe",
+        "role": "two-of-ten eligible-victim evidence"
+      },
+      {
+        "path": "results/bloodmnist_covariance_free_confirmation_v1/eligible_summary.csv",
+        "sha256": "e7fbe4eb39e65bddd6c76dd3bae2d2d77179bdd898fae8b8831d0af7bc326d88",
+        "role": "current inconclusive adaptive summary"
+      }
+    ]
+  },
+  "seed_audit": {
+    "scope": "Repository scan of protocol JSON and runner seed declarations before freezing this file.",
+    "already_used_or_reserved": [
+      {
+        "seeds": "42--80",
+        "reason": "MNIST/BloodMNIST development, confirmation, multiclass, and related evidence blocks"
+      },
+      {
+        "seeds": "81--85",
+        "reason": "PathMNIST external-validation V1 confirmation"
+      },
+      {
+        "seeds": "86--87",
+        "reason": "PathMNIST V2 development and warm-start pilot"
+      },
+      {
+        "seeds": "88--92",
+        "reason": "PathMNIST external-validation V2 confirmation"
+      },
+      {
+        "seeds": "93--94",
+        "reason": "PathMNIST standard-route formal victim seeds"
+      }
+    ],
+    "development_seeds": [95, 96, 97],
+    "confirmation_seeds": [98, 99, 100, 101, 102],
+    "replacement_seeds": [],
+    "rules": [
+      "Development and confirmation blocks are disjoint from each other and from every audited prior victim-seed block.",
+      "An ineligible, failed, or interrupted seed is not replaced.",
+      "No seed from either block may be used in implementation debugging, dry runs, or unit-test fixtures before its formal stage. Synthetic fixtures must use non-victim identifiers at least 10000."
+    ]
+  },
+  "dataset_and_split_lock": {
+    "dataset": "BloodMNIST binary target-versus-source construction used by the CF-CMD-U confirmation",
+    "dataset_npz_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+    "preprocessing_and_split_code": "Reuse the seed-specific preprocessing, fixed RGB-to-PCA additive trigger construction, poison count, and train/validation/test split logic of the audited CF-CMD-U confirmation without alteration.",
+    "expected_detector_populations": {
+      "trusted_validation_target_total": 200,
+      "reference": 120,
+      "calibration": 80,
+      "candidate_train_target_clean": 600,
+      "candidate_archived_poison": 60
+    },
+    "mismatch_policy": "Stop the affected stage before training if any population count, dataset hash, split receipt, trigger reconstruction, or disjointness assertion differs."
+  },
+  "threat_model": {
+    "knowledge": "Full white-box knowledge of the clean checkpoint, attacked model, final XZ16 observable, trusted/reference/calibration allocation, candidate pool, four folds, within-fold direction halves, alpha, and decision rule.",
+    "attacker_access": "The attacker may use training candidates and the validation target/non-target/triggered splits. The untouched test split is forbidden for gradients, hyperparameter choice, epoch choice, and development configuration ranking.",
+    "attack_family": "Fixed PCA-additive trigger with adaptive local-QML projector updates; the classifier and clean checkpoint remain frozen.",
+    "claim_scope": "Local BloodMNIST coordinate-aligned QML only. No architecture-invariant, dataset-general, hardware, or fresh-query claim is authorized."
+  },
+  "final_observable_and_decision": {
+    "observable": "delta_XZ16_theta(x) = concat(cos(pi*z_theta(x)/2), sin(pi*z_theta(x)/2)) - concat(cos(pi*z_clean(x)/2), sin(pi*z_clean(x)/2)), where z is the eight-dimensional projected latent used by the published local-angle QML model.",
+    "whitening": false,
+    "partition_rng": "NumPy default_rng(20260928 + 1009 * victim_seed), matching canonical custom_crossfit",
+    "trusted_partition": "Shuffle the 200 trusted validation-target rows; first 120 are reference and remaining 80 are calibration.",
+    "candidate_partition": "Concatenate 600 train-target clean rows followed by 60 archived poisoned rows, permute once into four array_split folds, and independently permute each fold into two direction/scoring halves.",
+    "direction": "For each scoring half, compute the unit vector from the centered reference mean toward the mean delta_XZ16 of the opposite half. The scored sample is excluded from its direction half.",
+    "score": "Centered delta_XZ16 dot the corresponding sample-excluded unit direction.",
+    "p_value": "(1 + count(calibration_score >= query_score)) / 81",
+    "flag": "p_value <= 0.05",
+    "equivalent_no_tie_boundary": "query_score strictly greater than the fourth-largest of 80 calibration scores",
+    "primary_endpoint": "Exact NumPy-float64 custom_crossfit TPR and FPR from this channel; no input view, Bonferroni fusion, whitened statistic, suspect-absolute view, or earlier CF-CMD endpoint may replace it."
+  },
+  "adaptive_attack": {
+    "name": "P6-D final-observable soft-rank attack",
+    "trainable_parameters": "Attacked model encoder.projector only",
+    "frozen_parameters": [
+      "clean checkpoint",
+      "attacked-model classifier",
+      "fixed PCA trigger",
+      "preprocessing and split assignments",
+      "reference/calibration and candidate fold assignments"
+    ],
+    "training": {
+      "clean_checkpoint_epochs": 40,
+      "attack_epochs": 12,
+      "batch_size": 64,
+      "task_step_learning_rate": 0.01,
+      "observable_step_learning_rate": 0.01,
+      "optimizer_update": "Each attack epoch first makes one seeded minibatch pass using the frozen task-preservation objective, then makes exactly one full-population final-observable step. Both retain the existing explicit gradient update and per-parameter-group norm clipping. Record metrics only after both phases.",
+      "gradient_clip": 1.0,
+      "clean_ce_weight": 1.0,
+      "backdoor_ce_weight": 12.0,
+      "distillation_weight": 20.0,
+      "projector_anchor_weight": 0.001,
+      "evasion_weight_grid_development_only": [0.5, 2.0, 8.0],
+      "randomness": "Seed Python/NumPy/Torch and record their derived seeds; force deterministic CPU execution for the formal reference run."
+    },
+    "differentiable_final_channel_loss": {
+      "construction": "At epoch 0 and after every attack epoch, recompute attacked-model delta_XZ16 for all reference, calibration, clean-candidate, and poison-candidate rows. Recreate the exact frozen reference split, four folds, opposite-half directions, and calibration scores in Torch.",
+      "rank_boundary": "For each scoring half, tau is the fourth-largest calibration score under that half's direction. Let sigma be max(population standard deviation of those 80 calibration scores, 1e-6), with sigma detached from the gradient. For every poisoned query, z=(query_score-tau)/sigma.",
+      "soft_flag_loss": "Mean softplus(z / 0.10) over all 60 poisoned candidates, using each poison's exact scoring half. Gradients flow through query score, tau, reference mean, calibration drift, and the opposite-half direction; only sigma is stop-gradient.",
+      "normalization": "For each seed and configuration, divide soft_flag_loss by its detached epoch-0 value plus 1e-12 before multiplying by the development-grid evasion weight.",
+      "task_preservation_phase": "For every seeded batch in one pass: clean_CE + 12*backdoor_CE + 20*distillation_KL + 0.001*projector_anchor.",
+      "final_observable_phase": "After the task pass, recompute the complete differentiable channel once and take one step on evasion_weight*normalized_soft_flag_loss + 0.001*projector_anchor. There is exactly one such full-population step per epoch; cached/detached directions or calibration thresholds are forbidden.",
+      "exactness_check": "At every recorded epoch, independently evaluate canonical NumPy-float64 custom_crossfit. Torch and NumPy partitions must match exactly, maximum absolute score error must be <=1e-6, p-values and flags must match exactly, and confusion matrices must match exactly. A failure stops the stage."
+    },
+    "validation_guard_band": {
+      "balanced_ca_min": 0.92,
+      "asr_min": 0.85,
+      "reason": "A stricter validation-only guard band is frozen to reduce the prior failure in which selected attacks fell below the published 0.90/0.80 test eligibility gate."
+    },
+    "epoch_selection": [
+      "Eligible epochs are those with validation balanced CA >=0.92 and validation ASR >=0.85.",
+      "Among eligible epochs, minimize exact CF-CMD-U poison TPR, then maximize exact mean poison p-value, then maximize the smaller normalized validation guard-band margin, then choose the earlier epoch.",
+      "If no epoch meets the guard band, select the epoch with the largest smaller normalized guard-band margin, then lower exact TPR, then earlier epoch; mark that seed/config validation-ineligible."
+    ]
+  },
+  "victim_eligibility": {
+    "population": "Selected attack checkpoint evaluated once on untouched test target, non-target, and triggered non-target rows",
+    "minimum_test_balanced_ca": 0.9,
+    "minimum_test_asr": 0.8,
+    "equality_passes": true,
+    "pooling_rule": "Detector efficacy is computed only over eligible victims. All ineligible victims and their detector diagnostics remain archived but are excluded from efficacy pooling."
+  },
+  "development_stage": {
+    "seeds": [95, 96, 97],
+    "configurations": "Exactly three evasion weights (0.5, 2.0, 8.0); all other settings are frozen above; nine attack trainings total.",
+    "configuration_ranking_without_test": [
+      "Maximize the number of development seeds whose selected epoch meets the 0.92/0.85 validation guard band.",
+      "Minimize mean exact CF-CMD-U poison TPR across validation-guard-band-eligible selected epochs.",
+      "Maximize worst validation ASR, then worst validation balanced CA.",
+      "Prefer the smaller evasion weight as the final deterministic tie-break."
+    ],
+    "test_firewall": "Choose exactly one global configuration using the ranking above, write and hash the selection receipt, and only then read the test split once for that configuration's three selected checkpoints. Never test unselected configurations.",
+    "expansion_to_confirmation_requires_all": [
+      "The selected configuration is determined by the frozen ranking without test access.",
+      "At least two of the three selected development victims meet test balanced CA >=0.90 and test ASR >=0.80.",
+      "Dataset, protocol, implementation, split, trigger, checkpoint, fold, and replay hashes are complete and valid.",
+      "The independent exact-score replay passes for every recorded selected checkpoint.",
+      "There is no non-finite value, split leakage, count mismatch, or unplanned code/configuration change."
+    ],
+    "detector_performance_is_not_an_expansion_gate": "A high or low development TPR cannot authorize or stop confirmation once victim feasibility and integrity gates are applied.",
+    "on_pass": "Freeze the selected evasion weight, runner/dependency hashes, environment receipt, and all remaining settings in a confirmation-lock receipt before opening seed 98.",
+    "on_fail": "Stop P6-D, retain the feasibility failure, do not inspect confirmation seeds, and do not create a second development grid from seeds 95--97."
+  },
+  "confirmation_stage": {
+    "seeds": [98, 99, 100, 101, 102],
+    "authorization": "Run only after every development expansion condition passes and the confirmation-lock receipt exists.",
+    "execution": "One frozen attack training per seed; no grid, warm-up, weight change, epoch-count change, guard-band change, trigger change, fold change, or seed replacement.",
+    "test_use": "Read the test split exactly once per seed after validation-only checkpoint selection, solely for balanced CA and ASR eligibility.",
+    "minimum_eligible_victims_for_any_adaptive_conclusion": 5,
+    "completion_rule": "Run all five seeds unless an integrity stop occurs; do not stop early for favorable or unfavorable efficacy.",
+    "if_fewer_than_five_are_eligible": "Report Grade-D insufficient victim feasibility. Do not pool efficacy as a confirmation claim and do not add rescue seeds.",
+    "if_all_five_are_eligible": "Compute the prespecified pooled and seed-bootstrap detector outcomes below."
+  },
+  "detector_outcomes": {
+    "primary_metrics": [
+      "pooled TPR over 60 poison candidates per eligible seed",
+      "pooled FPR over 600 clean candidates per eligible seed"
+    ],
+    "uncertainty": {
+      "bootstrap_unit": "eligible victim seed",
+      "draws": 10000,
+      "confidence": 0.95,
+      "rng_seed": 20260930
+    },
+    "published_detector_point_gate": {
+      "minimum_tpr": 0.9,
+      "maximum_fpr": 0.05
+    },
+    "decision_labels": [
+      "STRONG_EVASION if five victims are eligible and the seed-bootstrap upper 95% bound for TPR is below 0.90.",
+      "POINT_EVASION if five victims are eligible, pooled TPR is below 0.90, and its upper bound is at least 0.90.",
+      "FPR_GATE_FAILURE if pooled FPR is above 0.05; report this separately from attack evasion.",
+      "POINT_ROBUSTNESS_ONLY if pooled TPR is at least 0.90 and pooled FPR is at most 0.05 but either confidence interval crosses a gate.",
+      "INTERVAL_ROBUSTNESS_SUPPORT if the TPR lower 95% bound is at least 0.90 and the FPR upper 95% bound is at most 0.05.",
+      "INSUFFICIENT_ELIGIBLE_VICTIMS if fewer than five confirmation victims are eligible."
+    ],
+    "mandatory_context": "Always report all five CA/ASR pairs, eligible count, per-seed TPR/FPR, pooled counts, intervals, and development/confirmation separation. Never combine seeds 62--71 or 95--97 with seeds 98--102 for the primary confirmation claim."
+  },
+  "stopping_rules": [
+    "Before a stage: stop on a dataset/protocol/source/signature mismatch or if any formal seed has already been opened by an unregistered run.",
+    "During a run: stop that stage on a non-finite loss/gradient/observable, population-count mismatch, trigger reconstruction error above 1e-5, score replay error above 1e-6, flag mismatch, missing atomic checkpoint, or corrupted cache.",
+    "After development: stop permanently if fewer than two of three selected victims pass the published test CA/ASR gate or any integrity gate fails.",
+    "During confirmation: integrity failures stop the stage; efficacy and eligibility outcomes do not permit parameter changes, replacement seeds, or optional early stopping.",
+    "Any scientific change after the first scored development run requires a new versioned protocol and entirely new seed blocks; seeds 95--102 then remain consumed."
+  ],
+  "artifacts_and_cache": {
+    "planned_output_root": "results/p6d_final_observable_adaptive_v1",
+    "cache_policy": [
+      "Cache immutable preprocessing, split indices, clean checkpoints, and fixed partition indices per stage/seed under content-addressed keys.",
+      "Cache keys must include dataset SHA-256, protocol SHA-256, stage, victim seed, code-lock SHA-256, preprocessing receipt SHA-256, and complete hyperparameter signature.",
+      "Development and confirmation cache namespaces are separate. No attacked checkpoint, epoch choice, metric, or observable cache crosses stages.",
+      "Writes are temporary-file plus atomic replace. Resume is allowed only after exact signature and hash verification; otherwise refuse resume rather than recompute into the same directory."
+    ],
+    "required_files": [
+      "manifest.json",
+      "environment.json",
+      "development_selection_receipt.json",
+      "confirmation_lock_receipt.json when authorized",
+      "victim_metrics.csv",
+      "per_seed_metrics.csv",
+      "epoch_history.csv",
+      "per_sample_scores.csv",
+      "observable_rows.csv or a losslessly equivalent hashed table",
+      "fold_receipts.json",
+      "checkpoint_receipts.json",
+      "EXPERIMENT_REPORT.md"
+    ],
+    "per_sample_scores_schema_minimum": [
+      "stage",
+      "seed",
+      "configuration_id",
+      "sample_index",
+      "original_dataset_index",
+      "label",
+      "fold_id",
+      "scoring_half_id",
+      "direction_half_id",
+      "score",
+      "calibration_fourth_largest_threshold",
+      "p_value",
+      "flagged"
+    ],
+    "observable_rows_schema_minimum": "One row per reference, calibration, clean-candidate, and poison-candidate sample with stage, seed, configuration, population, original index, and all 16 delta_XZ16 coordinates.",
+    "hash_requirements": [
+      "SHA-256 of protocol, dataset, formal runner, every imported local scoring/training dependency, and environment lock receipt",
+      "SHA-256 of split indices, poison indices, reference/calibration indices, folds/halves, initial trigger, and canonical float32 input/observable arrays",
+      "SHA-256 of every clean and attacked checkpoint and every required CSV/JSON output",
+      "A final Merkle-style manifest listing relative path, byte count, row count where applicable, and SHA-256 for every artifact"
+    ],
+    "independent_replay": "A verifier that does not call the training-time soft-rank loss must reconstruct exact float64 scores, p-values, flags, confusion matrices, victim eligibility, selection ranking, and bootstrap summaries from saved observables and receipts."
+  },
+  "compute_budget": {
+    "development_hard_cap": "3 clean-checkpoint trainings plus 9 twelve-epoch attack trainings; no extra grid cells",
+    "confirmation_hard_cap": "5 clean-checkpoint trainings plus 5 twelve-epoch attack trainings; zero tuning runs",
+    "total_hard_cap": {
+      "clean_checkpoint_trainings": 8,
+      "clean_training_seed_epochs": 320,
+      "attack_trainings": 14,
+      "attack_training_seed_epochs": 168,
+      "formal_victim_seeds": 8
+    },
+    "empirical_reference": "The prior recovery pilot completed 18 eight-epoch surrogate attack runs in 32.94 seconds on the recorded arm64 Mac environment. The exact differentiable fold/rank channel requires additional full-population forward/backward work.",
+    "expected_same_host_cost": "Approximately 2--5 CPU minutes for the full authorized development plus confirmation path, plus verification and I/O; development alone should be about 1--2 minutes. Treat this as an estimate, not an outcome.",
+    "resource_stop": "If development exceeds 15 wall-clock minutes or 4 GiB incremental storage on the reference host, stop and diagnose implementation cost without opening confirmation seeds or changing scientific settings."
+  },
+  "implementation_lock_policy": {
+    "before_first_development_score": "Unit-test exact partition parity, threshold rank, tie behavior, score/p-value/flag replay, test firewall, atomic resume, and hash mismatch refusal on synthetic seeds >=10000; then record runner and dependency hashes.",
+    "after_first_development_score": "No scientific implementation change is allowed. A correctness bug consumes seeds 95--97 and requires a new version and new seeds.",
+    "before_confirmation": "Record protocol SHA-256, selected configuration, development selection receipt SHA-256, runner/dependency hashes, environment, and tests in confirmation_lock_receipt.json. Confirmation refuses to start on any mismatch."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "allowed_schema": [
+    "protocol",
+    "trial_token",
+    "k",
+    "conformal_rank",
+    "candidate_count",
+    "flagged_count"
+  ],
+  "config_sha256": "94e4207a4b83bbad50276cfc9ba641f30998abb48f6e14d59b54207cc3c29faf",
+  "created_unix": 1791542551.66957,
+  "freeze_manifest_sha256": "43bfc1383fa31a70354c53e9745cfff16ab7665e0d145b4008ff22c1b4f4077d",
+  "issuer_observations_sha256": "f3c4c4fc1ad6aedeb8b37b0915f20a1bce0a4ac1306a31be50b07488d476256d",
+  "key_commitment_sha256": "da5061c58a4507561159895498a4103e28a686098a2c2f1ea7b35ab69c290b0a",
+  "pretraining_key_commitment_sha256": "da5061c58a4507561159895498a4103e28a686098a2c2f1ea7b35ab69c290b0a",
+  "prohibited_fields_absent": true,
+  "prospective": true,
+  "protocol": "pathmnist_blind",
+  "rows": 30000,
+  "score_sha256": "41360e2a319963d1fc1cee43abf3c0f410142c6fd01fa1e9ba653350d8655f56",
+  "source_score_handoff_sha256": "41360e2a319963d1fc1cee43abf3c0f410142c6fd01fa1e9ba653350d8655f56",
+  "status": "ISSUER_OBSERVATIONS_SEALED"
+}

@@ -1,0 +1,27 @@
+{
+  "protocol_id": "cf_cmd_phase4_strong_baselines_v1",
+  "frozen_at": "2026-09-28",
+  "scenarios": [
+    "fixed_attack_local_angle",
+    "whitebox_representation_matching_local_angle",
+    "fixed_attack_residual_reupload"
+  ],
+  "seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "feature_views": ["checkpoint_drift_xz16", "joint_input256_plus_checkpoint_drift_xz16"],
+  "common_calibration": {
+    "trusted_split": "validation target",
+    "reference_count": 120,
+    "calibration_count": 80,
+    "alpha": 0.05
+  },
+  "baselines": {
+    "spectral_signatures": "top singular-vector squared projection after trusted-reference coordinate standardization",
+    "spectre_que": "trusted-reference robust whitening followed by quantum-entropy covariance scoring",
+    "activation_clustering": "PCA-16 plus two-cluster k-means; anomalous cluster is farther from the trusted centroid",
+    "scan_style": "PCA-16 two-component shared-covariance Gaussian mixture with likelihood-ratio scoring"
+  },
+  "fidelity_note": "SPECTRE/QUE and SCAn-style are clean-room mechanism baselines under the paper's external-reference protocol, not bit-identical reproductions of their authors' full pipelines.",
+  "thresholding": "all methods use the same independent clean calibration ranks; poison labels are used only after scoring",
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "statistics": {"bootstrap_unit": "eligible seed", "draws": 10000, "confidence": 0.95}
+}

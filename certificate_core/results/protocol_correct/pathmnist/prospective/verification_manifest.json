@@ -1,0 +1,8 @@
+{
+  "issuer_seal_preserved": true,
+  "prospective_from_victim_training": true,
+  "protocol": "pathmnist_blind",
+  "status": "PASS_PROTOCOL_CORRECT_INDEPENDENT_REPLAY",
+  "verification_report_sha256": "a32b8f0f5d9f2c0e4e6afcb34b30cb70b50dc590c41b0df501f8223ff61d2b1e",
+  "verified_unix": 1791542580.242486
+}

@@ -1,0 +1,43 @@
+{
+  "a1_mechanism_ablation": {
+    "leaked": {
+      "valid_draws": 50000,
+      "valid_false_go_count": 20000,
+      "valid_false_go_rate": 0.4
+    },
+    "protected": {
+      "valid_draws": 50000,
+      "valid_false_go_count": 0,
+      "valid_false_go_rate": 0.0
+    }
+  },
+  "checked_decisions": 980000,
+  "checked_trials": 490000,
+  "decision_sealed_before_verification": true,
+  "hashes": {
+    "certificate_decisions_evaluated_sha256": "982c12a23fc8ac6d4e45c619aca1a8228fb3104f1e14354412e51767b5f7098e",
+    "certificate_decisions_sealed_sha256": "e23a32fe57d7accdf8096a62c86c8575786aea6111fce5767446745e1bff9f1b",
+    "freeze_manifest_sha256": "20f77a081a3d9b7aa4cf420f3f4d73bcd6b3f786068ce3905621bab6bfefbf16",
+    "issuer_seal_manifest_sha256": "41826293314c23747d93efcb8547c728a856d90d0487d6059f16e3444c745258",
+    "public_manifest_sha256": "381802101b1ddb0c640ae4f544b3da9b4d30418d207404e6999464e7aae78107",
+    "redteam_primary_cell_inference_sha256": "89f47af3c20407071c6e99201b9b3a4aa901335eaa696b8cc13754c5a63d59dd",
+    "registrar_manifest_sha256": "37a4eb9fbb390bc9a002cfa2114a128617f73723be0bae785427e39a22669bd5",
+    "revealed_key_sha256": "133fc8bd6b2b76fb4741bf115421d5fbe6bdef3736809243508ee53d4a06fae3",
+    "verification_cell_summary_sha256": "413219ed58c8233102484c9ebe3a463a5e4b525e355d21d4a7a04742825b7d61",
+    "verifier_sha256": "26b81dffeb8bd6f7577b361b2c95e2f7d504fa4fefdb677d053acee04dcc1e56"
+  },
+  "issuer_input_schema_allowlist": "PASS",
+  "issuer_static_prohibited_identifier_scan": "PASS",
+  "non_exhaustive_trusted_pool": true,
+  "primary_safety_cells": 50,
+  "primary_supported_cells": 50,
+  "protocol": "certificate_aware_redteam",
+  "scientific_primary_status": "SUPPORTED",
+  "scope": "post-unblinding protocol replay over archived sealed scores",
+  "status": "PASS_PROTOCOL_CORRECT_INDEPENDENT_REPLAY",
+  "unique_trial_tokens": 490000,
+  "valid_decision_rows_all_cells": 980000,
+  "valid_false_go_candidate_count_all_cells": 40000,
+  "valid_false_go_candidate_rate_all_cells": 0.04081632653061224,
+  "verified_unix": 1791500025.071753
+}

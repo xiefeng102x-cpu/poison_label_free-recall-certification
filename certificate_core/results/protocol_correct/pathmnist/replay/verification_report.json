@@ -1,0 +1,30 @@
+{
+  "checked_decisions": 60000,
+  "checked_trials": 30000,
+  "decision_sealed_before_verification": true,
+  "hashes": {
+    "certificate_decisions_evaluated_sha256": "6716c662a764d3c6a6870a715d45b0da203a99b58e7ad85852d83538afdca640",
+    "certificate_decisions_sealed_sha256": "4c898b23b2f6e054c1e5b63731df51af2dee4ba4014b5eb850f409fba31a3fd2",
+    "freeze_manifest_sha256": "20f77a081a3d9b7aa4cf420f3f4d73bcd6b3f786068ce3905621bab6bfefbf16",
+    "issuer_seal_manifest_sha256": "15176e13c9b753abccef0963ada9edc91166fad47678cc22ac8d98ebb397c913",
+    "public_manifest_sha256": "5b744fb9fcec6d9c100c0aff5e60cfd633bb3cd0e30d86d4c1206abaef22ebdb",
+    "registrar_manifest_sha256": "62b766d4da17acb9257df295605164c25a493fa1302b6699c12b37452a3e4155",
+    "revealed_key_sha256": "133fc8bd6b2b76fb4741bf115421d5fbe6bdef3736809243508ee53d4a06fae3",
+    "verification_cell_summary_sha256": "30ac07ab1e2521842ad5b2b09d1acedb2ec21c2b0eea6ae014d8de2809a95dfc",
+    "verifier_sha256": "26b81dffeb8bd6f7577b361b2c95e2f7d504fa4fefdb677d053acee04dcc1e56"
+  },
+  "issuer_input_schema_allowlist": "PASS",
+  "issuer_static_prohibited_identifier_scan": "PASS",
+  "non_exhaustive_trusted_pool": true,
+  "primary_false_go_count": 0,
+  "primary_false_go_rate": 0.0,
+  "primary_valid_decision_rows": 30000,
+  "protocol": "pathmnist_blind",
+  "scope": "post-unblinding protocol replay over archived sealed scores",
+  "status": "PASS_PROTOCOL_CORRECT_INDEPENDENT_REPLAY",
+  "unique_trial_tokens": 30000,
+  "valid_decision_rows_all_cells": 60000,
+  "valid_false_go_candidate_count_all_cells": 0,
+  "valid_false_go_candidate_rate_all_cells": 0.0,
+  "verified_unix": 1791499730.678978
+}

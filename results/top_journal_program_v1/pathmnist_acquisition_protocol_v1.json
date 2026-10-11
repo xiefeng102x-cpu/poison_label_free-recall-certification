@@ -1,0 +1,65 @@
+{
+  "protocol_id": "p6b_pathmnist_acquisition_v1",
+  "frozen_before_download": true,
+  "frozen_date": "2026-09-29",
+  "purpose": "Acquire and validate one materially different multiclass image domain before freezing the P6-B external-validation experiment.",
+  "selection_rationale": {
+    "chosen": "PathMNIST 28x28",
+    "alternatives_considered": [
+      "CIFAR-10",
+      "DermaMNIST"
+    ],
+    "reason": "Nine-class histopathology supplies a materially different visual domain and a test set from a different clinical center, while retaining the 28x28 resolution needed for a bounded CPU pilot.",
+    "scope_constraint": "Dataset acquisition is not evidence and does not authorize model training. Training begins only after this acquisition gate passes and a separate experiment protocol is frozen."
+  },
+  "official_source": {
+    "project": "MedMNIST",
+    "metadata_version_observed": "3.0.2",
+    "metadata_url": "https://github.com/MedMNIST/MedMNIST/blob/main/medmnist/info.py",
+    "distribution_url": "https://zenodo.org/records/10519652/files/pathmnist.npz?download=1",
+    "legacy_record_url_used_for_size_crosscheck": "https://zenodo.org/records/6496656",
+    "license": "CC BY 4.0",
+    "expected_md5": "a8b06965200029087d5bd730944a56c1",
+    "reported_size_mb_decimal": 205.6,
+    "maximum_accepted_bytes": 230000000
+  },
+  "dataset_contract": {
+    "task": "multi-class",
+    "classes": 9,
+    "channels": 3,
+    "height": 28,
+    "width": 28,
+    "expected_keys": [
+      "train_images",
+      "train_labels",
+      "val_images",
+      "val_labels",
+      "test_images",
+      "test_labels"
+    ],
+    "expected_split_counts": {
+      "train": 89996,
+      "val": 10004,
+      "test": 7180
+    },
+    "expected_image_dtype": "uint8",
+    "expected_label_set": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    "test_domain_note": "CRC-VAL-HE-7K from a different clinical center is used as the official test split."
+  },
+  "local_contract": {
+    "destination": "<TMP>/paper14-data/pathmnist.npz",
+    "partial_download_suffix": ".partial",
+    "do_not_store_dataset_in_repository": true,
+    "required_receipt": "results/top_journal_program_v1/pathmnist_acquisition_receipt.json"
+  },
+  "pass_gate": [
+    "downloaded byte count is positive and no greater than maximum_accepted_bytes",
+    "MD5 exactly matches the official expected_md5",
+    "all and only expected NPZ keys are present",
+    "every split has the frozen image and label shapes",
+    "images are uint8 and labels are integer-valued",
+    "every split contains all nine frozen labels",
+    "an observed SHA-256 and per-split class histogram are recorded"
+  ],
+  "failure_policy": "Stop without training. Do not repair, mirror, subset, or silently replace the file under this protocol."
+}

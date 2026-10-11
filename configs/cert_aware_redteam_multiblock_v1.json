@@ -1,0 +1,65 @@
+{
+  "protocol_id": "cert_aware_redteam_multiblock_v1",
+  "dataset": "PathMNIST",
+  "attack_family": "BadNets_all_to_one",
+  "architecture": "official PathMNIST 28x28 ResNet-18",
+  "formal_seeds": [5201, 5202, 5203, 5204, 5205],
+  "detectors": [
+    "cf_cmd_u",
+    "target_centroid",
+    "crossfit_spectral",
+    "activation_clustering",
+    "que_score"
+  ],
+  "folds": [0, 1],
+  "certificate": {
+    "alpha": 0.05,
+    "tau": 0.8,
+    "alpha_cap": 0.1,
+    "delta_family": 0.05,
+    "familywise_cell_count": 50,
+    "delta_per_familywise_cell": 0.001,
+    "delta_per_detector": 0.025,
+    "trusted_member_budgets": [120, 500, 2000],
+    "primary_draws_per_cell": 1000,
+    "secondary_draws_per_cell": 200,
+    "fpr_mode": "tight",
+    "declared_intervals_per_fold": {
+      "primary": [1800, 2700],
+      "stress": [1125, 4500]
+    }
+  },
+  "redteam": {
+    "a1_conditions": ["protected", "leaked"],
+    "a1_protected_selection": "uniform_without_replacement_from_verified_clean_pool",
+    "a1_leaked_selection": "uniform_without_replacement_from_lowest_score_2k_members_of_private_uniform_clean_pool",
+    "a1_leaked_pool_multiple": 2,
+    "private_verified_clean_pool_rows_per_fold": 4500,
+    "private_attacker_poison_pool_rows_per_fold": 512,
+    "a2_contamination_fractions": [0.0, 0.01, 0.02, 0.05, 0.1],
+    "a2_contamination_count_rule": "floor(epsilon_times_k)",
+    "a2_nested_replacement": true,
+    "secret_rng": "HMAC_SHA256_with_defender_key_committed_in_freeze"
+  },
+  "primary_endpoint": {
+    "part": "a2",
+    "k": 2000,
+    "interval": "primary",
+    "leaked_in_safety_family": false
+  },
+  "formal_ack": "OPEN_CERT_AWARE_REDTEAM_SEEDS_5201_5205",
+  "formal_input_contract": {
+    "manifest_status": "SCORE_HANDOFF_COMPLETE",
+    "unblinded": false,
+    "training_must_start_after_freeze": true,
+    "required_score_columns": [
+      "victim_id",
+      "detector",
+      "fold",
+      "sample_id",
+      "score",
+      "role"
+    ],
+    "required_truth_columns": ["victim_id", "sample_id", "role", "is_poison"]
+  }
+}

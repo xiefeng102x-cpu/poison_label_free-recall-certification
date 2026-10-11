@@ -1,0 +1,10 @@
+{
+  "delta_family": 0.05,
+  "delta_per_detector_fold": 0.005,
+  "evaluated_sha256": "257dea25ce37da121481c0ce7caa468cf9717d7e23c399912f3dcb2ccd480e79",
+  "preregistered_before_outcome_inspection": true,
+  "status": "COMPLETE_FAMILYWISE_SENSITIVITY",
+  "summary_sha256": "9e36b620c9bd35d7c3ddf3572c6e5498c89bee30dd00e85f12727ae00ebc6693",
+  "valid_false_go_count": 0,
+  "valid_rows": 60000
+}

@@ -1,0 +1,16 @@
+{
+  "blind_scores_sha256": "9674b4138840186c80f2dab55a7a0b0b3b5f3f3b5c5f33242783adc760ffc64c",
+  "certificate_decisions_blind_sha256": "cac6edb1bec34bc8b0fa85f1aba84bfd4b8abfaeaea35cf3f4d838e7e04a5255",
+  "certificate_deployment_decisions_blind_sha256": "2d7e020d0757410c2534b139b1319bd614007df94ce5f7632c83292de531c78b",
+  "decision_rows": 60000,
+  "delta_family": 0.05,
+  "delta_per_detector_fold": 0.005,
+  "deployment_decision_rows": 30000,
+  "detectors": 5,
+  "familywise_primary": true,
+  "formal": true,
+  "private_truth_read_by_this_program": false,
+  "status": "CERTIFICATE_DECISIONS_SEALED_BEFORE_TRUTH_JOIN",
+  "trusted_member_pool_sha256": "31495c564f22e16fc159a3df7f81b821b75e83372490e5ebd1a90b540803f6e8",
+  "victims": 5
+}

@@ -1,0 +1,43 @@
+{
+  "protocol_id": "protocol_correct_certificate_rerun_v1",
+  "status": "POST_UNBLINDING_PROTOCOL_REPLAY_FROZEN_BEFORE_NEW_RANDOM_DRAWS",
+  "common": {
+    "alpha": 0.05,
+    "tau": 0.8,
+    "alpha_cap": 0.1,
+    "fpr_mode": "tight"
+  },
+  "pathmnist_blind": {
+    "source": "results/pathmnist_blind_e2e_multidetector_certificate_v1",
+    "output": "results/pathmnist_blind_protocol_correct_rerun_v1",
+    "trusted_pool_size_per_victim_fold": 3000,
+    "trusted_member_budgets": [120, 500, 2000],
+    "draws_per_cell": 200,
+    "delta_family": 0.05,
+    "familywise_cell_count": 10,
+    "delta_per_cell": 0.005,
+    "declared_intervals_per_fold": {
+      "primary": [1800, 2700],
+      "stress": [1125, 4500]
+    }
+  },
+  "certificate_aware_redteam": {
+    "source": "results/pathmnist_certaware_redteam_source_v2",
+    "output": "results/cert_aware_redteam_protocol_correct_rerun_v1",
+    "trusted_pool_size_per_victim_fold": 5000,
+    "private_attacker_pool_size_per_victim_fold": 512,
+    "trusted_member_budgets": [120, 500, 2000],
+    "primary_k": 2000,
+    "primary_draws_per_cell": 1000,
+    "secondary_draws_per_cell": 200,
+    "low_score_pool_multiple": 2,
+    "contamination_fractions": [0.0, 0.01, 0.02, 0.05, 0.1],
+    "delta_family": 0.05,
+    "familywise_cell_count": 50,
+    "delta_per_cell": 0.001,
+    "declared_intervals_per_fold": {
+      "primary": [1800, 2700],
+      "stress": [1125, 4500]
+    }
+  }
+}

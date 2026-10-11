@@ -1,0 +1,15 @@
+{
+  "status": "FROZEN_BEFORE_UNBLINDING",
+  "freeze_date": "2026-10-07",
+  "experiment": "pathmnist_blind_e2e_multidetector_certificate_v1",
+  "outcomes_opened_at_freeze": false,
+  "formal_seeds": [1201, 1202, 1203, 1204, 1205],
+  "hashes": {
+    "config_sha256": "5ca4297b04d88ef592a4d3a403a72f2ffb9dab2ec4bfe87edecf863113240e52",
+    "prereg_sha256": "28fbf7c249839f6e04428ec623970dd9971b0f667ec2daf072443643f5ab2812",
+    "runner_sha256": "3fb3dc10c91720c245a11e2db7f006e3026eacdd1539b7f14e845647f0624fe7",
+    "certificate_runner_sha256": "5238289b672c14a189752708f0a38e6163804e98a49df4d39a3b5d2028ad46b7",
+    "certificate_library_sha256": "890d00b4c8522ee352ef3b8bdeabf9b9fc0098783d7af0b3c51482c670652171"
+  },
+  "interpretation": "Any change to a hashed file after this freeze is a post-unblinding amendment and invalidates the blind-v1 label unless the formal run has not yet opened a seed."
+}

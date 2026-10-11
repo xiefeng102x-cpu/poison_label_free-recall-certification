@@ -1,0 +1,19 @@
+{
+  "all_primary_intervals_valid": true,
+  "all_victims_eligible": true,
+  "cell_summary_sha256": "d2d547c6ea0bc88402874aa7c6bce9c2fa49e2785eb320c5c2fca592a4e65ed8",
+  "conventional_metrics_sha256": "eb7d89e5c7a17f60c8776b899858813b308b8cb02a487528e2bff4bc6b743a66",
+  "deployment_evaluated_sha256": "bd2a0a45e52db137e6b92013400c0788009d4352dffac69ea79dff522ac16ca8",
+  "deployment_summary_sha256": "020a352a2f025a2cf971df04af46f721662dc43ff67120ee2ba8d8c1290c956b",
+  "detector_summary_sha256": "8c6ec12b8178600e7de1362459f495391224c77feda30c68de782484e264b30d",
+  "detectors": 5,
+  "evaluated_sha256": "2029e1cb8ac9ffd70e2269801ed93c1d653146cc74755d4c5994db24bf3f9455",
+  "familywise_primary": true,
+  "formal": true,
+  "primary_decision_unit": "victim-detector-budget-draw with both cross-fit folds jointly required for GO",
+  "primary_false_go_count": 0,
+  "primary_false_go_rate": 0.0,
+  "primary_valid_rows": 15000,
+  "status": "PASS_INDEPENDENT_BLIND_VERIFICATION",
+  "victims": 5
+}

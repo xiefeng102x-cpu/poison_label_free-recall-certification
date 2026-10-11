@@ -1,0 +1,17 @@
+{
+  "amendment": "pathmnist_terminal_claim_integration_v1_logistics_amendment_2026_10_02",
+  "status": "FROZEN_PRE_TERMINAL_LOGISTICS_ONLY",
+  "frozen_at": "2026-10-02T09:23:56+08:00",
+  "base_contract": "pathmnist_terminal_claim_integration_contract_v1.json",
+  "base_contract_sha256": "71e09c3fb678fad1024d822b929aca8379d61372c24d5e1441cb10d5d85f79c0",
+  "performance_endpoints_inspected": false,
+  "scientific_decision_rules_changed": false,
+  "route_conditions_changed": false,
+  "claim_permissions_changed": false,
+  "reason": "Pre-terminal delivery audit found that two public claim/status documents necessarily change after any terminal route but were omitted from the mandatory integration target list.",
+  "add_mandatory_integration_targets": [
+    "README.md",
+    "manuscript_zh/CLAIMS_EVIDENCE_ZH.md"
+  ],
+  "forbidden_effect": "This amendment cannot change route selection, eligibility thresholds, efficacy gates, pooling permissions, allowed scientific claims or any formal experiment artifact."
+}

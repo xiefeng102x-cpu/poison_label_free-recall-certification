@@ -1,0 +1,91 @@
+{
+  "protocol_id": "cf_cmd_top_journal_v1",
+  "frozen_at": "2026-09-28",
+  "development_seeds": [42, 43, 44, 45, 46, 47, 48, 49, 50, 51],
+  "pilot_seeds": [42, 46, 51],
+  "fresh_confirmation_seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "datasets": ["MNIST", "BloodMNIST"],
+  "victim_gate": {
+    "minimum_balanced_clean_accuracy": 0.9,
+    "minimum_attack_success_rate": 0.8
+  },
+  "primary_detector_gate": {
+    "minimum_pooled_tpr": 0.9,
+    "maximum_pooled_fpr": 0.05
+  },
+  "diagnostic_config_gate": {
+    "minimum_tpr": 0.8,
+    "maximum_fpr": 0.1
+  },
+  "familywise_alpha": 0.05,
+  "fixed_qml_confirmation_view": "checkpoint_drift_local_xz16",
+  "secondary_qml_multiview": "bonferroni_input_plus_checkpoint_drift_local_xz16",
+  "failed_ablation_view": "checkpoint_drift_local_z8",
+  "attack_families": [
+    "pca_additive_fixed",
+    "localized_patch",
+    "global_blend",
+    "geometric_or_frequency",
+    "sample_specific_input_aware",
+    "clean_label"
+  ],
+  "adaptive_attacks": [
+    "checkpoint_drift_representation_matching",
+    "multi_direction_coherence_breaking",
+    "joint_input_internal_detector_evasion"
+  ],
+  "architectures": {
+    "classical": ["mlp", "cnn_or_resnet"],
+    "qml": ["local_angle", "entangling_data_reupload"]
+  },
+  "required_baselines": [
+    "spectral_signatures",
+    "spectre",
+    "activation_or_measurement_clustering",
+    "scan_or_training_dynamics"
+  ],
+  "required_ablations": [
+    "input_only",
+    "internal_only",
+    "no_checkpoint_difference",
+    "no_sample_exclusion",
+    "no_whitening",
+    "no_conformal",
+    "z8_vs_xz16_vs_z_zz_vs_high_dimensional_pauli"
+  ],
+  "candidate_poison_fractions": [0.01, 0.03, 0.05, 0.1, 0.2, 0.3],
+  "trusted_reference_contamination": [0.0, 0.01, 0.03, 0.05, 0.1],
+  "statistics": {
+    "bootstrap_unit": "seed_block",
+    "bootstrap_draws": 10000,
+    "confidence_level": 0.95,
+    "report_worst_attack": true,
+    "report_worst_architecture": true,
+    "report_post_sanitization_ca_asr": true
+  },
+  "promotion_rules": {
+    "invalid_victim_action": "report_separately_and_exclude_from_primary_defense_claim",
+    "detector_counterexample_action": "promote_to_fresh_ten_seed_confirmation",
+    "easy_valid_attack_action": "retain_with_at_least_five_confirmation_seeds",
+    "post_hoc_representation_action": "development_only_until_fresh_confirmation"
+  },
+  "token_allocation_percent": {
+    "protocol_literature_data_audit": 8,
+    "reusable_implementation": 20,
+    "fresh_seed_and_adaptive_falsification": 32,
+    "cross_attack_architecture_ablation": 20,
+    "statistics_verification_figures": 12,
+    "paper_synthesis_reproducibility": 8
+  },
+  "required_deliverables": [
+    "frozen_protocol_and_deviation_log",
+    "tested_attack_architecture_and_baseline_implementations",
+    "victim_checkpoints_and_manifests",
+    "per_sample_and_per_seed_results",
+    "primary_adaptive_baseline_and_ablation_tables",
+    "publication_figures",
+    "machine_replay_verification_receipt",
+    "final_claims_limitations_and_innovation_report",
+    "reproduction_commands_and_artifact_index"
+  ]
+}

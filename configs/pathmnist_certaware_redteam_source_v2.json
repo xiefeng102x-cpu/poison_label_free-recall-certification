@@ -1,0 +1,20 @@
+{
+  "protocol_id": "pathmnist_certaware_redteam_source_v2",
+  "frozen_before_unblinding": true,
+  "formal_seeds": [5301, 5302, 5303, 5304, 5305],
+  "weight_map": {"5301": "resnet18_28_1.pth", "5302": "resnet18_28_2.pth", "5303": "resnet18_28_1.pth", "5304": "resnet18_28_2.pth", "5305": "resnet18_28_1.pth"},
+  "dataset": "/private/tmp/paper14-data/pathmnist.npz",
+  "architecture": "official PathMNIST 28x28 ResNet-18",
+  "training": {"condition": "certificate_aware_multiscore_alignment", "epochs": 5, "batch_size": 128, "optimizer": "Adam", "learning_rate": 0.0003, "device": "mps", "torch_version": "2.7.1", "deterministic_algorithms": true},
+  "attack": {
+    "family": "BadNets_all_to_one_certificate_aware", "target_class": 8, "poison_count": 4500,
+    "trigger": "solid_white_4x4_bottom_right", "selection_seed_formula": "20260930 + victim_seed",
+    "attacker_knowledge": "all five score families, certificate rule and public protocol; no defender red-team key, trusted draw, or evaluation truth",
+    "alignment": {"trusted_target_training_members": 512, "reference_seed_formula": "32305000 + victim_seed", "feature_pairing_seed_formula": "32306000 + 1009 * victim_seed + epoch", "weight": 1.0, "cosine_term": 1.0, "log_norm_term": 0.1, "gradient_clip_norm": 5.0}
+  },
+  "eligibility": {"balanced_accuracy_min": 0.75, "attack_success_rate_min": 0.8},
+  "crossfit": {"folds": 2, "partition_seed_formula": "20301000 + victim_seed", "population": "training rows assigned to target class 8"},
+  "detectors": ["cf_cmd_u", "target_centroid", "crossfit_spectral", "activation_clustering", "que_score"],
+  "certificate": {"alpha": 0.05, "tau": 0.8, "alpha_cap": 0.1, "delta_family": 0.05, "delta_per_fold": 0.025, "trusted_member_budgets": [120, 500, 2000], "draws_per_cell": 200, "fpr_mode": "tight", "declared_intervals_per_fold": {"primary": [1800, 2700], "stress": [1125, 4500]}, "tie_break_seed_base": 32302000, "trusted_draw_seed_base": 32303000},
+  "output": "results/pathmnist_certaware_redteam_source_v2"
+}

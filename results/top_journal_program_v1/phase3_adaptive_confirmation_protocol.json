@@ -1,0 +1,37 @@
+{
+  "protocol_id": "cf_cmd_phase3_whitebox_adaptive_confirmation_v1",
+  "frozen_at": "2026-09-28",
+  "parent_development_protocol": "phase3_adaptive_protocol_v1_1.json",
+  "role": "fresh_selective_confirmation",
+  "dataset": "BloodMNIST",
+  "fresh_seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "attacks": [
+    "checkpoint_drift_representation_matching",
+    "multi_direction_coherence_breaking",
+    "joint_input_internal_detector_evasion"
+  ],
+  "frozen_hyperparameters": {
+    "evasion_weight": 10.0,
+    "epochs": 8,
+    "learning_rate": 0.01,
+    "trigger_learning_rate": 0.002,
+    "backdoor_weight": 10.0,
+    "distillation_weight": 20.0,
+    "projector_anchor_weight": 0.001,
+    "gradient_clip_per_parameter_group": 1.0,
+    "multi_direction_amplitude": 0.2,
+    "joint_trigger_linf": 0.8,
+    "joint_trigger_correction_linf": 0.2
+  },
+  "selection": "validation-only epoch selection; no attack or detector hyperparameter changes on fresh seeds",
+  "test_use": "one-shot balanced CA and ASR after checkpoint selection",
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "detector_gate": {"minimum_pooled_tpr": 0.9, "maximum_pooled_fpr": 0.05},
+  "attack_effect_confirmation": {
+    "minimum_eligible_victims": 5,
+    "point_estimate_rule": "primary detector TPR below 0.90",
+    "strong_rule": "seed-bootstrap upper 95% confidence bound for TPR below 0.90"
+  },
+  "statistics": {"bootstrap_unit": "eligible seed", "draws": 10000, "confidence": 0.95},
+  "joint_attack_interpretation": "count as a distinct positive mechanism only if it materially changes the trigger and improves evasion relative to representation matching; otherwise retain as a no-incremental-benefit negative result"
+}

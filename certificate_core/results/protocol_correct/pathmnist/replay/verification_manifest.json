@@ -1,0 +1,7 @@
+{
+  "issuer_seal_preserved": true,
+  "protocol": "pathmnist_blind",
+  "status": "PASS_PROTOCOL_CORRECT_INDEPENDENT_REPLAY",
+  "verification_report_sha256": "6030cd1acddb771f1099aa8284b0d5dc884564204e0d6f29d657008e1e2cd26c",
+  "verified_unix": 1791499730.678978
+}

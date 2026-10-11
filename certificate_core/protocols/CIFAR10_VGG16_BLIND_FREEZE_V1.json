@@ -1,0 +1,37 @@
+{
+  "protocol_id": "cifar10_vgg16_bn_blind_certificate_v1",
+  "status": "FROZEN_BEFORE_FORMAL_SEED_EXECUTION",
+  "frozen_at": "2026-10-08T16:00:00+08:00",
+  "formal_seeds": [4201, 4202, 4203, 4204, 4205],
+  "formal_ack": "OPEN_CIFAR10_VGG16_BLIND_SEEDS_4201_4205",
+  "development_scope": {
+    "formal_evidence": false,
+    "detector_outcomes_opened": false,
+    "certificate_outcomes_opened": false,
+    "original_viability_epoch": 10,
+    "amended_strong_victim_epoch": 25,
+    "amendment_recorded_before_formal_execution": true
+  },
+  "primary_rule": {
+    "delta_family": 0.05,
+    "delta_per_detector_fold": 0.005,
+    "deployment_go": "both cross-fit folds are GO",
+    "deployment_no_go": "both cross-fit folds are NO_GO",
+    "otherwise": "ABSTAIN"
+  },
+  "hashes": {
+    "config_sha256": "849cc6711099a1735f22154f1bc0ea7649430bf438fcba0c85cd9fc7f304b770",
+    "prereg_sha256": "a8c40a2b7e7168da4b13eb775012d5f6c7ec779fad3c7817e78b17920b381981",
+    "runner_sha256": "c3540b21c1e0ac15e4c14f4d7c431c5df1a21c03796fa49523081710d3c8cf44",
+    "architecture_sha256": "0c87db1eb5b622b1ca1ca85142c6c65a985857753342502b97baeadaafb101a8",
+    "development_engine_sha256": "ff2c8e8988017b9a53c15728dd573f12c7bfb7ec5cae5136b4aa872b16118f9e",
+    "score_families_sha256": "099d97cde476c04bdb9cb53549ef6733d7402a9b35e07b23cbe011c70a0d581d",
+    "certificate_runner_sha256": "7feb0408ae54414a0e9734fe0bb2956e556d993981bfd6d5a96aad955d6c6111",
+    "verifier_sha256": "b29f39e870e277e9fbf9688c13402b19fa7243b8308388749edafffeb7312d3a",
+    "certificate_library_sha256": "890d00b4c8522ee352ef3b8bdeabf9b9fc0098783d7af0b3c51482c670652171",
+    "development_report_sha256": "b1c329f8d7106a7f2ac07f03d07ab1a4f5ea7e0cf93c558fec66a502b6d889f0",
+    "preformal_amendment_sha256": "9294c79fb519b6f19a8bdcde911c93f2d22183bc391089ce34b9b9ce7144f3bd",
+    "orchestration_script_sha256": "f6cbec9d9c7d11223f3ddd329e3aae1c687573cf684b4042c1edad80f900e4e8"
+  },
+  "interpretation": "Any post-freeze source or protocol change invalidates this manifest. Formal outcomes must be retained regardless of direction."
+}

@@ -1,0 +1,7 @@
+k,interval,rows,valid_rows,go_rate,nogo_rate,abstain_rate,valid_false_go_count,valid_false_go_rate
+120,primary,10000,10000,0.0,0.0081,0.9919,0,0.0
+120,stress,10000,10000,0.0,0.0,1.0,0,0.0
+500,primary,10000,10000,0.0327,0.0122,0.9551,0,0.0
+500,stress,10000,10000,0.0,0.0,1.0,0,0.0
+2000,primary,10000,10000,0.2728,0.0217,0.7055,0,0.0
+2000,stress,10000,10000,0.0,0.0,1.0,0,0.0

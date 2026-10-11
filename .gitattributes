@@ -1,0 +1,3 @@
+# Preserve archived result-table bytes. Some tables intentionally use CRLF and
+# are hash-bound by the accompanying manifests.
+certificate_core/results/**/*.csv binary

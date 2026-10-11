@@ -1,0 +1,67 @@
+{
+  "protocol": "official_backdoorbench_feature_pilot_v2",
+  "frozen_before_execution": true,
+  "supersedes": "official_backdoorbench_pilot_protocol.json",
+  "reason_for_v2": "V1 correctly stopped because it assumed both selected BloodMNIST classes had 1000 available samples. The pinned NPZ has 1000 class-6 samples after truncation and 852 class-0 samples. No method, threshold, seed, representation or eligibility rule changed.",
+  "development_seeds": [52, 54],
+  "confirmation_seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "scenarios": [
+    "fixed_attack_local_angle",
+    "whitebox_representation_matching_local_angle",
+    "fixed_attack_residual_reupload"
+  ],
+  "view": "checkpoint_drift_xz16",
+  "victim_eligibility": {
+    "minimum_balanced_ca": 0.9,
+    "minimum_asr": 0.8,
+    "confirmation_summary_rule": "Report all victim metrics; pool detection metrics only over eligible victims."
+  },
+  "source_class_counts": {"class_6_target": 1000, "class_0_source": 852},
+  "candidate_pool": {
+    "trusted_reference_target": 200,
+    "trusted_reference_source": 170,
+    "target_class_clean": 600,
+    "source_class_clean_after_poison_replacement": 451,
+    "poison_relabelled_to_target": 60,
+    "candidate_order": ["target_clean", "source_clean", "poison"]
+  },
+  "methods": {
+    "backdoorbench_spectral": {"percentile": 85.0},
+    "backdoorbench_scan": {
+      "class_threshold": "exp(2)",
+      "binary_class_degeneracy_must_be_reported": true
+    },
+    "backdoorbench_spectre_oracle_target": {
+      "pca_dimension": 16,
+      "contamination_counts": {"source": 0, "target": 60},
+      "advantaged_baseline": true
+    },
+    "backdoorbench_spectre_oracle_all_classes": {
+      "pca_dimension": 16,
+      "contamination_counts": {"source": 60, "target": 60},
+      "advantaged_baseline": true
+    }
+  },
+  "upstream": {
+    "repository": "https://github.com/SCLBD/BackdoorBench",
+    "commit": "f02e3534645f0ee63d6848653062cd6c0d6c400d",
+    "license": "CC BY-NC 4.0",
+    "scipy_compatibility": "Runtime-only sym_pos=True to assume_a='pos' alias; semantics unchanged."
+  },
+  "dataset_npz_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+  "pilot_expansion_gate": {
+    "performance_independent": true,
+    "requirements": [
+      "All six development victims meet CA >= 0.90 and ASR >= 0.80.",
+      "Every method completes without exception or non-finite exposed score.",
+      "Candidate and reference counts match the corrected frozen pool definition.",
+      "A repeated SCAn call on the first configuration is identical.",
+      "Receipts identify the pinned upstream commit, symbol and parameters."
+    ]
+  },
+  "interpretation_constraints": [
+    "Feature-level adapter audit, not bit-identical end-to-end BackdoorBench execution.",
+    "SPECTRE variants are oracle-budget, advantaged baselines.",
+    "SCAn results on the binary task cannot be generalized without a multiclass benchmark."
+  ]
+}

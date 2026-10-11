@@ -1,0 +1,73 @@
+{
+  "protocol_id": "cf_cmd_phase3_whitebox_adaptive_v1",
+  "frozen_at": "2026-09-28",
+  "role": "development_resource_gate_not_confirmation",
+  "dataset": "BloodMNIST",
+  "victim": "local_angle_qml_with_frozen_classifier",
+  "base_attack": "pca_additive_fixed",
+  "pilot_seeds": [42, 46, 51],
+  "tuning_seed": 42,
+  "validation_seeds": [46, 51],
+  "fresh_confirmation_seeds_if_promoted": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "attacker_knowledge": {
+    "clean_checkpoint": true,
+    "detector_representation": true,
+    "cross_fitted_direction_rule": true,
+    "trusted_reference_distribution": true,
+    "candidate_labels_used_for_training_or_model_selection": true,
+    "held_out_test_labels_or_scores_used_for_selection": false
+  },
+  "adaptive_attacks": {
+    "checkpoint_drift_representation_matching": {
+      "trigger": "fixed",
+      "loss": "match poison XZ16 checkpoint-drift mean and variance to clean-target drift"
+    },
+    "multi_direction_coherence_breaking": {
+      "trigger": "fixed",
+      "loss": "assign poisons to four fixed sign-balanced XZ16 drift directions while matching the clean-target centroid",
+      "direction_amplitude": 0.2
+    },
+    "joint_input_internal_detector_evasion": {
+      "trigger": "learned_from_fixed_trigger",
+      "loss": "joint input-distribution and XZ16 checkpoint-drift matching",
+      "pca_trigger_linf": 0.8,
+      "pca_correction_linf": 0.2
+    }
+  },
+  "hyperparameter_search": {
+    "evasion_weights": [0.1, 1.0, 10.0],
+    "epochs": 8,
+    "learning_rate": 0.01,
+    "trigger_learning_rate": 0.002,
+    "backdoor_weight": 10.0,
+    "distillation_weight": 20.0,
+    "projector_anchor_weight": 0.001,
+    "gradient_clip": 1.0,
+    "rule": "on seed 42 choose an eligible checkpoint/config with lowest frozen dual-view poison TPR, then lowest XZ16 poison TPR, then highest validation balanced CA and ASR; reuse unchanged on seeds 46 and 51"
+  },
+  "victim_eligibility": {
+    "minimum_validation_balanced_ca": 0.9,
+    "minimum_validation_asr": 0.8,
+    "minimum_test_balanced_ca": 0.9,
+    "minimum_test_asr": 0.8
+  },
+  "detector": {
+    "primary": "bonferroni_input_plus_checkpoint_drift_local_xz16",
+    "secondary": ["input256", "checkpoint_drift_local_xz16"],
+    "alpha": 0.05,
+    "trusted_pool": "disjoint_validation_target",
+    "reference_count": 120,
+    "calibration_count": 80,
+    "candidate_pool": "training_target_clean_plus_60_training_poisons",
+    "sample_exclusion": "four outer folds and swapped half direction estimation"
+  },
+  "promotion_rule": "promote only an attack with at least two of three eligible pilot victims and pooled primary TPR below 0.90 or pooled primary FPR above 0.05; retain invalid attacks as feasibility failures",
+  "reporting": [
+    "all attempted seed-42 weights",
+    "selected checkpoint and hashes",
+    "per-sample detector rows",
+    "validation and one-shot test CA/ASR",
+    "trigger and adaptive-loss receipts",
+    "explicit failure or success conclusion"
+  ]
+}

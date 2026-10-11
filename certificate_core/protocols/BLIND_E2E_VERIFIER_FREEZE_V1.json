@@ -1,0 +1,7 @@
+{
+  "status": "FROZEN_BEFORE_OUTCOME_INSPECTION",
+  "freeze_date": "2026-10-07",
+  "verifier_sha256": "2ca94506644ff732fb9e29041a3b9929725555ea5a0ad3e4607ab95dc9991aee",
+  "verifier": "src/verify_pathmnist_blind_e2e.py",
+  "scope": "full replay of trusted draws, thresholds, tail counts, certificates, realized metrics, false-GO labels, and artifact hashes"
+}

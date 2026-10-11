@@ -1,0 +1,181 @@
+{
+  "adaptive_multiscore": {
+    "attack_success_rate": {
+      "max": 1.0,
+      "mean": 0.9963342861947201,
+      "min": 0.9909197914915083
+    },
+    "balanced_accuracy": {
+      "max": 0.8776428708114068,
+      "mean": 0.8678007642674647,
+      "min": 0.8538637664581361
+    },
+    "conventional_detectors": [
+      {
+        "detector": "activation_clustering",
+        "pooled_target_clean_fpr": 0.053845556849049285,
+        "pooled_tpr": 0.9992444444444445
+      },
+      {
+        "detector": "cf_cmd_u",
+        "pooled_target_clean_fpr": 0.042374854481955763,
+        "pooled_tpr": 0.0
+      },
+      {
+        "detector": "crossfit_spectral",
+        "pooled_target_clean_fpr": 0.042871556072953045,
+        "pooled_tpr": 0.0
+      },
+      {
+        "detector": "que_score",
+        "pooled_target_clean_fpr": 0.03942568878540939,
+        "pooled_tpr": 0.9980888888888889
+      },
+      {
+        "detector": "target_centroid",
+        "pooled_target_clean_fpr": 0.04316647264260769,
+        "pooled_tpr": 0.0
+      }
+    ],
+    "eligible_victims": 5,
+    "familywise_primary_by_budget": [
+      {
+        "abstain_rate": 0.4,
+        "go_rate": 0.0,
+        "k": 120,
+        "nogo_rate": 0.6,
+        "valid_false_go_count": 0,
+        "valid_false_go_rate": 0.0
+      },
+      {
+        "abstain_rate": 0.3809,
+        "go_rate": 0.0191,
+        "k": 500,
+        "nogo_rate": 0.6,
+        "valid_false_go_count": 0,
+        "valid_false_go_rate": 0.0
+      },
+      {
+        "abstain_rate": 0.2445,
+        "go_rate": 0.1555,
+        "k": 2000,
+        "nogo_rate": 0.6,
+        "valid_false_go_count": 0,
+        "valid_false_go_rate": 0.0
+      }
+    ],
+    "familywise_valid_false_go_count_all_intervals": 0,
+    "familywise_valid_rows_all_intervals": 60000,
+    "independent_verification": {
+      "all_models_and_features_hash_verified": true,
+      "checked_certificate_rows": 60000,
+      "detectors": 5,
+      "manifest_sha256": "ac107cc513b618a7922d4c53f145bfad7039bb13f32225a7456f164a93857cbb",
+      "report_sha256": "10ad27ca1fbf92b48328893d176a8277a97050586f75196958ee325a5e16d5e0",
+      "score_rows": 496275,
+      "status": "PASS",
+      "truth_rows": 93090,
+      "valid_false_go_count_all_intervals": 68,
+      "victims": 5
+    },
+    "seeds": [
+      3201,
+      3202,
+      3203,
+      3204,
+      3205
+    ],
+    "status": "COMPLETE",
+    "victim_count": 5
+  },
+  "interpretation_rule": "A zero false-GO count supports safety only at the frozen operating point; GO/ABSTAIN rates quantify utility and are not interchangeable with safety.",
+  "strong_resnet50": {
+    "attack_success_rate": {
+      "max": 1.0,
+      "mean": 0.987321338489995,
+      "min": 0.9408104926853876
+    },
+    "balanced_accuracy": {
+      "max": 0.8946198622729883,
+      "mean": 0.8725813029595664,
+      "min": 0.8633849783254048
+    },
+    "conventional_detectors": [
+      {
+        "detector": "activation_clustering",
+        "pooled_target_clean_fpr": 0.04040357004268529,
+        "pooled_tpr": 1.0
+      },
+      {
+        "detector": "cf_cmd_u",
+        "pooled_target_clean_fpr": 0.041862630966239815,
+        "pooled_tpr": 1.0
+      },
+      {
+        "detector": "crossfit_spectral",
+        "pooled_target_clean_fpr": 0.04900271633682576,
+        "pooled_tpr": 0.8509777777777778
+      },
+      {
+        "detector": "que_score",
+        "pooled_target_clean_fpr": 0.04060535506402794,
+        "pooled_tpr": 1.0
+      },
+      {
+        "detector": "target_centroid",
+        "pooled_target_clean_fpr": 0.038494373302289484,
+        "pooled_tpr": 0.9999555555555556
+      }
+    ],
+    "eligible_victims": 5,
+    "familywise_primary_by_budget": [
+      {
+        "abstain_rate": 0.9717,
+        "go_rate": 0.0,
+        "k": 120,
+        "nogo_rate": 0.0283,
+        "valid_false_go_count": 0,
+        "valid_false_go_rate": 0.0
+      },
+      {
+        "abstain_rate": 0.9318,
+        "go_rate": 0.0296,
+        "k": 500,
+        "nogo_rate": 0.0386,
+        "valid_false_go_count": 0,
+        "valid_false_go_rate": 0.0
+      },
+      {
+        "abstain_rate": 0.642,
+        "go_rate": 0.318,
+        "k": 2000,
+        "nogo_rate": 0.04,
+        "valid_false_go_count": 0,
+        "valid_false_go_rate": 0.0
+      }
+    ],
+    "familywise_valid_false_go_count_all_intervals": 0,
+    "familywise_valid_rows_all_intervals": 60000,
+    "independent_verification": {
+      "all_models_and_features_hash_verified": true,
+      "checked_certificate_rows": 60000,
+      "detectors": 5,
+      "manifest_sha256": "dc34f4980697682c820ef07c3084106d850a5f24cd820604ed1674f659c41fe9",
+      "report_sha256": "604ef3296060d44b3fe55188aa89924ebffc0707a881a2042ea5cfa260a9cd36",
+      "score_rows": 496275,
+      "status": "PASS",
+      "truth_rows": 93090,
+      "valid_false_go_count_all_intervals": 162,
+      "victims": 5
+    },
+    "seeds": [
+      2201,
+      2202,
+      2203,
+      2204,
+      2205
+    ],
+    "status": "COMPLETE",
+    "victim_count": 5
+  }
+}

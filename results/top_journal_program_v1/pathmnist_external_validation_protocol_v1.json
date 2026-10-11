@@ -1,0 +1,153 @@
+{
+  "protocol_id": "p6b_pathmnist_external_validation_v1",
+  "frozen_before_training": true,
+  "frozen_date": "2026-09-29",
+  "purpose": "Test whether observable-channel poison auditability and strong feature baselines transfer from MNIST/BloodMNIST to a histopathology domain with an external-center test split.",
+  "frozen_inputs": {
+    "acquisition_protocol_sha256": "5dd570b3563d1ff30b006864082556a08932abae1ac9ad1fddbfb7ea38b104f1",
+    "acquisition_receipt_sha256": "7125eba07227f00541c0e14586a2f89e9fc6cb3d3273782e414b0d2d187eede7",
+    "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+    "core_implementation_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "runner_sha256": "9e13264bfb3e87bfcb8fc9b0b8918625a1a2d85267016e3be73e7d3bf5fa2a6d",
+    "backdoorbench_adapter_sha256": "45852a5df504b73d231330fe658ff8d34b57729ed21d97d00d0419514c065eef",
+    "upstream_scan_sha256": "f0951f806cd0ef2c6004918e78011c46225c8020e798c455fc787c3cd82f42f6",
+    "upstream_backdoorbench_commit": "f02e3534645f0ee63d6848653062cd6c0d6c400d"
+  },
+  "dataset": {
+    "name": "PathMNIST 28x28",
+    "task": "nine-class histopathology classification",
+    "license": "CC BY 4.0",
+    "official_counts": {
+      "train": 89996,
+      "validation": 10004,
+      "test": 7180
+    },
+    "training_subset": {
+      "selection": "exactly 3,000 rows per class selected without replacement from the official training split, then restored to official-index order",
+      "seed": 20260930,
+      "count": 27000,
+      "selected_official_indices_sha256": "42c2b8fe4aa0ce9823df461f0a68022e47769ec1f7e56989a5e77ececd16c060",
+      "reason": "bounded CPU pilot; this is not a full-training PathMNIST benchmark"
+    },
+    "validation": "full official validation split",
+    "test": "full official CRC-VAL-HE-7K test split from a different clinical center",
+    "normalization": {
+      "source": "full clean official training split",
+      "mean_rgb": [
+        0.7405449748,
+        0.5329821706,
+        0.7058288455
+      ],
+      "std_rgb": [
+        0.1236822158,
+        0.1767625362,
+        0.1244306713
+      ]
+    }
+  },
+  "attack": {
+    "family": "BadNets all-to-one",
+    "target_class": 8,
+    "target_label": "colorectal adenocarcinoma epithelium",
+    "poison_count": 1350,
+    "subset_poison_fraction": 0.05,
+    "selection": "uniform without replacement from non-target rows in the frozen 27,000-row training subset",
+    "selection_seed_formula": "20260930 + seed",
+    "construction": "replace selected training images in place, overwrite labels with target 8, retain official source indices",
+    "trigger": {
+      "shape": "solid bottom-right square",
+      "patch_size": 4,
+      "value_uint8": 255
+    }
+  },
+  "victim": {
+    "architecture": "Conv3x3(3,16)-BN-ReLU; residual blocks 16, 32/stride2, 64/stride2; global average pool; Linear(64,9)",
+    "parameter_count": 77977,
+    "audit_layer": "64-dimensional post-pooling hidden vector",
+    "paired_training": "clean and suspect roles use identical initialization, shuffled-index order, and augmentation RNG for a seed",
+    "augmentation": "independent per-sample horizontal and vertical flips with probability 0.5, seeded by 20270930 + seed",
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 512,
+    "maximum_epochs": 8,
+    "early_stopping": {
+      "metric": "full clean validation balanced accuracy",
+      "patience": 2,
+      "minimum_delta": 0.0001,
+      "restore_best_epoch": true
+    },
+    "checkpoint_policy": "save clean and suspect best-epoch state dictionaries, preprocessing, seed, role, training history, protocol hash and SHA-256"
+  },
+  "victim_evaluation": {
+    "clean_metric": "balanced accuracy on the untouched external-center official test split",
+    "attack_metric": "target-class ASR on patched official non-target test images",
+    "eligibility": {
+      "balanced_clean_accuracy_min": 0.75,
+      "attack_success_rate_min": 0.8
+    }
+  },
+  "detector_pool": {
+    "trusted_reference": "full clean official validation split with true labels",
+    "candidates": "full frozen 27,000-row in-place poisoned training subset with assigned labels",
+    "poison_truth": "the 1,350 selected official training indices",
+    "views": [
+      "suspect_hidden64",
+      "clean_to_suspect_hidden64_drift"
+    ],
+    "drift_scope": "oracle paired-clean diagnostic, not a deployable default"
+  },
+  "methods": {
+    "cf_cmd_u": {
+      "scope": "target-assigned class only",
+      "trusted_target_split": "512 whitening-reference and 512 disjoint calibration rows selected from validation target class",
+      "trusted_selection_seed_formula": "20271001 + detector seed",
+      "whitening": "reference covariance with ridge equal to 0.1 times mean marginal variance",
+      "sample_exclusion": "two candidate halves; score each half with the opposite-half mean direction",
+      "rank_alpha": 0.05,
+      "calibration_claim": "clean-validation rank calibration only; exact exchangeability for training-member queries is not claimed"
+    },
+    "backdoorbench_scan": {
+      "source": "pinned BackdoorBench feature primitive",
+      "classes": 9,
+      "seed_formula": "seed + 1000 * view_index"
+    },
+    "backdoorbench_spectral": {
+      "source": "pinned BackdoorBench feature block",
+      "per_class_percentile": 85.0
+    }
+  },
+  "stages": {
+    "development": {
+      "seeds": [
+        79,
+        80
+      ],
+      "maximum_runtime_seconds_per_seed": 1800,
+      "expansion_gate": "both victims eligible; all nine classes present; all defined method scores finite; compressed sample artifacts replay exactly; both seeds remain within the runtime cap",
+      "detection_performance_is_an_expansion_gate": false
+    },
+    "confirmation": {
+      "seeds": [
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "start_condition": "development expansion gate passes without code, data, architecture, attack, threshold or method changes",
+      "ten_seed_expansion": "not automatic; consider only if at least four of five confirmation victims are eligible and a seed-level interval remains decision-relevant"
+    }
+  },
+  "interpretation": {
+    "positive_scope": "external-domain evidence for a fixed attack, bounded training subset and lightweight residual victim",
+    "negative_result_policy": "retain victim, calibration, detector or runtime failure without retuning on development outcomes",
+    "forbidden_claims": [
+      "full-training PathMNIST state of the art",
+      "general natural-image transfer",
+      "paired drift is deployable without a clean oracle",
+      "rank p-values are exact conformal p-values for training-member candidates",
+      "one fixed BadNets result proves cross-attack robustness"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "protocol_id": "cf_cmd_covariance_free_confirmation_v1",
+  "frozen_at": "2026-09-28",
+  "status": "post_ablation_revised_method_requires_new_seed_confirmation",
+  "development_evidence": "seeds 52--61 showed whitening suppression on local-angle XZ16; these seeds are excluded from confirmation",
+  "fresh_seeds": [62, 63, 64, 65, 66, 67, 68, 69, 70, 71],
+  "method": {
+    "name": "CF-CMD-U",
+    "representation": "local-angle checkpoint-difference XZ16",
+    "direction": "four-fold sample-excluded candidate mean shift relative to a disjoint validation-target reference",
+    "whitening": false,
+    "threshold": "one-sided empirical conformal rank from 80 disjoint clean calibration samples",
+    "reference_count": 120,
+    "alpha": 0.05
+  },
+  "scenarios": {
+    "fixed_pca_additive": "standard 5-epoch backdoor adaptation",
+    "whitebox_representation_matching": "attacker knows CF-CMD-U; evasion weight 10, eight epochs, validation selects lowest covariance-free detector TPR subject to CA/ASR gate"
+  },
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "detector_gate": {"minimum_pooled_tpr": 0.9, "maximum_pooled_fpr": 0.05},
+  "statistics": {"bootstrap_unit": "eligible seed", "draws": 10000, "confidence": 0.95},
+  "minimum_eligible_victims_for_adaptive_conclusion": 5,
+  "scope_limit": "This revised rule is not claimed architecture-invariant; residual-reupload remains a confirmed boundary."
+}

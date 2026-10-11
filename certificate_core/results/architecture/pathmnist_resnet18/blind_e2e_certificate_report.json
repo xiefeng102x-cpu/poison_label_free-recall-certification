@@ -1,0 +1,20 @@
+{
+  "all_primary_intervals_valid": true,
+  "blind_scores_sha256": "4ffae843d158e9bda7cfe2e59961fb285744caeadf1e2ca42b61016917c58427",
+  "certificate_cell_summary_sha256": "b3b6609448a891738510e38b5850a48520ec56b87297f8e6c482331a6ea79b2a",
+  "certificate_decisions_blind_sha256": "b7d625d78a12c459b60435d508873d2f79e471a7e4680e4f5661d58cd83e19d6",
+  "certificate_decisions_evaluated_sha256": "636cf2b1ca6261e1169c3092d1920cdc8e51bb55a434661d744f33a7b92383ee",
+  "certificate_detector_summary_sha256": "c3b86d52b97e709141610c8cc85ca21956a1aa8559d26d7ed45a9e7976d7b096",
+  "conventional_detector_metrics_sha256": "6a765aef197fdfe8bed01be34f16e33621e8acc303c7e7a8d5884862890db724",
+  "decision_rows": 60000,
+  "detectors": 5,
+  "evaluation_rows": 60000,
+  "freeze_manifest_sha256": "f3c84ff3523331c4afbf05ef24c5fd0a30f1b2b37d2558b5a4a6b3ba2ba82fed",
+  "primary_false_go_count": 120,
+  "primary_false_go_rate": 0.004,
+  "primary_valid_draws": 30000,
+  "private_truth_sha256": "1050ac9bb69bff0657cb7c7fe822cbe91d6436418d3b82510a03e3e3455ed733",
+  "scope": "one dataset, one strong architecture, one BadNets attack, five unseen seeds; no cross-domain universality claim",
+  "status": "COMPLETE_BLIND_END_TO_END_CERTIFICATE",
+  "victims": 5
+}

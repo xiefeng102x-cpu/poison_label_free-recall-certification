@@ -1,0 +1,111 @@
+{
+  "protocol_id": "cifar10_vgg16_bn_blind_certificate_v1",
+  "status": "FROZEN_BEFORE_FORMAL_SEED_EXECUTION",
+  "formal_seeds": [4201, 4202, 4203, 4204, 4205],
+  "dataset": {
+    "name": "CIFAR-10",
+    "root_relative_to_paper14": "../paper5/paper_v6/paper5_code_audited_complete_20260716/paper5/datasets/cifar10",
+    "archive": "cifar-10-python.tar.gz",
+    "archive_md5": "c58f30108f718f92721af3b95e74349a",
+    "archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+    "validation_rows_per_class": 500,
+    "validation_split_seed": 42420000,
+    "training_rows": 45000,
+    "validation_rows": 5000,
+    "test_rows": 10000
+  },
+  "victim": {
+    "architecture": "CIFAR-native VGG16-BN",
+    "feature": "512-D global-average-pooled penultimate activation",
+    "parameter_count": 14724042,
+    "training_epochs": 25,
+    "schedule_horizon_epochs": 30,
+    "batch_size": 256,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0005,
+    "schedule": "cosine_to_zero_with_30_epoch_horizon_stopped_at_epoch_25",
+    "augmentation": "reflect-pad-4 per-image random crop plus random horizontal flip",
+    "device": "mps"
+  },
+  "development_provenance": {
+    "seed": 4200,
+    "allowed_observations": "victim clean balanced accuracy and attack success only",
+    "detector_outcomes_opened": false,
+    "certificate_outcomes_opened": false,
+    "original_viability_selected_epoch": 10,
+    "epoch_10_balanced_accuracy": 0.8064,
+    "epoch_10_attack_success_rate": 0.955,
+    "original_selection_rule": "earliest prelisted evaluation epoch satisfying BCA >= 0.80 and ASR >= 0.90",
+    "preformal_strong_victim_amendment": "before formal execution, strengthen the victim fidelity target to BCA >= 0.90 while retaining ASR >= 0.90",
+    "formal_selected_epoch": 25,
+    "epoch_25_balanced_accuracy": 0.9015,
+    "epoch_25_attack_success_rate": 0.9723333333333334,
+    "amendment_record": "auditability_certificate_v1/PREFORMAL_CIFAR_VGG_HORIZON_AMENDMENT_2026-10-08.md"
+  },
+  "attack": {
+    "family": "BadNets_all_to_one",
+    "target_class": 8,
+    "target_name": "ship",
+    "poison_count": 2250,
+    "poison_rate_of_training_rows": 0.05,
+    "selection_population": "non-target rows in the fixed 45000-row training split",
+    "selection_seed_formula": "4242100 + victim_seed",
+    "trigger": "solid_white_4x4_bottom_right_applied_after_augmentation",
+    "assigned_label": 8
+  },
+  "eligibility": {
+    "balanced_accuracy_min": 0.75,
+    "attack_success_rate_min": 0.9,
+    "no_seed_replacement": true
+  },
+  "reference": {
+    "population": "target-class rows in the fixed clean validation split",
+    "split_seed": 42424000,
+    "reference_rows": 250,
+    "conventional_calibration_rows": 250,
+    "disjoint_from_victim_training": true,
+    "test_split_remains_untouched_until_final_victim_evaluation": true
+  },
+  "crossfit": {
+    "folds": 2,
+    "partition_seed_formula": "4242500 + victim_seed",
+    "population": "training rows assigned to target class 8",
+    "expected_rows": 6750,
+    "expected_clean_rows": 4500,
+    "expected_poison_rows": 2250
+  },
+  "detectors": [
+    "cf_cmd_u",
+    "target_centroid",
+    "crossfit_spectral",
+    "activation_clustering",
+    "que_score"
+  ],
+  "certificate": {
+    "alpha": 0.05,
+    "tau": 0.8,
+    "alpha_cap": 0.1,
+    "delta_family": 0.05,
+    "delta_per_detector_fold": 0.005,
+    "multiplicity_family": "five detectors times two cross-fit folds",
+    "trusted_pool_rows_per_fold": 2100,
+    "trusted_member_budgets": [120, 500, 2000],
+    "draws_per_cell": 200,
+    "fpr_mode": "tight",
+    "declared_intervals_per_fold": {
+      "primary": [900, 1350],
+      "stress": [560, 1374]
+    },
+    "trusted_draw_seed_base": 42428000
+  },
+  "primary_endpoint": "familywise valid false-GO count for sealed deployment decisions under the primary declared poison-count interval",
+  "deployment_rule": "GO only if both cross-fit folds are GO; NO-GO only if both folds are NO-GO; otherwise ABSTAIN",
+  "secondary_endpoints": [
+    "GO, NO-GO, and ABSTAIN rates by trusted-member budget",
+    "failure-recognition rate",
+    "conventional detector TPR and target-clean FPR",
+    "victim BCA and ASR"
+  ],
+  "output": "results/cifar10_vgg16_bn_blind_certificate_v1"
+}

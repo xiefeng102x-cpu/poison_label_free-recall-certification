@@ -1,0 +1,119 @@
+{
+  "protocol_id": "paper14_single_sample_reference_audit_v1",
+  "status": "FROZEN_BEFORE_SINGLE_SAMPLE_ENDPOINTS",
+  "frozen_date": "2026-10-02",
+  "role": "retrospective_development_only",
+  "question": "Can an archived BloodMNIST poison be scored independently of every other candidate by comparing only its XZ16 checkpoint drift with a fixed trusted-clean reference and calibration set?",
+  "source": {
+    "root": "results/bloodmnist_whitebox_adaptive_confirmation_v1",
+    "manifest_sha256": "78e76c2609c2d9ac64a1de78e2369d8a6fc70ccbcc9f9f1773e166602cd077c6",
+    "victim_metrics_sha256": "1892eb738b8c6e2e170142fc31b741ea51de87f8830495d02e9f22ede01ea228",
+    "dataset_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+    "seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+    "modes": [
+      "checkpoint_drift_representation_matching",
+      "multi_direction_coherence_breaking",
+      "joint_input_internal_detector_evasion"
+    ],
+    "eligibility": "reuse_stored_test_ca_asr_decision_without_reopening_selection"
+  },
+  "observation": {
+    "name": "checkpoint_drift_xz16",
+    "definition": "XZ16(attacked_checkpoint,x)-XZ16(clean_checkpoint,x)",
+    "trusted_population": "validation_target_clean",
+    "member_clean_query_population": "training_target_clean",
+    "fresh_clean_query_population": "test_target_clean",
+    "poison_query_population": "archived_training_poison",
+    "candidate_batch_used_for_scoring": false,
+    "query_labels_used_for_scoring": false
+  },
+  "trusted_split": {
+    "permutation_seed_formula": "20261003 + victim_seed",
+    "reference_fraction": 0.5,
+    "reference_indices": "first_floor_half_after_permutation",
+    "calibration_indices": "remaining_indices_after_permutation",
+    "same_indices_across_attack_modes_within_seed": true
+  },
+  "fixed_scorers": {
+    "ridge_mahalanobis": {
+      "score": "(x-reference_mean)^T(reference_covariance+ridge_I)^-1(x-reference_mean)",
+      "ridge_fraction_of_mean_reference_variance": 0.1
+    },
+    "rbf_reference_witness": {
+      "standardization": "reference_mean_and_population_standard_deviation_with_1e-8_floor",
+      "gamma": "one_over_two_times_reference_median_nonzero_pairwise_squared_distance",
+      "score": "one_minus_mean_reference_rbf_similarity"
+    },
+    "knn5_reference_distance": {
+      "standardization": "same_reference_standardization_as_rbf",
+      "neighbors": 5,
+      "score": "fifth_smallest_euclidean_distance_to_reference"
+    }
+  },
+  "calibration_and_fusion": {
+    "per_scorer_p_value": "(1 + number_of_calibration_scores_greater_than_or_equal_to_query_score)/(calibration_count+1)",
+    "fusion": "bonferroni_minimum_p_value",
+    "fused_p_value": "min(1, 3 * minimum_per_scorer_p_value)",
+    "alpha": 0.05,
+    "query_independence": "After the trusted split and scorer fits are fixed, every query score and decision is a function only of that query and the fixed trusted state."
+  },
+  "reported_endpoints": {
+    "per_victim": [
+      "poison_tpr",
+      "member_clean_fpr",
+      "fresh_clean_fpr",
+      "poison_auc_against_member_clean",
+      "poison_auc_against_fresh_clean",
+      "median_poison_fused_p_value",
+      "minimum_poison_fused_p_value"
+    ],
+    "per_scorer_diagnostics": [
+      "poison_auc_against_member_clean",
+      "poison_auc_against_fresh_clean"
+    ],
+    "primary_population": "stored_test_eligible_victims_per_attack_mode",
+    "secondary_population": "all_archived_victims",
+    "pooling": "sum_confusion_counts_across_selected_victims",
+    "uncertainty": "10000_draw_seed_bootstrap_of_per_victim_rates",
+    "bootstrap_seed": 20261003,
+    "bootstrap_draws": 10000,
+    "confidence_level": 0.95
+  },
+  "decision_rule": {
+    "minimum_eligible_victims_per_mode": 5,
+    "strong_gate": {
+      "pooled_poison_tpr_min": 0.9,
+      "pooled_member_clean_fpr_max": 0.05,
+      "pooled_fresh_clean_fpr_max": 0.05,
+      "required_modes": 3,
+      "label": "PROMISING_RETROSPECTIVE_SINGLE_SAMPLE_CHANNEL"
+    },
+    "partial_gate": {
+      "pooled_poison_tpr_min": 0.8,
+      "pooled_member_clean_fpr_max": 0.075,
+      "pooled_fresh_clean_fpr_max": 0.075,
+      "required_modes": 2,
+      "label": "PARTIAL_RETROSPECTIVE_SINGLE_SAMPLE_CHANNEL"
+    },
+    "otherwise": "NO_RELIABLE_SINGLE_SAMPLE_CHANNEL_IN_THIS_ARCHIVE"
+  },
+  "claim_boundaries": [
+    "This is a retrospective development analysis on previously observed attacks and seeds, not fresh confirmation.",
+    "The scoring rule is label-free at query time, but poison and clean labels are used to evaluate it.",
+    "The primary population is selected by previously stored test CA/ASR eligibility and cannot support unconditional population generalization.",
+    "Training-member clean queries need not be exchangeable with validation calibration queries, so the rank values are clean-calibrated scores rather than unconditional exact conformal p-values.",
+    "Single-sample means independence from other candidate queries after the trusted state is fixed; it does not mean reference-free, clean-checkpoint-free or model-agnostic.",
+    "A positive retrospective gate would authorize a separately preregistered fresh confirmation, not a main-paper efficacy claim.",
+    "No PathMNIST artifact is read, modified or interpreted."
+  ],
+  "forbidden_actions": [
+    "retrain_any_victim",
+    "select_or_tune_scorers_after_endpoint_inspection",
+    "change_alpha_or_fusion_after_endpoint_inspection",
+    "drop_or_replace_archived_seeds",
+    "use_candidate_labels_or_other_candidate_queries_in_scoring",
+    "describe_retrospective_results_as_fresh_confirmation",
+    "claim_unconditional_exact_conformal_validity",
+    "inspect_pathmnist_partial_outputs"
+  ]
+}

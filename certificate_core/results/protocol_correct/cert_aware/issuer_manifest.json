@@ -1,0 +1,19 @@
+{
+  "allowed_schema": [
+    "protocol",
+    "trial_token",
+    "k",
+    "conformal_rank",
+    "candidate_count",
+    "flagged_count"
+  ],
+  "config_sha256": "fa5207769bf7d734ffdfec28b00afcf6e0e917dba95b609348efcc379bc014fd",
+  "created_unix": 1791499570.430672,
+  "issuer_observations_sha256": "d20f4d3fa7043cdd1f6769bec54c412add8a6fc9c99a5ce8e9bf2bc0430f2cc7",
+  "key_commitment_sha256": "952967c341f7a7fdc9b0f3811d227a20682ee59b705a0847bc697ef44c0da2dd",
+  "prohibited_fields_absent": true,
+  "protocol": "certificate_aware_redteam",
+  "rows": 490000,
+  "score_sha256": "4a65c08f6503ce0eeac596c2a0475d0517db7fa1e00ecd4ce074fcc5c1f234e8",
+  "status": "ISSUER_OBSERVATIONS_SEALED"
+}

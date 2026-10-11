@@ -1,0 +1,12 @@
+{
+  "adaptive_attack_count": 3,
+  "architecture_count": 4,
+  "attack_family_count": 6,
+  "baseline_count": 4,
+  "confirmation_is_disjoint": true,
+  "development_seed_count": 10,
+  "fresh_confirmation_seed_count": 10,
+  "protocol_id": "cf_cmd_top_journal_v1",
+  "status": "PASS",
+  "token_allocation_total": 100
+}

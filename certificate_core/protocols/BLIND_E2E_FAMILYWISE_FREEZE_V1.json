@@ -1,0 +1,10 @@
+{
+  "status": "FROZEN_BEFORE_OUTCOME_INSPECTION",
+  "freeze_date": "2026-10-07",
+  "relationship_to_primary": "separate sensitivity analysis; does not modify the blind-v1 primary",
+  "error_allocation": "0.05 / (5 detectors * 2 folds) = 0.005",
+  "hashes": {
+    "prereg_sha256": "72dddcd78e367ee4f9cd0830534a462d81b7196d857924256c0be8ce60781232",
+    "runner_sha256": "510dfd1804ce68a44a8d647a4a64b41ae7b58760f2f8763cbc5964549e4268af"
+  }
+}

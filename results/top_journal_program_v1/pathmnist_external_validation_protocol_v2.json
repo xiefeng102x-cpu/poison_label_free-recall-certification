@@ -1,0 +1,85 @@
+{
+  "protocol_id": "p6b_pathmnist_external_validation_v2",
+  "frozen_before_training": true,
+  "frozen_date": "2026-09-29",
+  "design_status": "fresh-seed repair after the retained V1 victim-feasibility failure",
+  "purpose": "Reduce label-overwrite pressure while preserving an approximately matched trigger-footprint budget, then retest external-center victim feasibility and the unchanged detector suite.",
+  "v1_evidence_lock": {
+    "v1_protocol_sha256": "b39b5be9cc35bd5cd07a132d587063679a55c69ed24c2dbb912a615021aa8342",
+    "v1_manifest_sha256": "af17f72fdd4da197c92aa246a883b8dbfbb4b663a892ec0a391e3db92c65446a",
+    "v1_victim_metrics_sha256": "f7e1e0920891616483e3dce868a17c458caf86cf9ff7d011695fa19b83e44de8",
+    "v1_verification_sha256": "9f1ed0bc9e61108b9ee75b15d65728031a10675f61e7303700ea7ffb59ff5bf7",
+    "observed_failure": "seed 80 suspect external-center balanced accuracy was 0.7381 versus the frozen 0.75 gate; V1 confirmation was not authorized"
+  },
+  "frozen_inputs": {
+    "acquisition_protocol_sha256": "5dd570b3563d1ff30b006864082556a08932abae1ac9ad1fddbfb7ea38b104f1",
+    "acquisition_receipt_sha256": "7125eba07227f00541c0e14586a2f89e9fc6cb3d3273782e414b0d2d187eede7",
+    "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+    "core_implementation_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "v1_runner_dependency_sha256": "9e13264bfb3e87bfcb8fc9b0b8918625a1a2d85267016e3be73e7d3bf5fa2a6d",
+    "v2_runner_sha256": "b1bc3afb463ff9adca0cce06ddf692035bc9c4a0e573e06c7604a5b9af6a4441",
+    "backdoorbench_adapter_sha256": "45852a5df504b73d231330fe658ff8d34b57729ed21d97d00d0419514c065eef"
+  },
+  "unchanged_from_v1": {
+    "dataset_and_subset": "PathMNIST official splits; fixed 3,000-per-class, 27,000-row training subset with index hash 42c2b8fe4aa0ce9823df461f0a68022e47769ec1f7e56989a5e77ececd16c060",
+    "victim": "77,977-parameter residual CNN, full-train normalization, paired initialization/order/augmentation, AdamW, batch 512, maximum 8 epochs and validation-balanced-accuracy early stopping",
+    "victim_gates": "external-center balanced accuracy at least 0.75 and patched non-target ASR at least 0.80",
+    "views": [
+      "suspect_hidden64",
+      "clean_to_suspect_hidden64_drift"
+    ],
+    "methods": [
+      "cf_cmd_u",
+      "backdoorbench_scan",
+      "backdoorbench_spectral"
+    ],
+    "detector_hyperparameters": "unchanged exactly from V1; detection outcomes are not an expansion gate",
+    "runtime_cap_seconds_per_seed": 1800
+  },
+  "attack_revision": {
+    "family": "BadNets all-to-one",
+    "target_class": 8,
+    "poison_count": 810,
+    "subset_poison_fraction": 0.03,
+    "selection_seed_formula": "20260930 + seed",
+    "patch_size": 5,
+    "patch_value_uint8": 255,
+    "v1_footprint_proxy": 0.8,
+    "v2_footprint_proxy": 0.75,
+    "footprint_proxy_definition": "poison fraction multiplied by square-patch area",
+    "rationale": "lower the number of overwritten labels while keeping the aggregate trigger footprint approximately matched; this targets V1 victim feasibility rather than detector performance"
+  },
+  "stages": {
+    "development": {
+      "fresh_seeds": [
+        86,
+        87
+      ],
+      "expansion_gate": "both victims eligible; all nine classes present; all defined method scores finite; compressed sample artifacts replay exactly; both seeds remain within 1,800 seconds",
+      "detection_performance_is_an_expansion_gate": false
+    },
+    "confirmation": {
+      "fresh_seeds": [
+        88,
+        89,
+        90,
+        91,
+        92
+      ],
+      "start_condition": "all V2 development gates pass without changing code, data, attack, threshold or detector settings",
+      "ten_seed_expansion": "not automatic; require at least four of five eligible victims and a decision-relevant seed interval"
+    }
+  },
+  "interpretation": {
+    "analysis_population": "Only CA/ASR-eligible victims support detector efficacy; ineligible victims remain failure evidence.",
+    "revision_transparency": "V1 is retained and reported. V2 is a sequential development protocol and cannot be pooled with V1 as if all seeds were exchangeable confirmations.",
+    "paired_drift": "oracle diagnostic only",
+    "calibration": "CF-CMD-U uses clean-validation rank calibration; exact training-member exchangeability is not claimed",
+    "forbidden_claims": [
+      "V2 erases or supersedes the V1 failure",
+      "V1 and V2 seeds form one pre-registered sample",
+      "one fixed BadNets attack establishes cross-attack external validity",
+      "this bounded subset is a full PathMNIST benchmark"
+    ]
+  }
+}

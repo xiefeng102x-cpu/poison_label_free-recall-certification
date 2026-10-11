@@ -1,0 +1,91 @@
+{
+  "created_at": "2026-10-07T13:15:37.081276+08:00",
+  "hashes": {
+    "certificate_library": "4c943d787fcbd2d13060ac16924dee661e226c81d7b94a869c98986ef8ae9f9a",
+    "certificate_results": "a3b0685e3c82baadc3228d98674afaefc4609aea554dbbc82af99574b685e221",
+    "certificate_template": "6dc9edc587febeb1badcddd4c15a78873e9b9617df12cb9c8d44b589b5eb813f",
+    "export_manifest": "612b092db233089ccde405592e9f067b2cccfbe18069b025f437bf7d2e67ca3d",
+    "exporter": "4f34d9ff373ec0c99881d2054471e7005fc8f32710b9513189b30f0e2585c9b1",
+    "scores": "ed6eae2c54b052079fcc7e88e8ffca4bccd68d70e186f7c74d2fd3b6a30916f6"
+  },
+  "hypotheses": {
+    "H1": {
+      "cells": 160,
+      "holm_rejections": 0,
+      "minimum_unadjusted_pvalue": 0.9936770006130294,
+      "status": "NOT_FALSIFIED_IN_RETROSPECTIVE_BLOCK"
+    },
+    "H2": {
+      "detail": "View- and k-specific seed-bootstrap intervals are in real_s1_summary.csv.",
+      "status": "DESCRIPTIVE_ESTIMATED"
+    },
+    "H2b": {
+      "reason": "Target-stratum poison prevalence is 20.48%, above the preregistered <=5% condition; fresh pool also cannot support k=500 fresh calibration.",
+      "status": "NOT_APPLICABLE"
+    },
+    "H3": {
+      "reason": "Each fold has only about 1,165 clean members, so k>=2000 is impossible.",
+      "status": "NOT_TESTED"
+    },
+    "H4": {
+      "low_recall_cells": 0,
+      "status": "NO_FAILURE_CELL_AVAILABLE"
+    },
+    "H5": {
+      "reason": "No reference-budget m* grid in this export.",
+      "status": "NOT_TESTED"
+    },
+    "H6": {
+      "reason": "No trusted-set contamination grid in this export.",
+      "status": "NOT_TESTED"
+    },
+    "H7": {
+      "reason": "This block is classical BloodMNIST, not a QML channel experiment.",
+      "status": "NOT_TESTED"
+    }
+  },
+  "input_validation": {
+    "duplicate_keys": 0,
+    "finite_scores": true,
+    "folds": [
+      0,
+      1
+    ],
+    "result_rows": 40,
+    "score_rows": 35960,
+    "seeds": [
+      74,
+      75,
+      76,
+      77,
+      78
+    ],
+    "source_clean_fresh_rows_replayed": 29960,
+    "victim_ids": 10,
+    "views": [
+      "paired_hidden64_drift",
+      "suspect_hidden64"
+    ]
+  },
+  "principal_results": {
+    "exact_count_pooled_false_go_rate_k500": 0.00025,
+    "k120_exact_count_abstain_rate": 1.0,
+    "k120_exact_count_go_rate": 0.0,
+    "k120_ratio1_2_go_rate": 0.0,
+    "k500_exact_count_abstain_rate": 0.029749999999999943,
+    "k500_exact_count_go_rate": 0.9702500000000001,
+    "k500_ratio1_2_go_rate": 0.0,
+    "max_cell_false_go_rate": 0.005,
+    "mean_lower_bound_fraction_k120": 0.7819229291322245,
+    "mean_lower_bound_fraction_k500": 0.9013041972246958,
+    "poison_prevalence_in_target_stratum": 0.20477815699658702
+  },
+  "scope_limits": [
+    "Retrospective analysis: archived victims predate PREREG_S1_S4.md.",
+    "Population is the target-assigned detector-defined stratum, not the complete eight-class training set.",
+    "Only BloodMNIST, BadNets, one victim architecture, five seeds, and two score views are covered.",
+    "Fresh calibration at k=500 is unavailable because each fold has only 333 fresh rows.",
+    "k=2000 is unavailable because each fold has fewer than 2000 clean training members."
+  ],
+  "status": "PASS_WITH_SCOPE_LIMITS"
+}

@@ -1,0 +1,244 @@
+{
+  "contract": "pathmnist_terminal_integration_execution_v2",
+  "status": "FROZEN_PRETERMINAL_EXECUTION",
+  "performance_endpoints_inspected": false,
+  "scientific_decision_rules_changed": false,
+  "required_terminal_route_marker_prefix": "PATHMNIST_TERMINAL_ROUTE=",
+  "required_terminal_capsule_hash_marker_prefix": "PATHMNIST_CLAIM_CAPSULE_SHA256=",
+  "required_terminal_metric_marker_prefix": "PATHMNIST_METRIC=",
+  "terminal_claim_binding_surfaces": {
+    "english_sentence_targets": [
+      "manuscript_en/main_en.tex",
+      "manuscript_tifs_en/main_tifs.tex"
+    ],
+    "chinese_sentence_targets": [
+      "manuscript_zh/main_zh.tex"
+    ],
+    "metric_targets": [
+      "results/top_journal_program_v1/PAPER_TABLES.md",
+      "manuscript_tifs_en/supplement_tifs.tex"
+    ]
+  },
+  "purpose": "Close the post-selection execution gap without changing R0--R3. In particular, supersede the V1 instruction to update final_bundle_receipt.json: the V1 receipt and verifier are immutable history, and terminal closure must create V2 artifacts.",
+  "bindings": {
+    "results/top_journal_program_v1/pathmnist_terminal_claim_integration_contract_v1.json": "71e09c3fb678fad1024d822b929aca8379d61372c24d5e1441cb10d5d85f79c0",
+    "results/top_journal_program_v1/tifs_pathmnist_terminal_integration_template_v1.json": "5e40fb48bac2d0cd96cf106fdc1218ca88553f167b1d3dd435f4b064f8cfa36d",
+    "results/top_journal_program_v1/pathmnist_terminal_route_selector_contract_v1.json": "330a707ce6b284771fa555c094902174e55ab7bfa3eabf4ed48dc7c4752977dd",
+    "src/select_pathmnist_terminal_route_v2.py": "2210db9c00afa52414020978770285c0372ab8acb541ee58391d6fdcde3ba73a",
+    "results/top_journal_program_v1/pathmnist_terminal_replay_dataset_lifetime_amendment_2026-10-04.json": "c6b07bb544931bc4bc928b07cd6b0af3db8d8ddbbc0e913401077a295eabd83c",
+    "src/run_pathmnist_terminal_staged_replay_v2.py": "b406a62e45c4c384355f5b5ecc6d67225df20fb2fd5caa38ebd73f7f9c7c93c3",
+    "src/run_full_source_regression_terminal_v2.py": "b9f692a388d7c3a5acd4ed65fe2766f40d3357dc3ed899d9c38195648594e195",
+    "src/build_terminal_release_profile_v2.py": "1abefb3b9b3fa7f111dd9770600c9517284521818d5ac95a6c2be1557ccb9ebb",
+    "src/run_terminal_reviewer_package_v2.py": "4cc48cd95ab7c6c156ea9636ce6615609f83ba04b39fdf6022a2424073404b53",
+    "src/prepare_tifs_terminal_visual_qa_v2.py": "7caba640436266287667eaa6e8876cde10bc4afde4692427dc446f5e6776b97b",
+    "src/integrate_pathmnist_terminal_surfaces_v2.py": "3aee92ac15323d9cc1ff2671a22745b9c9027662f59b20bd5ad8fc2229ee800b"
+  },
+  "ordered_routes": [
+    {
+      "route": "R0_INVALID_OR_INCOMPLETE",
+      "pooling_allowed": false
+    },
+    {
+      "route": "R1_INSUFFICIENT_ELIGIBLE_VICTIMS",
+      "pooling_allowed": false
+    },
+    {
+      "route": "R2_ELIGIBLE_PRIMARY_GATE_FAIL",
+      "pooling_allowed": true
+    },
+    {
+      "route": "R3_ELIGIBLE_PRIMARY_GATE_PASS",
+      "pooling_allowed": true
+    }
+  ],
+  "mutable_integration_targets": [
+    "results/top_journal_program_v1/PATHMNIST_OFFICIAL_WEIGHT_DETECTOR_CONFIRMATION_ADDENDUM.md",
+    "results/top_journal_program_v1/FINAL_EVIDENCE_REPORT.md",
+    "results/top_journal_program_v1/FINAL_CLAIM_MATRIX.csv",
+    "results/top_journal_program_v1/PAPER_TABLES.md",
+    "results/top_journal_program_v1/STATUS.md",
+    "results/top_journal_program_v1/NEXT_EXPERIMENTS.md",
+    "results/top_journal_program_v1/TOP_JOURNAL_MASTER_PLAN_V2.md",
+    "results/top_journal_program_v1/TOP_JOURNAL_READINESS_GATE_2026-10-01.md",
+    "results/top_journal_program_v1/ARTIFACT_INDEX.md",
+    "results/top_journal_program_v1/REPRODUCE.md",
+    "results/top_journal_program_v1/TIFS_CLAIM_EVIDENCE_MAP_2026-10-03.md",
+    "results/top_journal_program_v1/TARGET_JOURNAL_SELECTION_DOSSIER_2026-10-03.md",
+    "results/top_journal_program_v1/PRETERMINAL_RELEASE_READINESS_AUDIT_2026-10-04.md",
+    "results/top_journal_program_v1/TIFS_MOCK_REVIEW_AND_ACTIONS_2026-10-04.md",
+    "manuscript_zh/main_zh.tex",
+    "manuscript_en/main_en.tex",
+    "manuscript_tifs_en/main_tifs.tex",
+    "manuscript_tifs_en/supplement_tifs.tex",
+    "results/top_journal_program_v1/bilingual_manuscript_receipt.json"
+  ],
+  "preterminal_mutable_hashes": {
+    "results/top_journal_program_v1/PATHMNIST_OFFICIAL_WEIGHT_DETECTOR_CONFIRMATION_ADDENDUM.md": "5214c7d669d5a216f7621135d69c48a09ee04caaaee3ee9bb2414d83d0b948de",
+    "results/top_journal_program_v1/FINAL_EVIDENCE_REPORT.md": "120302f8a8e17bcabcbc4261fc37ff56b2304582739a2ebf47da148ed7e8d1d8",
+    "results/top_journal_program_v1/FINAL_CLAIM_MATRIX.csv": "a22a173d00084ff18d9de715bfb308b7811ea1957d821b2459d96eeae91d31f7",
+    "results/top_journal_program_v1/PAPER_TABLES.md": "2823c64727bce3c36e05d6e5002a7984df69f7ad4109aa9b6c5eca3bc2a99406",
+    "results/top_journal_program_v1/STATUS.md": "49f1a3cd4464773d3b87e7a95e448d555c62b9e24f75aadfc673d2ef3ff6ceea",
+    "results/top_journal_program_v1/NEXT_EXPERIMENTS.md": "19a6a87e4d5f1cb03aa9904c5df6430175c44582ad75882ef6dbe33bacc41e97",
+    "results/top_journal_program_v1/TOP_JOURNAL_MASTER_PLAN_V2.md": "b352e56c59300dc087570561385f83b749d630a125ac353de74c87a76fd8e11d",
+    "results/top_journal_program_v1/TOP_JOURNAL_READINESS_GATE_2026-10-01.md": "8f10634667fe7d2aaa71da34b2b47e91966493852ea3af0330539e0d14c17efa",
+    "results/top_journal_program_v1/ARTIFACT_INDEX.md": "6ed5b973771636bbb323179872aadf7efa93f2f0fc0c24839ada41be61c84f74",
+    "results/top_journal_program_v1/REPRODUCE.md": "0cdf362eadc99363f402332e4adf23c8c300256e86d39b9fa82209d67058e8cc",
+    "results/top_journal_program_v1/TIFS_CLAIM_EVIDENCE_MAP_2026-10-03.md": "940f0a3c2f316538ab62d55f402f0e93f0d589e42ddc6f889f94559415a1daef",
+    "results/top_journal_program_v1/TARGET_JOURNAL_SELECTION_DOSSIER_2026-10-03.md": "542eaedf26f9683670d188fed686b12e822d0c2bcbf14cb5be96672645f89415",
+    "results/top_journal_program_v1/PRETERMINAL_RELEASE_READINESS_AUDIT_2026-10-04.md": "dd53a1c3e52b27c36e360465ea661bf0d8edd0fd17a622d4f6fff23a503bd153",
+    "results/top_journal_program_v1/TIFS_MOCK_REVIEW_AND_ACTIONS_2026-10-04.md": "3047bc99b53e5f615ede788719d470997ee4b483b66a76f74f316adf1d31d4da",
+    "manuscript_zh/main_zh.tex": "26b74fae4b0c24ea3e3c601d6156dc472a80809659411bbb24ca26f2c64928c8",
+    "manuscript_en/main_en.tex": "fbd1ce25d73e2f96bd6328f73887dd50f54d7de76d47bb2d1b2fbbe6dec007cb",
+    "manuscript_tifs_en/main_tifs.tex": "769f2e9fd2dd93bf41ea5d49d0932313ef733bccb6c5290ac26b7fa09a595fd5",
+    "manuscript_tifs_en/supplement_tifs.tex": "63981fb39b54f84020944fb793e514f8822375c5690adc54e429847e69146110",
+    "results/top_journal_program_v1/bilingual_manuscript_receipt.json": "4aeef0f73c317b5b8d78f5f95f99acd269947af98ae7c5a7cc153543092a34d5"
+  },
+  "terminal_surface_actions": [
+    {
+      "path": "results/top_journal_program_v1/PATHMNIST_OFFICIAL_WEIGHT_DETECTOR_CONFIRMATION_ADDENDUM.md",
+      "preterminal_anchor": "# PathMNIST official-weight detector confirmation addendum",
+      "terminal_action": "append the selected route, eligible-victim accounting, permitted endpoints and replay/route receipt hashes"
+    },
+    {
+      "path": "results/top_journal_program_v1/FINAL_EVIDENCE_REPORT.md",
+      "preterminal_anchor": "PathMNIST adds an official external-center data acquisition and victim-feasibility chain, but not a confirmed detector endpoint.",
+      "terminal_action": "replace the open external-domain conclusion and update verifier/replay totals"
+    },
+    {
+      "path": "results/top_journal_program_v1/FINAL_CLAIM_MATRIX.csv",
+      "preterminal_anchor": "PENDING_TERMINAL",
+      "terminal_action": "replace C27 only with the route receipt claim_decision and bounded evidence text"
+    },
+    {
+      "path": "results/top_journal_program_v1/PAPER_TABLES.md",
+      "preterminal_anchor": "## Table 0E. Standard PathMNIST route readiness (not formal evidence)",
+      "terminal_action": "add the route-authorized five-seed victim/detector table without deleting the lightweight boundary"
+    },
+    {
+      "path": "results/top_journal_program_v1/STATUS.md",
+      "preterminal_anchor": "Until a strict V2 receipt is atomically persisted, the block contributes no detector-efficacy evidence.",
+      "terminal_action": "replace the open detector gate with the selected terminal verdict and remaining author-only blockers"
+    },
+    {
+      "path": "results/top_journal_program_v1/NEXT_EXPERIMENTS.md",
+      "preterminal_anchor": "wait for its strict terminal verdict without restarting",
+      "terminal_action": "close the wait instruction and apply the route-dependent next-experiment rule"
+    },
+    {
+      "path": "results/top_journal_program_v1/TOP_JOURNAL_MASTER_PLAN_V2.md",
+      "preterminal_anchor": "the running PathMNIST 103--107 detector confirmation is the sole open",
+      "terminal_action": "close the external-domain milestone and retain any unresolved author or hardware boundary"
+    },
+    {
+      "path": "results/top_journal_program_v1/TOP_JOURNAL_READINESS_GATE_2026-10-01.md",
+      "preterminal_anchor": "OPEN — hard gate",
+      "terminal_action": "replace E5 with exactly the selected R0--R3 state and rerun the readiness decision"
+    },
+    {
+      "path": "results/top_journal_program_v1/ARTIFACT_INDEX.md",
+      "preterminal_anchor": "Path efficacy remains sealed.",
+      "terminal_action": "index the replay, route, manuscript, regression, package and V2 final receipts"
+    },
+    {
+      "path": "results/top_journal_program_v1/REPRODUCE.md",
+      "preterminal_anchor": "Only after the V2 receipt exists, select the frozen terminal route:",
+      "terminal_action": "record the selected route and add the exact terminal rebuild/verification command sequence"
+    },
+    {
+      "path": "results/top_journal_program_v1/TIFS_CLAIM_EVIDENCE_MAP_2026-10-03.md",
+      "preterminal_anchor": "外部域子主张仍由 sealed terminal process 管辖",
+      "terminal_action": "replace only the external-domain subclaim while retaining all non-Path claim ceilings"
+    },
+    {
+      "path": "results/top_journal_program_v1/TARGET_JOURNAL_SELECTION_DOSSIER_2026-10-03.md",
+      "preterminal_anchor": "Frozen terminal route",
+      "terminal_action": "record the selected route's target-journal consequence without changing official scope evidence"
+    },
+    {
+      "path": "results/top_journal_program_v1/PRETERMINAL_RELEASE_READINESS_AUDIT_2026-10-04.md",
+      "preterminal_anchor": "NOT RELEASE READY — TERMINAL SCIENTIFIC ROUTING AND AUTHOR ACTIONS REMAIN",
+      "terminal_action": "replace the scientific-route blocker and preserve all author/rights-holder decisions"
+    },
+    {
+      "path": "results/top_journal_program_v1/TIFS_MOCK_REVIEW_AND_ACTIONS_2026-10-04.md",
+      "preterminal_anchor": "PathMNIST 103--107 严格 staged replay",
+      "terminal_action": "close reviewer action R2 with the route-authorized verdict and evidence ceiling"
+    },
+    {
+      "path": "manuscript_zh/main_zh.tex",
+      "preterminal_anchor": "性能端点在该重放通过前继续封存，因此仍不能声称 PathMNIST 检测确认。",
+      "terminal_action": "synchronize abstract, protocol, external-domain results, claim ledger, limitations and conclusion"
+    },
+    {
+      "path": "manuscript_en/main_en.tex",
+      "preterminal_anchor": "Until that replay passes, every performance endpoint remains sealed and the block is not detector evidence.",
+      "terminal_action": "synchronize abstract, protocol, external-domain results, claim ledger, limitations and conclusion"
+    },
+    {
+      "path": "manuscript_tifs_en/main_tifs.tex",
+      "preterminal_anchor": "% PRETERMINAL DRAFT: PathMNIST 103--107 endpoints remain sealed.",
+      "terminal_action": "replace all three sealed anchors, update scope/claim tables and preserve the page-budget hierarchy"
+    },
+    {
+      "path": "manuscript_tifs_en/supplement_tifs.tex",
+      "preterminal_anchor": "% PRETERMINAL SUPPLEMENT: PathMNIST 103--107 endpoints remain sealed.",
+      "terminal_action": "replace the sealed configuration row with full route-permitted victim, detector, interval and baseline evidence"
+    },
+    {
+      "path": "results/top_journal_program_v1/bilingual_manuscript_receipt.json",
+      "preterminal_anchor": "\"status\": \"PASS\"",
+      "terminal_action": "refresh source/PDF hashes, page counts and terminal route metadata after recompilation"
+    }
+  ],
+  "protected_history": [
+    "src/verify_top_journal_final_bundle.py",
+    "results/top_journal_program_v1/final_bundle_receipt.json",
+    "results/top_journal_program_v1/tifs_main_preterminal_receipt_2026-10-03.json",
+    "results/top_journal_program_v1/tifs_preterminal_visual_qa_2026-10-03.json"
+  ],
+  "protected_history_hashes": {
+    "src/verify_top_journal_final_bundle.py": "b80fac29d45efb953b3b5d7a68d782459ec75b60d8ccff60185350517985b846",
+    "results/top_journal_program_v1/final_bundle_receipt.json": "2e50e529246d7d56a8e910ee63306bb1b86b5bb1d236fec10410d807cb8f76d4",
+    "results/top_journal_program_v1/tifs_main_preterminal_receipt_2026-10-03.json": "831165a7c37ac2fbc31c3a1890b0eb0e68aca5f4c27a027eb0531d2ebf736ccc",
+    "results/top_journal_program_v1/tifs_preterminal_visual_qa_2026-10-03.json": "f9cf3c89a5359842e99c60f6da0d402982c692238e69c1571ad6c6f3acf45b4e"
+  },
+  "required_terminal_inputs": [
+    "results/top_journal_program_v1/pathmnist_terminal_staged_replay_v2_receipt_2026-10-04.json",
+    "results/top_journal_program_v1/pathmnist_terminal_route_selection_v2_receipt.json"
+  ],
+  "required_new_terminal_outputs": [
+    "results/top_journal_program_v1/pathmnist_terminal_claim_capsule_v2_2026-10-04.json",
+    "results/top_journal_program_v1/pathmnist_terminal_claim_capsule_verification_v2_2026-10-04.json",
+    "results/top_journal_program_v1/pathmnist_terminal_surface_integration_v2_2026-10-04.json",
+    "results/top_journal_program_v1/tifs_main_terminal_receipt_2026-10-04.json",
+    "results/top_journal_program_v1/tifs_terminal_visual_qa_2026-10-04.json",
+    "results/top_journal_program_v1/full_source_regression_terminal_2026-10-04.json",
+    "results/top_journal_program_v1/reviewer_package_terminal_receipt_2026-10-04.json",
+    "results/top_journal_program_v1/release_profile_terminal_receipt_2026-10-04.json",
+    "results/top_journal_program_v1/final_bundle_v2_receipt_2026-10-04.json"
+  ],
+  "mandatory_sequence": [
+    "require the atomic V2 replay receipt before any PathMNIST endpoint parse",
+    "run the frozen selector once and persist exactly one route receipt",
+    "build the hash-bound route-authorized bilingual claim capsule before editing any claim surface",
+    "independently replay every victim row, permitted detector summary and bilingual claim in the capsule",
+    "render only that route's allowed prose and numeric fields",
+    "update every mutable integration target while preserving all protected history",
+    "recompile and visually inspect all changed manuscript pages",
+    "refresh bilingual, threat-model, theory, TIFS and claim-consistency checks",
+    "run the complete source regression once after integration",
+    "rebuild and independently replay the reviewer and public release profiles",
+    "create and run the V2 final-bundle verifier against the V2 replay and route receipts",
+    "write new terminal receipts and never overwrite V1 or preterminal history"
+  ],
+  "route_independent_invariants": [
+    "seeds remain exactly 103--107",
+    "R0 and R1 prohibit pooled detector efficacy",
+    "R2 is a negative external-validity result, never positive efficacy",
+    "R3 is conditional on dataset, architecture, attack, reference budget and calibration law",
+    "all-clean FPR remains the primary FPR quantity",
+    "no route authorizes architecture-, attack-, dataset- or channel-invariant detection",
+    "author declarations remain author-confirmed rather than inferred",
+    "every mutable claim/release surface carries exactly the selected machine-readable terminal route marker"
+  ]
+}

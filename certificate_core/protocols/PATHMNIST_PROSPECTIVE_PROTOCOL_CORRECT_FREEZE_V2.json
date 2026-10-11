@@ -1,0 +1,39 @@
+{
+  "status": "FROZEN_BEFORE_VICTIM_TRAINING_AND_CERTIFICATE_ISSUANCE",
+  "freeze_date": "2026-10-09T17:30:00+08:00",
+  "experiment": "pathmnist_prospective_protocol_correct_v2",
+  "outcomes_opened_at_freeze": false,
+  "key_revealed_at_freeze": false,
+  "formal_seeds": [8301, 8302, 8303, 8304, 8305],
+  "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+  "key_commitment_sha256": "da5061c58a4507561159895498a4103e28a686098a2c2f1ea7b35ab69c290b0a",
+  "weight_sha256": {
+    "resnet18_28_1.pth": "64774e5fdf8786c7f0182eb6a7300d162b12a7a93455805cb2987eb0c12258e0",
+    "resnet18_28_2.pth": "9984d6c42189d79462e22c190bd4b0c669d98a8dac1d0e98f915b9c866ead63e"
+  },
+  "hashes": {
+    "architecture_sha256": "f72f8ed2ccd491386adb430b191fb64f9b0a4194a3f8bbcc5abe97a088485474",
+    "audit_wrapper_sha256": "86c2ba8e56a759573d94f9ab2bb7f62faa9d3d5198dc921652862504ed75682f",
+    "base_audit_sha256": "ae4ff3925745043f58da8f65c1f38047d772b49e7c39529b4e2ca0771b10e518",
+    "base_issuer_sha256": "780dea624b7265753e92e963b08007253d3f1a4d22d9c377a2e4a5e18788945e",
+    "base_registrar_sha256": "9dfc06782a17c0193748e6f47afec0147a7f36dfabe545b0dac9aacb8a04f688",
+    "base_trainer_sha256": "3fb3dc10c91720c245a11e2db7f006e3026eacdd1539b7f14e845647f0624fe7",
+    "base_verifier_sha256": "26b81dffeb8bd6f7577b361b2c95e2f7d504fa4fefdb677d053acee04dcc1e56",
+    "certificate_library_sha256": "890d00b4c8522ee352ef3b8bdeabf9b9fc0098783d7af0b3c51482c670652171",
+    "config_sha256": "94e4207a4b83bbad50276cfc9ba641f30998abb48f6e14d59b54207cc3c29faf",
+    "issuer_wrapper_sha256": "5f9fd4ea3a8d042539507ecba20bc51b63166d0517217a69a28f5791631b6158",
+    "prereg_sha256": "5f6b17bab440d4d77e7f7cd6721ef071ad19e093caead0d852bb8c1e27e28227",
+    "prospective_common_sha256": "5c671350a30f20016a8b0d5a83994c5342803333fd4c4ffdc4666202eaed2b49",
+    "protocol_common_sha256": "fd0f383281ea5866de0a5a854b2047faabe005a55608a52d29eadd324c1ea488",
+    "registrar_wrapper_sha256": "fe8a21e6df806f4f81d3e985576a80ede59f54c11cec280a1060cc5fe888be5e",
+    "smoke_receipt_sha256": "18e051931c3774bd70db7f0fce1714317e95755488a3e88c3acf1aa2f17abbf7",
+    "smoke_verification_sha256": "016d4c72fc6dfd8931b452c6618de6f9276ed80eceaf84aba4d15671935ccd9c",
+    "test_file_sha256": "ba868014e7e0670cd1f9bc390d8a5a1d55623c53c750b796f21df7d7c3b318d3",
+    "training_core_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "training_engine_sha256": "a5045474d0ea25a84a1365339eef1ee2ef7bd448784d223bb9d6e583cdf54711",
+    "training_wrapper_sha256": "45de9651ab366c496e3f0dccb850c3cb1ad3faf2c4fd7aef664da8ad4120e9b7",
+    "verifier_wrapper_sha256": "94d001c2772b23dc2c4aaec94734c943c6913f3121e48ff1fd63764b998d6487",
+    "weight_receipt_sha256": "79bb54bf93d2eb845b1f8949d78c291a473bea41d607b9e200a127cfaf6700bd"
+  },
+  "interpretation": "Any mutation of a frozen file, seed, key, dataset, weight, endpoint, or declared interval after this freeze invalidates the prospective-v2 label."
+}

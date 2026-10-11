@@ -1,0 +1,121 @@
+{
+  "protocol_id": "tifs_native_cifar10_v1",
+  "frozen_at": "2026-10-06T08:10:00+08:00",
+  "status": "frozen_before_detector_execution",
+  "scope": {
+    "dataset": "CIFAR-10",
+    "native_definition": "Original CIFAR-10 Python release, 32x32 RGB, ten classes; no MedMNIST, generated, substituted, or proxy images.",
+    "attack": "Audited all-to-one bottom-right patch attack from the archived paper5 native CIFAR-10 program",
+    "target_class": 8,
+    "target_name": "ship",
+    "victim": "CIFAR-native ResNet-18, width 64, ten-way head",
+    "decision_unit": "unique source training record; repeated optimizer exposures are not duplicated in the audit table",
+    "confirmation_seeds": [42, 43, 44, 45, 46, 47, 48, 49, 50, 51],
+    "minimum_eligible_victims": 8,
+    "no_seed_replacement": true
+  },
+  "dataset": {
+    "root_relative_to_paper14": "../paper5/paper_v6/paper5_code_audited_complete_20260716/paper5/datasets/cifar10",
+    "archive": "cifar-10-python.tar.gz",
+    "official_url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+    "archive_md5": "c58f30108f718f92721af3b95e74349a",
+    "archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+    "torchvision_integrity_check_required": true,
+    "expected_train_rows": 50000,
+    "expected_test_rows": 10000,
+    "expected_shape": [32, 32, 3]
+  },
+  "candidate_construction": {
+    "clean_records": 50000,
+    "clean_records_per_class": 5000,
+    "poison_source_classes": [0, 1, 2, 3, 4, 5, 6, 7, 9],
+    "poison_records_per_source_class": 750,
+    "unique_poison_records": 6750,
+    "candidate_rows": 56750,
+    "candidate_target_assigned_rows": 11750,
+    "patch_size": 4,
+    "patch_alpha": 0.45,
+    "patch_rgb": [1.0, 0.85, 0.05],
+    "poison_selection_rng": "torch.Generator(seed + 2200 + source_class * 131 + target_class * 17)",
+    "assigned_label_for_poison": 8,
+    "poison_repeat_in_archived_training": 3,
+    "poison_repeat_in_audit_table": 1
+  },
+  "trusted_split": {
+    "source": "official CIFAR-10 test split, target class only",
+    "per_victim_permutation_rng": "numpy.default_rng(2026100600 + victim_seed)",
+    "reference_rows": 400,
+    "calibration_rows": 400,
+    "reserved_rows": 200,
+    "disjoint_from_training_candidates": true,
+    "reference_calibration_reserved_pairwise_disjoint": true
+  },
+  "observation": {
+    "checkpoint_role": "archived suspect victim",
+    "feature": "concatenated tanh hidden1 (256-D) and tanh penultimate (128-D)",
+    "feature_dimension": 384,
+    "batch_size": 256,
+    "numeric_scoring_dtype": "float64"
+  },
+  "detectors": {
+    "primary": {
+      "name": "CF-CMD-U",
+      "rule": "Two-fold target-candidate cross-fit raw mean direction; each half is scored by the opposite half; conservative upper-tail rank p-values from the separate calibration split.",
+      "alpha": 0.05,
+      "crossfit_rng": "numpy.default_rng(20271001 + victim_seed)",
+      "defined_population": "target-assigned candidate records"
+    },
+    "matched_baselines": [
+      {
+        "name": "target_centroid_distance",
+        "rule": "Euclidean distance from the trusted target-class reference centroid with the same calibration split and alpha."
+      },
+      {
+        "name": "crossfit_spectral",
+        "rule": "Two-fold spectral-signature score; the principal direction is fit on the opposite candidate half and calibrated on the same trusted calibration split."
+      }
+    ]
+  },
+  "victim_eligibility": {
+    "clean_balanced_accuracy_min": 0.75,
+    "attack_success_rate_min": 0.90,
+    "clean_accuracy_reported": true,
+    "clean_test_scope": "all 10000 official test images",
+    "asr_scope": "all 9000 non-target official test images after the frozen patch"
+  },
+  "primary_detector_gate": {
+    "per_seed_tpr_min": 0.90,
+    "per_seed_target_clean_fpr_max": 0.05,
+    "all_clean_fpr_reported": true,
+    "auc_scope": "poison versus legitimate target-class clean records within the target-assigned candidate population",
+    "confirmation_claim_requires": "at least 8 eligible victims and pooled TPR >= 0.90 and pooled target-clean FPR <= 0.05",
+    "otherwise": "retain and report a negative or inconclusive result without retuning"
+  },
+  "stopping_rules": [
+    "Run a synthetic detector smoke test plus dataset/checkpoint integrity and forward-pass checks first; smoke uses no real candidate detection outcome and cannot enter confirmation aggregates.",
+    "Abort a victim on dataset integrity, checkpoint file hash, checkpoint state hash, architecture, config, candidate-count, non-finite-score, or collapsed-direction mismatch.",
+    "Do not replace failed or ineligible seeds.",
+    "Do not tune feature layer, alpha, trusted budgets, target class, attack, or detector after reading confirmation detector outcomes.",
+    "If fewer than eight of ten victims are eligible, mark the native attack-development endpoint inconclusive and do not pool a population-level detector claim.",
+    "GTSRB is a separate feasibility line and cannot substitute for this CIFAR-10 confirmation block."
+  ],
+  "archived_victim_source": {
+    "root_relative_to_paper14": "../paper5/paper_v6/paper5_code_audited_complete_20260716/paper5/outputs/cifar10_multiclass_resnet18_audited_v1_patch_target8_confirm",
+    "source_manifest_sha256": "36ba56ee78912c4488ea67eea15ff1470fd89983f0d63391022d2fedfa80ae87",
+    "source_metrics_sha256": "c75b46e3e407fa2c3056d845ea9cf472d2f327fce2bd1854661b485fbc3a35b7",
+    "base_runner_sha256": "2f96101293aa6c589dd362c992e6e33c9d5995391d8f6beccbf261c9852cace1",
+    "audited_runner_sha256": "97053f58d1ef4fcf5bb8847a4ac149e5d97917a0933dea974718c1b5a576c822",
+    "checkpoints": [
+      {"seed": 42, "file": "checkpoints/model_seed42.pt", "file_sha256": "f665aad559f6a88fb86aff27d535f74187f579aa8d1785e723a2db55d234436f", "state_sha256": "815b1352022a6649ec7ddc8b599c81e04d40412f022558dc14ed72e619d1220f"},
+      {"seed": 43, "file": "checkpoints/model_seed43.pt", "file_sha256": "6cd9c2ed5f33aaf970c9838e53b9bf2686b9f712b4d21e5e14d0917474228dd9", "state_sha256": "58d4c745be62d2a06eb2f42845adaf1c658380bcbd0474306074c43800a01f04"},
+      {"seed": 44, "file": "checkpoints/model_seed44.pt", "file_sha256": "4ba3eedc9aa5ced024300ae4cf2f0862ebb6a7f72a18dca4c4d5e54f9c693118", "state_sha256": "07238c7d8dc5c455aa64593cdc66bda89c94ac0f607ec94e8cedced194273af2"},
+      {"seed": 45, "file": "checkpoints/model_seed45.pt", "file_sha256": "3f85a511ab399d6faf305d275071e1d74f260684cb12fa49ae0c826dfa886c71", "state_sha256": "c616ea1a590d7c0c542ce5d382d6897a7dfb87d619903c51b8699dc4c4878aee"},
+      {"seed": 46, "file": "checkpoints/model_seed46.pt", "file_sha256": "13616ce65d80d8fbee7b53fac0025b14b81c6dcc0bdf9fc84d29e45050605b11", "state_sha256": "ef034aa44ab090229dc4bfa6a5dded2180370a2435b881b2a7bff6efdc75f405"},
+      {"seed": 47, "file": "checkpoints/model_seed47.pt", "file_sha256": "820a8b0dead3f6f0a7fcd13f29763c9adff481432828f3bd33e355cc4f1f26e6", "state_sha256": "c06403c81233fc02e30f7668cdcebaa0ede7e016d4b529c9cd522abd21d7a45e"},
+      {"seed": 48, "file": "checkpoints/model_seed48.pt", "file_sha256": "67b9a4849438412f2261d5a7d219bab9c84f191a85ba5fbbf3cfb33fab568209", "state_sha256": "f7b8ddb672e91f74c4d1a638d4cef983b09da1b0e2b5c2cd15d496e60ef889d0"},
+      {"seed": 49, "file": "checkpoints/model_seed49.pt", "file_sha256": "c87b37b33f7488d79bf1d3cdb61fb784dfbaef3b63aecacb87b9f126ed6cb3b3", "state_sha256": "99a2ea652a53bb77ace1c3a9199ca1ddda773a35034de9ac1e0bf3f2a32b533b"},
+      {"seed": 50, "file": "checkpoints/model_seed50.pt", "file_sha256": "efe3f40907a681dfd9b1b330ee57a8be09f132fd55848f1d7ee35143cd40d165", "state_sha256": "560e6894c9b27f215be0a2101f9832bec990115d2b84133ba67aef4a5fdbaac0"},
+      {"seed": 51, "file": "checkpoints/model_seed51.pt", "file_sha256": "d9dfefbb9d3a0e58f48d0eca1361659a9c3d4607a1378e88982e3c8dd3242434", "state_sha256": "702ec9e73922e7d3dadd3a6827576dbd05e370534c1440aa079e796b0616c871"}
+    ]
+  }
+}

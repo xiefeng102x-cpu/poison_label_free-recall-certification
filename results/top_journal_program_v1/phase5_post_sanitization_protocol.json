@@ -1,0 +1,24 @@
+{
+  "protocol_id": "cf_cmd_phase5_post_sanitization_v1",
+  "frozen_at": "2026-09-28",
+  "dataset": "BloodMNIST",
+  "source_detection": "CF-CMD-U fixed-attack confirmation on seeds 62--71",
+  "eligible_seeds_only": true,
+  "conditions": {
+    "detected_removal": "remove every candidate flagged by CF-CMD-U",
+    "random_matched_removal": "remove the same total number of candidate samples using a fixed seed-blinded random permutation",
+    "oracle_poison_removal": "remove all 60 poison samples and no clean candidates"
+  },
+  "retraining": {
+    "classical": "MLP from scratch, 80 epochs",
+    "qml": "local-angle QML clean model from scratch, up to 40 epochs, followed by the frozen five-epoch backdoor adaptation when poisons remain",
+    "validation_selection": "unchanged",
+    "test_use": "one-shot post-training balanced CA and ASR"
+  },
+  "reported_outcomes": [
+    "clean candidates removed",
+    "poisons removed and remaining",
+    "classical post-sanitization CA and ASR",
+    "QML post-sanitization CA and ASR"
+  ]
+}

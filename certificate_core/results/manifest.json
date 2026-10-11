@@ -1,0 +1,14 @@
+{
+  "paper": "Liu et al., JMLR 23(44), 2022",
+  "algorithm": "Basic-CDF Algorithm 1 + Corollary 1",
+  "seed_root": 20261010,
+  "replicates_per_cell": 1000,
+  "grid_cells": 48,
+  "elapsed_seconds": 63.93914580345154,
+  "files": {
+    "matched_cells.csv": "10a9bda0bb00e5618384d36a1af7e0bb6b752a8c2322044788aba00f05ef021b",
+    "matched_summary.csv": "5534e81e729a8c7463d6718b3ee3e3431cd520ae0153d354a51fefd794ef8813",
+    "budget_comparison.csv": "9ddc31fd443ea478a56112e7f90c1f9b4f900a70d63512a9bd44f4110b326856",
+    "REPORT.md": "1792959ceb6b156d698c3ecff254bddcddf4010c334e8bc8d7dbd6f1f55a4a4b"
+  }
+}

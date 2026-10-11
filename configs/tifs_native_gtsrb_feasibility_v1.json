@@ -1,0 +1,56 @@
+{
+  "protocol_id": "tifs_native_gtsrb_feasibility_v1",
+  "frozen_at": "2026-10-06T08:45:00+08:00",
+  "status": "official_data_ready_pre_smoke",
+  "purpose": "Determine whether a native GTSRB confirmation can be run without substituting data or inventing victims.",
+  "native_requirement": {
+    "dataset": "Original GTSRB RGB traffic-sign images and 43 labels",
+    "accepted_loader": "torchvision.datasets.GTSRB",
+    "substitutions_forbidden": ["MedMNIST", "CIFAR-10 relabeling", "synthetic traffic signs", "paper-only tabulated values"]
+  },
+  "torchvision_0_22_1_sources": [
+    {
+      "archive": "GTSRB-Training_fixed.zip",
+      "url": "https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/GTSRB-Training_fixed.zip",
+      "md5": "513f3c79a4c5141765e10e952eaa2478",
+      "sha256": "df4144942083645bd60b594de348aa6930126c3e0e5de09e39611630abf8455a"
+    },
+    {
+      "archive": "GTSRB_Final_Test_Images.zip",
+      "url": "https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/GTSRB_Final_Test_Images.zip",
+      "md5": "c7e4e6327067d32654124b0fe9e82185",
+      "sha256": "48ba6fab7e877eb64eaf8de99035b0aaecfbc279bee23e35deca4ac1d0a837fa"
+    },
+    {
+      "archive": "GTSRB_Final_Test_GT.zip",
+      "url": "https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/GTSRB_Final_Test_GT.zip",
+      "md5": "fe31e9c9270bbcd7b84b7f21a9d9d9e5",
+      "sha256": "f94e5a7614d75845c74c04ddb26b8796b9e483f43541dd95dd5b726504e16d6d"
+    }
+  ],
+  "downloaded_dataset": {
+    "root_relative_to_paper14": "data/gtsrb_official",
+    "train_rows": 26640,
+    "test_rows": 12630,
+    "class_count": 43,
+    "test_ground_truth_csv_sha256": "58a660fab5465cce66d7334eb9422ae09ed16186ad4500766b59b5a077a1c12f",
+    "torchvision_integrity_and_load_check": "passed"
+  },
+  "execution_gate": {
+    "dataset_cache_required": true,
+    "audited_native_victim_checkpoint_required": true,
+    "checkpoint_must_include": ["architecture", "training configuration", "seed", "state hash", "attack definition"],
+    "minimum_checkpoint_count_for_confirmation": 3,
+    "if_data_exists_but_victims_do_not": "Record DATA_READY_VICTIM_TRAINING_REQUIRED, then run a prespecified one-seed smoke before freezing confirmation training parameters."
+  },
+  "searched_locations": [
+    "paper14/data",
+    "paper14/results",
+    "paper14/external/BackdoorBench",
+    "Blackdoor_1/paper5",
+    "<USER_HOME>/.cache",
+    "<USER_HOME>/Downloads",
+    "<USER_HOME>/datasets",
+    "<USER_HOME>/data"
+  ]
+}

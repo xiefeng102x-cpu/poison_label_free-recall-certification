@@ -1,0 +1,85 @@
+{
+  "contract": "pathmnist_terminal_claim_integration_v1",
+  "status": "FROZEN_BEFORE_TERMINAL_RESULT_INSPECTION",
+  "frozen_at": "2026-10-02T09:17:50+08:00",
+  "formal_block": {
+    "seeds": [103, 104, 105, 106, 107],
+    "unit_of_independence": "paired clean/suspect victim training seed",
+    "state_at_freeze": "RUNNING",
+    "performance_endpoints_inspected": false,
+    "no_seed_substitution": true,
+    "no_optional_stopping": true
+  },
+  "bindings": {
+    "protocol_sha256": "52bb254a7ddd1929ba7687bd4be83f5ebf038005d25e046ad9dea679168adca3",
+    "runner_sha256": "a5045474d0ea25a84a1365339eef1ee2ef7bd448784d223bb9d6e583cdf54711",
+    "standalone_verifier_sha256": "d565bfab8d4e9f64ada8468adc01f33145c33a634cfd1a5c160d651a699c15c0"
+  },
+  "decision_inputs": {
+    "independent_replay_pass": "standalone verifier status PASS, formal_evidence true, no failures, seeds exactly 103--107 and 25 method rows",
+    "eligible_seed_count": "number of pairs in which both clean and suspect balanced accuracy are at least 0.75 and suspect ASR is at least 0.80",
+    "primary_point_gate_pass": "all five pairs eligible, pooled primary TPR at least 0.90 and pooled primary all-clean FPR at most 0.05"
+  },
+  "ordered_routes": [
+    {
+      "route": "R0_INVALID_OR_INCOMPLETE",
+      "condition": "independent_replay_pass is false",
+      "allowed_claim": "No formal PathMNIST detector result.",
+      "required_action": "Freeze an incident report, preserve every artifact, and keep E5 open or failed according to the terminal failure; do not infer performance from partial files.",
+      "efficacy_pooling_allowed": false
+    },
+    {
+      "route": "R1_INSUFFICIENT_ELIGIBLE_VICTIMS",
+      "condition": "independent_replay_pass is true and eligible_seed_count is less than 5",
+      "allowed_claim": "The five-seed attack/victim feasibility gate was not met; PathMNIST detector outputs are seed-level diagnostic boundary evidence only.",
+      "required_action": "Report every seed and eligibility failure, but do not pool or promote a five-seed external-domain detector-efficacy endpoint.",
+      "efficacy_pooling_allowed": false
+    },
+    {
+      "route": "R2_ELIGIBLE_PRIMARY_GATE_FAIL",
+      "condition": "independent_replay_pass is true, eligible_seed_count equals 5, and primary_point_gate_pass is false",
+      "allowed_claim": "The frozen detector fails its primary point gate on an independently verified external data domain under the official-weight ResNet-18 route.",
+      "required_action": "Report all primary, secondary and baseline point estimates, seed-block intervals and per-seed rates as a confirmed external-domain limitation; do not claim positive efficacy.",
+      "efficacy_pooling_allowed": true
+    },
+    {
+      "route": "R3_ELIGIBLE_PRIMARY_GATE_PASS",
+      "condition": "independent_replay_pass is true, eligible_seed_count equals 5, and primary_point_gate_pass is true",
+      "allowed_claim": "Conditional external-domain confirmation for the frozen official-weight PathMNIST ResNet-18 route only.",
+      "required_action": "Report point estimates, seed-block intervals, per-seed rates, target-clean FPR and all baselines; retain dataset-, architecture- and attack-invariance prohibitions.",
+      "efficacy_pooling_allowed": true
+    }
+  ],
+  "mandatory_integration_targets": [
+    "results/top_journal_program_v1/PATHMNIST_OFFICIAL_WEIGHT_DETECTOR_CONFIRMATION_ADDENDUM.md",
+    "results/top_journal_program_v1/FINAL_EVIDENCE_REPORT.md",
+    "results/top_journal_program_v1/FINAL_CLAIM_MATRIX.csv",
+    "results/top_journal_program_v1/PAPER_TABLES.md",
+    "results/top_journal_program_v1/STATUS.md",
+    "results/top_journal_program_v1/NEXT_EXPERIMENTS.md",
+    "results/top_journal_program_v1/TOP_JOURNAL_MASTER_PLAN_V2.md",
+    "results/top_journal_program_v1/TOP_JOURNAL_READINESS_GATE_2026-10-01.md",
+    "results/top_journal_program_v1/ARTIFACT_INDEX.md",
+    "results/top_journal_program_v1/REPRODUCE.md",
+    "manuscript_zh/main_zh.tex",
+    "manuscript_en/main_en.tex",
+    "results/top_journal_program_v1/bilingual_manuscript_receipt.json",
+    "results/top_journal_program_v1/final_bundle_receipt.json"
+  ],
+  "post_integration_gates": [
+    "standalone PathMNIST independent replay passes",
+    "both manuscripts compile without undefined references or overfull boxes",
+    "both PDFs receive targeted visual QA on changed pages",
+    "the complete regression suite passes",
+    "the final bundle verifier passes and records its own SHA-256"
+  ],
+  "forbidden_actions": [
+    "inspect or report partial performance endpoints before terminal replay",
+    "replace an ineligible or failed seed",
+    "rerun the formal block to obtain a preferred outcome",
+    "change poison fraction, trigger, epochs, model, device or detector after seeing results",
+    "substitute target-clean FPR for the preregistered all-clean FPR gate",
+    "turn a bootstrap interval into a new pass/fail gate",
+    "add a post-hoc figure or headline that changes the frozen claim hierarchy"
+  ]
+}

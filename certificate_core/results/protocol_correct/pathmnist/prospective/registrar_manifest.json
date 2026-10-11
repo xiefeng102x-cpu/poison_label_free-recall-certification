@@ -1,0 +1,28 @@
+{
+  "allowed_schema": [
+    "protocol",
+    "trial_token",
+    "k",
+    "conformal_rank",
+    "candidate_count",
+    "flagged_count"
+  ],
+  "config_sha256": "94e4207a4b83bbad50276cfc9ba641f30998abb48f6e14d59b54207cc3c29faf",
+  "created_unix": 1791542551.66957,
+  "evaluation_sha256": "280dbed65b549bc5b548b4ab3a9a3e56b7f5c504b293b98b87e3d7b8c7f1986a",
+  "freeze_manifest_sha256": "43bfc1383fa31a70354c53e9745cfff16ab7665e0d145b4008ff22c1b4f4077d",
+  "issuer_observations_sha256": "f3c4c4fc1ad6aedeb8b37b0915f20a1bce0a4ac1306a31be50b07488d476256d",
+  "key_commitment_sha256": "da5061c58a4507561159895498a4103e28a686098a2c2f1ea7b35ab69c290b0a",
+  "pretraining_key_commitment_sha256": "da5061c58a4507561159895498a4103e28a686098a2c2f1ea7b35ab69c290b0a",
+  "prohibited_fields_absent": true,
+  "prospective": true,
+  "protocol": "pathmnist_blind",
+  "registrar_sha256": "fe8a21e6df806f4f81d3e985576a80ede59f54c11cec280a1060cc5fe888be5e",
+  "rows": 30000,
+  "score_sha256": "41360e2a319963d1fc1cee43abf3c0f410142c6fd01fa1e9ba653350d8655f56",
+  "source_manifest_sha256": "955797e7b43fe4834fe6fbcba2d6dc70ee0571f62271884f42ee21b85696b309",
+  "source_manifest_status": "SCORE_HANDOFF_COMPLETE",
+  "source_score_handoff_sha256": "41360e2a319963d1fc1cee43abf3c0f410142c6fd01fa1e9ba653350d8655f56",
+  "status": "ISSUER_OBSERVATIONS_SEALED",
+  "trial_map_sha256": "2f1a585a4fada1b6b3ea01db11bff153e567722660297c55f3328eac90ff29e0"
+}

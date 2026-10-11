@@ -1,0 +1,116 @@
+{
+  "protocol_id": "pathmnist_full_data_official_resnet18_victim_pilot_v1",
+  "frozen_before_formal_training": true,
+  "purpose": "Test victim feasibility only with a full-data official-style 28x28 ResNet-18 before authorizing any clean-pair or detector experiment.",
+  "hash_design": "The protocol does not embed its own digest. The runner, checkpoints, manifest and verifier compute the complete protocol-file SHA-256 at runtime, avoiding a self-hash cycle.",
+  "frozen_inputs": {
+    "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+    "core_source_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "model_source_sha256": "f72f8ed2ccd491386adb430b191fb64f9b0a4194a3f8bbcc5abe97a088485474",
+    "runner_source_sha256": "2598abfe2b959acaa361a6b072cc5fbffa7a6da66db08a6f77cdb2424bdd1967"
+  },
+  "dataset": {
+    "name": "PathMNIST",
+    "path": "<TMP>/paper14-data/pathmnist.npz",
+    "splits": {
+      "train": 89996,
+      "validation": 10004,
+      "test": 7180
+    },
+    "training_scope": "all official training rows with their natural class frequencies",
+    "normalization": "Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))"
+  },
+  "model": {
+    "name": "official-style 28x28 ResNet-18",
+    "source_url": "https://github.com/MedMNIST/experiments/blob/main/MedMNIST2D/models.py",
+    "block": "BasicBlock",
+    "depths": [2, 2, 2, 2],
+    "channels": [64, 128, 256, 512],
+    "stem": "3x3 stride 1 padding 1, no max-pool",
+    "pool": "adaptive average pool to 1x1",
+    "hidden_dimension": 512,
+    "classes": 9,
+    "parameter_count": 11173449,
+    "pretrained_weights": false
+  },
+  "attack": {
+    "family": "BadNets all-to-one",
+    "target_class": 8,
+    "poison_fraction_of_full_training_set": 0.05,
+    "poison_count": 4500,
+    "selection_population": "all non-target official training rows",
+    "selection": "uniform without replacement",
+    "selection_seed_formula": "20260930 + seed",
+    "construction": "in-place image replacement and target-label overwrite; dataset length and original indices preserved",
+    "trigger": "solid white 4x4 bottom-right patch"
+  },
+  "training": {
+    "formal_seeds": [93, 94],
+    "epochs": 100,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "betas": [0.9, 0.999],
+    "epsilon": 1e-08,
+    "weight_decay": 0.0,
+    "scheduler": "MultiStepLR",
+    "scheduler_milestones": [50, 75],
+    "scheduler_gamma": 0.1,
+    "augmentation": "none",
+    "shuffle_seed_formula": "20261001 + seed",
+    "primary_checkpoint": "highest clean validation macro one-vs-rest AUC observed during the fixed 100 epochs; earliest epoch wins exact ties",
+    "secondary_checkpoint": "fixed epoch 100",
+    "test_selection_forbidden": true
+  },
+  "resume": {
+    "frequency": "every epoch",
+    "atomic_replace": true,
+    "required_state": [
+      "model",
+      "optimizer",
+      "scheduler",
+      "completed epoch",
+      "Python RNG",
+      "NumPy RNG",
+      "Torch RNG",
+      "DataLoader shuffle-generator RNG",
+      "best validation AUC/model/epoch",
+      "training history"
+    ],
+    "strict_hashes": [
+      "dataset",
+      "protocol",
+      "runner source",
+      "model source",
+      "shared PathMNIST core source"
+    ],
+    "mismatch_policy": "refuse resume"
+  },
+  "evaluation": {
+    "primary_clean_metric": "balanced accuracy on the untouched official test split",
+    "attack_metric": "target-class attack success rate on patched official non-target test rows",
+    "test_timing": "only after all training and clean-validation checkpoint selection for a seed are complete",
+    "victim_eligibility": {
+      "test_balanced_accuracy_min": 0.75,
+      "attack_success_rate_min": 0.8
+    }
+  },
+  "gate": {
+    "pass": "both seeds 93 and 94 complete formally and both primary best-clean-validation-AUC checkpoints satisfy both victim thresholds",
+    "pass_action": "authorize a separately frozen clean-pair/detector protocol",
+    "fail_action": "retain the victim-feasibility failure and do not run detectors or a clean pair"
+  },
+  "dry_run": {
+    "purpose": "static integration and exact-resume testing only",
+    "max_epochs_allowed": 3,
+    "max_batches_per_epoch_allowed": 5,
+    "formal_evidence": false,
+    "can_authorize_followup": false,
+    "default_output_is_separate": true
+  },
+  "scope": {
+    "trains_clean_pair": false,
+    "runs_detectors": false,
+    "claim": "victim feasibility only"
+  }
+}

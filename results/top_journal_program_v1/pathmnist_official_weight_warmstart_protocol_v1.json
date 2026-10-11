@@ -1,0 +1,149 @@
+{
+  "protocol_id": "pathmnist_official_weight_warmstart_victim_feasibility_v1",
+  "frozen_before_formal_training": true,
+  "purpose": "Test two-seed victim feasibility after full-parameter fine-tuning from prespecified official PathMNIST ResNet-18 weights. This protocol trains suspect victims only and cannot produce detector evidence.",
+  "hash_design": "The protocol omits its own digest. The runner, resume checkpoints, artifacts, manifest and verifier compute the complete protocol-file SHA-256 at runtime, avoiding a self-hash cycle.",
+  "frozen_inputs": {
+    "dataset_sha256": "81823f52dc622e69db2db4c72f8e8e617938dd6864d3c1f23d4e49724a28ea72",
+    "core_source_sha256": "e9c7c34ab6645d0b23807fe118d79b519baeb8ac1daa81bf64829a88c3eb5c01",
+    "model_source_sha256": "f72f8ed2ccd491386adb430b191fb64f9b0a4194a3f8bbcc5abe97a088485474",
+    "runner_source_sha256": "2b15eb5513724604ac1707d621d7a36892e623cd60fd4a1b8ffbd60db6033b49",
+    "receipt_sha256": "79bb54bf93d2eb845b1f8949d78c291a473bea41d607b9e200a127cfaf6700bd",
+    "official_weight_sha256_by_seed": {
+      "93": "64774e5fdf8786c7f0182eb6a7300d162b12a7a93455805cb2987eb0c12258e0",
+      "94": "9984d6c42189d79462e22c190bd4b0c669d98a8dac1d0e98f915b9c866ead63e"
+    }
+  },
+  "official_weight_provenance": {
+    "receipt": "paper14/results/top_journal_program_v1/pathmnist_official_weights_acquisition_receipt.json",
+    "mapping_frozen_before_local_metrics": {
+      "93": "resnet18_28_1.pth",
+      "94": "resnet18_28_2.pth"
+    },
+    "load_requirement": "strict=True with no key remapping",
+    "initialization_requirement": "the in-memory model state and the initial state saved in every resume checkpoint must be bit-identical to the mapped official checkpoint state",
+    "clean_metric_sanity_only": {
+      "resnet18_28_1.pth": {
+        "test_macro_ovr_auc": 0.9802867,
+        "test_accuracy": 0.9126741,
+        "test_balanced_accuracy": 0.8873593
+      },
+      "resnet18_28_2.pth": {
+        "test_macro_ovr_auc": 0.9788003,
+        "test_accuracy": 0.8983287,
+        "test_balanced_accuracy": 0.8696712
+      }
+    },
+    "selection_prohibition": "The sanity metrics must not be used to choose, swap or rank the two official checkpoints."
+  },
+  "dataset": {
+    "name": "PathMNIST",
+    "path": "<TMP>/paper14-data/pathmnist.npz",
+    "splits": {
+      "train": 89996,
+      "validation": 10004,
+      "test": 7180
+    },
+    "training_scope": "all 89,996 official training rows with natural class frequencies",
+    "normalization": "Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))"
+  },
+  "model": {
+    "name": "official 28x28 ResNet-18",
+    "source_url": "https://github.com/MedMNIST/experiments/blob/main/MedMNIST2D/models.py",
+    "block": "BasicBlock",
+    "depths": [2, 2, 2, 2],
+    "channels": [64, 128, 256, 512],
+    "stem": "3x3 stride 1 padding 1, no max-pool",
+    "pool": "adaptive average pool to 1x1",
+    "classifier_module_name": "linear",
+    "classes": 9,
+    "parameter_count": 11173449
+  },
+  "attack": {
+    "family": "BadNets all-to-one",
+    "target_class": 8,
+    "poison_fraction_of_full_training_set": 0.05,
+    "poison_count": 4500,
+    "selection_population": "all non-target official training rows",
+    "selection": "uniform without replacement",
+    "selection_seed_formula": "20260930 + seed",
+    "construction": "in-place image replacement and target-label overwrite; dataset length and original indices preserved",
+    "trigger": "solid white 4x4 bottom-right patch"
+  },
+  "training": {
+    "formal_seed_order": [93, 94],
+    "epochs": 5,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "learning_rate": 0.0003,
+    "betas": [0.9, 0.999],
+    "epsilon": 1e-08,
+    "weight_decay": 0.0,
+    "scheduler": null,
+    "augmentation": "none",
+    "shuffle_seed_formula": "20261001 + seed",
+    "fine_tuning_scope": "all model parameters",
+    "primary_checkpoint": "fixed final epoch 5",
+    "validation_role": "diagnostic only; validation never selects a model or stopping time",
+    "test_timing": "only after fixed epoch 5 is complete for that seed",
+    "test_selection_forbidden": true
+  },
+  "prespecified_early_stop": {
+    "only_allowed_case": "After seed 93 completes epoch 5 and test evaluation, stop without running seed 94 if seed 93 fails either victim-eligibility threshold.",
+    "rationale": "The formal gate is a conjunction over both frozen seeds, so failure of seed 93 makes success mathematically impossible.",
+    "if_seed93_passes": "seed 94 must run to fixed epoch 5",
+    "other_early_stopping": "forbidden"
+  },
+  "resume": {
+    "frequency": "every epoch",
+    "atomic_replace": true,
+    "required_state": [
+      "model",
+      "optimizer",
+      "completed epoch",
+      "Python RNG",
+      "NumPy RNG",
+      "Torch CPU RNG",
+      "DataLoader shuffle-generator RNG",
+      "complete diagnostic history",
+      "full initial official checkpoint state",
+      "initial official state hash"
+    ],
+    "strict_hashes": [
+      "dataset",
+      "protocol",
+      "runner source",
+      "model source",
+      "shared PathMNIST core source",
+      "official-weight acquisition receipt",
+      "both official weight files"
+    ],
+    "mismatch_policy": "refuse resume"
+  },
+  "evaluation": {
+    "primary_clean_metric": "balanced accuracy on the untouched official test split",
+    "attack_metric": "target-class attack success rate on patched official non-target test rows",
+    "victim_eligibility": {
+      "test_balanced_accuracy_min": 0.75,
+      "attack_success_rate_min": 0.8
+    }
+  },
+  "gate": {
+    "pass": "both seeds complete fixed epoch 5 and both mapped victims satisfy both thresholds",
+    "pass_action": "record victim feasibility only; any detector or clean-pair work requires a separately frozen protocol",
+    "fail_action": "retain the victim-feasibility failure and do not run detectors or a clean pair"
+  },
+  "dry_run": {
+    "purpose": "static integration, one-batch smoke testing and exact-resume testing only",
+    "max_epochs_allowed": 5,
+    "max_batches_per_epoch_allowed": 5,
+    "formal_evidence": false,
+    "can_authorize_followup": false,
+    "default_output_is_separate": true
+  },
+  "scope": {
+    "trains_clean_pair": false,
+    "runs_detectors": false,
+    "claim": "official-weight warm-start victim feasibility only"
+  }
+}

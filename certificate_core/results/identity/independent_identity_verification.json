@@ -1,0 +1,32 @@
+{
+  "attack_methods": [
+    "public_hash",
+    "same_detector_low",
+    "same_detector_high",
+    "multiscore_extreme",
+    "shadow_frequency",
+    "shadow_ridge"
+  ],
+  "formal": true,
+  "hashes": {
+    "attacker_rankings_sha256": "2c0f64cef62ea01f7253beeac512d14c837b983b923be46691f75c0ef2a8e320",
+    "per_draw_sha256": "a2a432c9da281903dc5bef64a5940fa6643cdd9dec7893b53b3a9a3a6835221e",
+    "primary_cells_sha256": "fa0f7e1e58548ed545214a281e8831bfb8e0a18593933cabd2ce3d34d9a32d2f",
+    "primary_pooled_sha256": "7a0f5109a3d05fa4fdae64d57c4a306a6addce57f89a832a6da28f53d340a7cd",
+    "revealed_key_sha256": "5e0355b395d2d282871e550336728a9118cdb73e247ea090ef130b8991c05f1b",
+    "victim_summary_sha256": "6da6719dbb909d0da68fba708fc4b521bc06c42fb1fa2f06b017e44b0fff0d03"
+  },
+  "interpretation": "The secret draw is computationally independent of all declared attacker observables; this does not cover key or side-channel disclosure.",
+  "maximum_allowed_mean_target_corruption": 0.1,
+  "maximum_nonoracle_mean_target_corruption": 0.07949367999999982,
+  "negative_control": "oracle_key",
+  "oracle_negative_control_pass": true,
+  "primary_contradicted_cells": 0,
+  "primary_inconclusive_cells": 0,
+  "primary_safety_cells": 60,
+  "primary_supported_cells": 60,
+  "recomputed_draw_method_rows": 490000,
+  "scientific_primary_status": "SUPPORTED",
+  "status": "PASS_INDEPENDENT_TRUSTED_IDENTITY_VERIFICATION",
+  "verified_unix": 1791467465.454417
+}

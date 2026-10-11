@@ -1,0 +1,36 @@
+{
+  "experiment": "bloodmnist_cfcmdu_whitebox_recovery_pilot_v1",
+  "role": "development_resource_gate",
+  "frozen_before_execution": true,
+  "date": "2026-09-29",
+  "dataset": "BloodMNIST",
+  "attack_mode": "checkpoint_drift_representation_matching",
+  "selection_detector": "covariance_free_xz16",
+  "development_seeds": [52, 56, 61],
+  "clean_checkpoint_root": "results/bloodmnist_xz16_fresh_confirmation_v1",
+  "grid": {
+    "backdoor_weights": [12.0, 16.0, 20.0],
+    "evasion_weights": [5.0, 10.0],
+    "distill_weights": [20.0],
+    "epochs": 8,
+    "learning_rate": 0.01,
+    "batch_size": 64
+  },
+  "victim_eligibility": {
+    "validation_balanced_ca_min": 0.9,
+    "validation_asr_min": 0.8
+  },
+  "ranking": [
+    "maximize eligible seed count",
+    "minimize eligible-seed mean covariance-free TPR",
+    "maximize worst validation balanced CA",
+    "maximize worst validation ASR",
+    "stable parameter-tuple tie break"
+  ],
+  "expansion_gate": {
+    "eligible_seed_count_min": 2,
+    "mean_covariance_free_tpr_eligible_max": 0.8
+  },
+  "on_pass": "freeze one configuration and evaluate once on untouched seeds 72-81",
+  "on_fail": "do not expand; retain the underpowered white-box result as a limitation"
+}

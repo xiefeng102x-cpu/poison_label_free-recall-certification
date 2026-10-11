@@ -1,0 +1,12 @@
+{
+  "all_models_and_features_hash_verified": true,
+  "checked_certificate_rows": 60000,
+  "detectors": 5,
+  "manifest_sha256": "5c3c519afd619dd4de743761896f9f320286215df230565110bd8ffb09249eee",
+  "report_sha256": "d7d3d2af8705b8fbeb57f78cbc51f905917a64f40347619126eedaa4b431678c",
+  "score_rows": 496275,
+  "status": "PASS",
+  "truth_rows": 93090,
+  "valid_false_go_count_all_intervals": 120,
+  "victims": 5
+}

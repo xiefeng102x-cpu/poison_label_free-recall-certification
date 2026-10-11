@@ -1,0 +1,43 @@
+{
+  "protocol_id": "checkpoint_auditability_theory_probe_v1",
+  "frozen_before_analysis": true,
+  "role": "retrospective mechanism probe on existing Phase-A caches; not confirmatory detector evidence",
+  "source": {
+    "root": "results/phase_a_mnist5q_real_v1",
+    "seeds": [42, 43, 44],
+    "checkpoints": ["middle", "output"],
+    "representations": ["Z", "XYZ", "Full"],
+    "splits": "reuse frozen pair-grouped train/validation/test assignments from splits.csv"
+  },
+  "views": {
+    "suspect_absolute": "Pauli representation from the backdoor victim",
+    "paired_checkpoint_drift": "backdoor-victim representation minus clean-victim representation on the same input"
+  },
+  "estimation": {
+    "direction": "attack mean minus clean mean on train pairs only",
+    "clean_covariance": "train-clean covariance plus isotropic ridge",
+    "ridge_fraction_of_mean_variance": 0.1,
+    "effect_size": "sqrt(delta^T Sigma_ridge^{-1} delta)",
+    "score": "Sigma_ridge^{-1} delta projected on features centered by train-clean mean",
+    "validation_and_test_labels_hidden_during_fitting": true
+  },
+  "outputs": {
+    "test_discrimination": ["ROC-AUC", "paired-bootstrap drift-minus-absolute AUC interval"],
+    "direction_stability": ["cosine(train_delta, validation_delta)", "cosine(train_delta, test_delta)"],
+    "calibration_shift": ["clean-calibrated rank FPR on train clean", "clean-calibrated rank FPR on independent test clean", "KS distance between validation-clean and test-clean scores"],
+    "bootstrap_repetitions": 5000,
+    "bootstrap_seed": 20260929,
+    "rank_alpha": 0.05
+  },
+  "interpretation_gates": {
+    "supports_representation_hypothesis": "paired drift has positive mean test-AUC delta for both middle and output checkpoints in at least two of three representation families, with no sign reversal across all three seeds for at least one family",
+    "calibration_warning": "independent test-clean FPR exceeds 0.075 or train-clean and test-clean FPR differ by more than 0.05",
+    "stop_positive_mechanism_claim": "drift advantage is absent or direction stability is not positive across seeds"
+  },
+  "mandatory_qualifications": [
+    "Phase-A clean and backdoor victims were trained independently; this probe cannot establish a causal poison-only checkpoint effect.",
+    "The fitted direction uses poison labels on the training split and is an oracle mechanism probe, not an unsupervised screening result.",
+    "Full Pauli is a 1023-dimensional oracle representation and is not a deployable measurement claim.",
+    "Only three archived seeds are available, so intervals describe paired sample uncertainty rather than population-level seed uncertainty."
+  ]
+}

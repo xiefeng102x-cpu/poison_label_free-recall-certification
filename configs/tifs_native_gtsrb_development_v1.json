@@ -1,0 +1,73 @@
+{
+  "protocol_id": "tifs_native_gtsrb_development_v1",
+  "stage": "development_smoke",
+  "frozen_at": "2026-10-06T13:00:00+08:00",
+  "dataset": {
+    "name": "GTSRB",
+    "root_relative_to_paper14": "data/gtsrb_official",
+    "train_rows": 26640,
+    "test_rows": 12630,
+    "class_count": 43,
+    "resize": [32, 32],
+    "archives": [
+      {"file": "gtsrb/GTSRB-Training_fixed.zip", "md5": "513f3c79a4c5141765e10e952eaa2478", "sha256": "df4144942083645bd60b594de348aa6930126c3e0e5de09e39611630abf8455a"},
+      {"file": "gtsrb/GTSRB_Final_Test_Images.zip", "md5": "c7e4e6327067d32654124b0fe9e82185", "sha256": "48ba6fab7e877eb64eaf8de99035b0aaecfbc279bee23e35deca4ac1d0a837fa"},
+      {"file": "gtsrb/GTSRB_Final_Test_GT.zip", "md5": "fe31e9c9270bbcd7b84b7f21a9d9d9e5", "sha256": "f94e5a7614d75845c74c04ddb26b8796b9e483f43541dd95dd5b726504e16d6d"}
+    ]
+  },
+  "seeds": [100],
+  "split": {
+    "train_fraction_per_class": 0.9,
+    "split_rng": "numpy.default_rng(2026100600 + seed + class_id * 1009)",
+    "validation_used_for": "best-epoch selection by balanced clean accuracy only"
+  },
+  "attack": {
+    "name": "fixed_patch_all_to_one",
+    "target_class": 2,
+    "poison_fraction_per_non_target_training_class": 0.1,
+    "poison_selection_rng": "numpy.default_rng(2026101600 + seed + source_class * 131)",
+    "patch_size": 4,
+    "patch_alpha": 1.0,
+    "patch_rgb_uint8": [255, 217, 13],
+    "decision_unit": "unique training record; each selected source image contributes one additional poison record",
+    "candidate_cohort": "all clean records in the 90% training split plus one copy of every selected poison record"
+  },
+  "victim": {
+    "architecture": "GTSRBTinyCNN-43",
+    "representation": "64-D tanh penultimate feature",
+    "epochs": 12,
+    "batch_size": 512,
+    "optimizer": "AdamW",
+    "learning_rate": 0.002,
+    "weight_decay": 0.0001,
+    "loss": "cross entropy with inverse-square-root clean-class-frequency weights",
+    "checkpoint_selection": "highest validation balanced accuracy; earliest epoch breaks ties"
+  },
+  "trusted_split": {
+    "source": "official GTSRB test split, target class only",
+    "target_class_rows": 750,
+    "reference_rows": 250,
+    "calibration_rows": 250,
+    "reserved_rows": 250,
+    "rng": "numpy.default_rng(2026102600 + seed)"
+  },
+  "detectors": {
+    "primary": {"name": "CF-CMD-U", "alpha": 0.05, "crossfit_rng": "numpy.default_rng(20271001 + seed)"},
+    "matched_baselines": ["target_centroid_distance", "crossfit_spectral"]
+  },
+  "smoke_gate": {
+    "test_balanced_clean_accuracy_min": 0.65,
+    "attack_success_rate_min": 0.8,
+    "all_counts_and_hashes_replay": true,
+    "checkpoint_and_incremental_outputs_present": true,
+    "victim_only": true,
+    "next_step": "After the victim-only smoke result, freeze a separate confirmation protocol before computing any real-sample detector outcomes. Do not include seed 100 in confirmation aggregates."
+  },
+  "planned_confirmation": {
+    "seeds": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
+    "minimum_eligible_victims": 8,
+    "victim_eligibility": {"test_balanced_clean_accuracy_min": 0.65, "attack_success_rate_min": 0.8},
+    "primary_detector_gate": {"pooled_tpr_min": 0.9, "pooled_target_clean_fpr_max": 0.05},
+    "no_seed_replacement": true
+  }
+}

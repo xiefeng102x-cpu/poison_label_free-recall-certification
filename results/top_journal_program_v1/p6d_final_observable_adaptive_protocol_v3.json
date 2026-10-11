@@ -1,0 +1,82 @@
+{
+  "protocol_id": "p6d_final_observable_adaptive_protocol_v3",
+  "version": 3,
+  "frozen_at": "2026-10-01",
+  "status": "PRE_REGISTERED_NOT_RUN",
+  "base_protocol_sha256": "0eb9316274c428c7893407fbd7bba6f7e1d9f379b9d6e5b28aaa172e56678225",
+  "v2_protocol_sha256": "565099a675070ece91485467edfd67d293833ea1992db0bad1325042e2d04339",
+  "source_audit": {
+    "v1_runner_sha256": "a9afe435f41c05605820b1692b178ec9289e4ba178f7c8a80caf00986d796d09",
+    "v1_verifier_sha256": "fb965e4849b58e1da33e7fc11bc3991c7ec4c19660cac0f63560797798780724",
+    "v2_runner_sha256": "df7f02b4e8280d3c075bf9f6276d9a163d49dab3cedd4861703582c85cafcbd5",
+    "v2_verifier_sha256": "d9147f8b3b043c212ecb66eb1442e0007b85cd6c0eba0c8354955e03c35a9e43",
+    "v2_failure_receipt": "p6d_v2_formal_failure_receipt.json",
+    "v3_runner_sha256": "587e4cba4b7bac3ea5d404120c020d41cfe9fd5dd8e54301f0f54fa050019a56",
+    "v3_verifier_sha256": "2a3fcdcd0f33aef322fc7c7676373f2108fee9c321a25e9fc2600c149e9f8f26",
+    "v3_runner": "src/run_p6d_final_observable_adaptive_v3.py",
+    "v3_verifier": "src/verify_p6d_final_observable_adaptive_v3.py"
+  },
+  "seed_audit": {
+    "v1_consumed_seeds": [95, 96, 97],
+    "v1_confirmation_seeds_permanently_closed": [98, 99, 100, 101, 102],
+    "reserved_for_pathmnist": [103, 104, 105, 106, 107],
+    "v2_consumed_seeds": [108, 109, 110],
+    "v2_confirmation_seeds_permanently_closed": [111, 112, 113, 114, 115],
+    "development_seeds": [116, 117, 118],
+    "confirmation_seeds": [119, 120, 121, 122, 123],
+    "replacement_seeds": [],
+    "rules": [
+      "No seed from 95 through 115 may be reopened by v3.",
+      "An interrupted, failed or ineligible v3 seed is not replaced.",
+      "Synthetic fixtures use identifiers at or above 10000 and never touch seeds 116 through 123."
+    ]
+  },
+  "versioned_changes": {
+    "protocol_id": "p6d_final_observable_adaptive_protocol_v3",
+    "status": "PRE_REGISTERED_NOT_RUN",
+    "seed_audit": {
+      "scope": "Second delivery-only recovery after the immutable v2 pre-test nested-NumPy JSON failure.",
+      "already_used_or_reserved": [
+        {"seeds": "42--94", "reason": "Prior MNIST, BloodMNIST and PathMNIST programs"},
+        {"seeds": "95--97", "reason": "P6-D v1 formal development consumed"},
+        {"seeds": "98--102", "reason": "P6-D v1 confirmation permanently closed"},
+        {"seeds": "103--107", "reason": "Reserved for PathMNIST"},
+        {"seeds": "108--110", "reason": "P6-D v2 formal development consumed"},
+        {"seeds": "111--115", "reason": "P6-D v2 confirmation permanently closed"}
+      ],
+      "development_seeds": [116, 117, 118],
+      "confirmation_seeds": [119, 120, 121, 122, 123],
+      "replacement_seeds": []
+    },
+    "recovery_audit": {
+      "v2_failure": "All nine validation-only trainings completed, then split_receipts.json failed before test access because trigger_receipt.poison_indices was a nested numpy.ndarray.",
+      "scientific_change": "None. Dataset, architecture, attack loss, optimization, epochs, validation ranking, detector, thresholds, eligibility gates and confirmation logic remain inherited from the exact hash-pinned v1 science used by v2.",
+      "delivery_change": "Before strict allow_nan=False JSON encoding, recursively map numpy.ndarray to nested lists and numpy scalar values to their Python scalar values. No numerical computation or selection input is changed.",
+      "observable_schema_change": "None relative to v2; the v2 trusted_sample_index repair is retained exactly.",
+      "v2_seed_disposition": "Seeds 108--110 are consumed and 111--115 are permanently unavailable."
+    },
+    "artifacts_and_cache": {
+      "planned_output_root": "results/p6d_final_observable_adaptive_v3",
+      "required_files": [
+        "manifest.json", "environment.json", "development_selection_receipt.json",
+        "victim_metrics.csv", "per_seed_metrics.csv", "epoch_history.csv",
+        "per_sample_scores.csv", "observable_rows.csv", "fold_receipts.json",
+        "split_receipts.json", "checkpoint_receipts.json", "EXPERIMENT_REPORT.md"
+      ]
+    }
+  },
+  "preflight_gate": {
+    "formal_entry": "Enabled only when full_path_synthetic_shadow_self_check passes in a fresh temporary directory immediately before the formal launcher.",
+    "required_coverage": [
+      "nested ndarray/scalar split receipt strict JSON write and read",
+      "all 9 observable, score, fold and selected-epoch groups",
+      "validation-only three-weight ranking and hash sidecar",
+      "test firewall denial for an unselected configuration",
+      "exactly one authorized synthetic test read per selected seed",
+      "victim and per-seed metrics",
+      "clean and attacked checkpoint receipts",
+      "complete manifest hash/byte/row schema, resume audit and independent replay"
+    ],
+    "out_of_scope": "The synthetic shadow does not claim real-data victim feasibility or detector efficacy; those require the unopened formal seeds."
+  }
+}

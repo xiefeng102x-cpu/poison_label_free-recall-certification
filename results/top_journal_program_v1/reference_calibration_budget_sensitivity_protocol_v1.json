@@ -1,0 +1,106 @@
+{
+  "protocol_id": "reference_calibration_budget_sensitivity_v1",
+  "frozen_at": "2026-10-03",
+  "status": "preregistered_retrospective_checkpoint_replay_before_results",
+  "purpose": "Measure how the frozen CF-CMD-U operating point changes with trusted-reference and rank-calibration budgets without retraining victims or selecting a best budget post hoc.",
+  "source_experiment": {
+    "name": "bloodmnist_covariance_free_confirmation_v1",
+    "scenario": "fixed_pca_additive",
+    "seeds": [
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ],
+    "source_manifest_sha256": "b24643e920a261d1549419be697b0ee36b0c2348936f43cc07a71a274cdb388a",
+    "source_protocol_sha256": "28eff53e1315c5d0f8c1294ea64d987ee182be1f886dbe138ecabbdc40a57427",
+    "source_runner_sha256": "c45f9de765f27cd81c3abeb5e6ca4725b127b69f8389d5c4cb39721cbef4e3d9",
+    "crossfit_helper_sha256": "5e18f88d429d32f74905c1d1e350325abf39a7058110d7a2a23729a9d372ae94",
+    "split_helper_sha256": "aeedb89a1177c96804ae502ec78d6a487291a05d829f9f72c4a24a3a0fba16f0",
+    "feature_helper_sha256": "065bcedddcae8655bbd611ebb6e0beb081399282b5beb498279b6896a74837d9",
+    "dataset_npz_sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+    "dataset_npz_md5": "7053d0359d879ad8a5505303e11de1dc",
+    "eligible_population": "Use the archived fixed_pca_additive victim gate exactly; report all seeds but pool only the seven previously eligible victims. Never replace or add seeds."
+  },
+  "method": {
+    "name": "CF-CMD-U",
+    "representation": "unwhitened local-angle clean-to-suspect checkpoint-difference XZ16",
+    "candidate_population": "the same clean target-class training candidates followed by the same 60 archived poison candidates for each seed",
+    "trusted_population": "the same 200 clean target-class validation rows for each seed",
+    "trusted_permutation_seed_formula": "20260928 + 1009 * victim_seed",
+    "reference_pool": "nested prefixes trusted_order[0:reference_count]",
+    "calibration_pool": "nested prefixes trusted_order[120:120+calibration_count], disjoint from every reference setting",
+    "candidate_crossfit": "the original four outer folds and two-way sample exclusion inside each fold, generated after the single trusted permutation by the same NumPy RNG stream",
+    "score": "inner product of the centered XZ16 drift with the cross-fitted unit candidate mean-shift direction",
+    "p_value": "(1 + number of calibration scores greater than or equal to query score) / (calibration_count + 1)",
+    "alpha": 0.05,
+    "whitening": false,
+    "sample_exclusion": true,
+    "attack_specific_tuning": false
+  },
+  "grid": {
+    "reference_counts": [
+      8,
+      16,
+      32,
+      64,
+      120
+    ],
+    "calibration_counts": [
+      20,
+      40,
+      80
+    ],
+    "rank_grid_null_rejection_probability": {
+      "20": 0.047619047619047616,
+      "40": 0.04878048780487805,
+      "80": 0.04938271604938271
+    },
+    "original_protocol_replay_cell": {
+      "reference_count": 120,
+      "calibration_count": 80
+    }
+  },
+  "victim_gate": {
+    "minimum_balanced_clean_accuracy": 0.9,
+    "minimum_attack_success_rate": 0.8
+  },
+  "statistics": {
+    "pooled_rates": "sum confusion counts over the frozen eligible seeds before division",
+    "uncertainty": "95% percentile seed-block bootstrap interval over eligible-seed TPR and FPR",
+    "bootstrap_draws": 10000,
+    "bootstrap_rng_seed_formula": "20261003 + 1000 * reference_count + calibration_count"
+  },
+  "reported_outputs": [
+    "per-seed and per-grid-cell TP, FN, FP, TN, TPR, FPR, cross-fitted score AUC, and rank-p-value AUC",
+    "pooled counts and rates over the frozen eligible population for every grid cell",
+    "rank-grid null rejection probability for every calibration count",
+    "exact replay check that the 120/80 cell matches the archived CF-CMD-U fixed-scenario per-seed decisions and summary",
+    "dataset, protocol, runner, checkpoint, poison-array, and output hashes",
+    "wall time and peak resident memory when available from the operating system"
+  ],
+  "interpretation": {
+    "design": "retrospective sensitivity analysis on already observed seeds, not an independent confirmation",
+    "selection": "report the complete 5-by-3 grid; do not select, recommend, or rename a best budget after seeing results",
+    "allowed_claim": "state the observed stability or instability of the frozen detector as trusted clean budgets shrink",
+    "forbidden_claims": [
+      "no new attack-robustness claim",
+      "no new cross-dataset claim",
+      "no claim that reference_count is a trained hyperparameter",
+      "no comparison to ACBD clean-image counts without also disclosing ACBD's labeled-poison attack supervision",
+      "no replacement of the original 120/80 primary endpoint"
+    ]
+  },
+  "stopping_rules": {
+    "dataset_or_hash_mismatch": "abort without producing performance summaries",
+    "missing_checkpoint": "abort; do not retrain",
+    "original_cell_replay_mismatch": "mark invalid and debug code only; do not alter the frozen grid or seeds",
+    "zero_or_nonfinite_direction": "retain the declared deterministic unit-vector fallback and report its count"
+  }
+}

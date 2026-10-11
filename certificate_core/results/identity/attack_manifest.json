@@ -1,0 +1,480 @@
+{
+  "attack_methods": [
+    "public_hash",
+    "same_detector_low",
+    "same_detector_high",
+    "multiscore_extreme",
+    "shadow_frequency",
+    "shadow_ridge"
+  ],
+  "attacker_rankings_sha256": "2c0f64cef62ea01f7253beeac512d14c837b983b923be46691f75c0ef2a8e320",
+  "blind_scores_sha256": "4a65c08f6503ce0eeac596c2a0475d0517db7fa1e00ecd4ce074fcc5c1f234e8",
+  "candidate_pool_sha256": "523e9086580064f507a88c063f1ffc2f98934ce3712a70b5c03407be367c93a7",
+  "defender_key_commitment_sha256": "c3106f4d69381f419812b8153f2d8aa6a41c9e34db692471557ecbfabd79f6df",
+  "defender_key_read_by_attacker": false,
+  "formal": true,
+  "freeze_manifest_sha256": "c5dbc3fdd731592a257d3e97ec61cf98baa0847db00e43ce120f75eaf53608eb",
+  "groups": [
+    {
+      "candidate_count": 6455,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 0,
+      "prefix": "g000",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6455,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 0,
+      "prefix": "g001",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6455,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 0,
+      "prefix": "g002",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6455,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 0,
+      "prefix": "g003",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6455,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 0,
+      "prefix": "g004",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6430,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 1,
+      "prefix": "g005",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6430,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 1,
+      "prefix": "g006",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6430,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 1,
+      "prefix": "g007",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6430,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 1,
+      "prefix": "g008",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6430,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 1,
+      "prefix": "g009",
+      "seed": 5301,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5301"
+    },
+    {
+      "candidate_count": 6438,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 0,
+      "prefix": "g010",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6438,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 0,
+      "prefix": "g011",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6438,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 0,
+      "prefix": "g012",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6438,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 0,
+      "prefix": "g013",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6438,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 0,
+      "prefix": "g014",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6447,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 1,
+      "prefix": "g015",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6447,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 1,
+      "prefix": "g016",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6447,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 1,
+      "prefix": "g017",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6447,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 1,
+      "prefix": "g018",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6447,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 1,
+      "prefix": "g019",
+      "seed": 5302,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5302"
+    },
+    {
+      "candidate_count": 6508,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 0,
+      "prefix": "g020",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6508,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 0,
+      "prefix": "g021",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6508,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 0,
+      "prefix": "g022",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6508,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 0,
+      "prefix": "g023",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6508,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 0,
+      "prefix": "g024",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6377,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 1,
+      "prefix": "g025",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6377,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 1,
+      "prefix": "g026",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6377,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 1,
+      "prefix": "g027",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6377,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 1,
+      "prefix": "g028",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6377,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 1,
+      "prefix": "g029",
+      "seed": 5303,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5303"
+    },
+    {
+      "candidate_count": 6411,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 0,
+      "prefix": "g030",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6411,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 0,
+      "prefix": "g031",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6411,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 0,
+      "prefix": "g032",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6411,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 0,
+      "prefix": "g033",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6411,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 0,
+      "prefix": "g034",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6474,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 1,
+      "prefix": "g035",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6474,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 1,
+      "prefix": "g036",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6474,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 1,
+      "prefix": "g037",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6474,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 1,
+      "prefix": "g038",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6474,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 1,
+      "prefix": "g039",
+      "seed": 5304,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5304"
+    },
+    {
+      "candidate_count": 6416,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 0,
+      "prefix": "g040",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6416,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 0,
+      "prefix": "g041",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6416,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 0,
+      "prefix": "g042",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6416,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 0,
+      "prefix": "g043",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6416,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 0,
+      "prefix": "g044",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6469,
+      "detector": "cf_cmd_u",
+      "detector_index": 0,
+      "fold": 1,
+      "prefix": "g045",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6469,
+      "detector": "target_centroid",
+      "detector_index": 1,
+      "fold": 1,
+      "prefix": "g046",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6469,
+      "detector": "crossfit_spectral",
+      "detector_index": 2,
+      "fold": 1,
+      "prefix": "g047",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6469,
+      "detector": "activation_clustering",
+      "detector_index": 3,
+      "fold": 1,
+      "prefix": "g048",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    },
+    {
+      "candidate_count": 6469,
+      "detector": "que_score",
+      "detector_index": 4,
+      "fold": 1,
+      "prefix": "g049",
+      "seed": 5305,
+      "victim_id": "pathmnist_adaptive_multiscore_resnet18_seed5305"
+    }
+  ],
+  "ranking_arrays": 950,
+  "sealed_unix": 1791467432.812439,
+  "source_manifest_sha256": "7dfa93e97cfd4c4b2cf7f693b019340aacb2e58e7088aaed91b78e3d9de3f864",
+  "source_scores_open_before_new_identity_draw": true,
+  "status": "ATTACK_RANKINGS_SEALED_BEFORE_KEY_OPEN",
+  "target_membership_read_by_attacker": false,
+  "trusted_member_budgets": [
+    120,
+    500,
+    2000
+  ]
+}

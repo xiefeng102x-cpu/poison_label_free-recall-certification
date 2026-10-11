@@ -1,0 +1,45 @@
+{
+  "experiment_id": "p6c_qml_noise_bridge_v1",
+  "source_config": "configs/phase_a_mnist5q_real.json",
+  "data_root": "data/Mnist/detail_single_samle",
+  "seeds": [42, 43, 44],
+  "n_qubits": 5,
+  "n_layers": 12,
+  "checkpoint_layers": 12,
+  "pair": "t7_vs_t1",
+  "poison_ratio": 0.3,
+  "max_pairs_per_seed": 180,
+  "split_seed": 20260927,
+  "split_fractions": {"train": 0.6, "validation": 0.2, "test": 0.2},
+  "representation": "XYZ",
+  "n_features": 15,
+  "detector": "logistic",
+  "c_grid": [0.01, 0.1, 1.0, 10.0],
+  "shot_budgets": {"primary": 512, "diagnostic_only": 2048},
+  "noise_conditions": {
+    "nominal": {"p1": 0.001, "p2": 0.01},
+    "light_sensitivity": {"p1": 0.0005, "p2": 0.005},
+    "heavy_sensitivity": {"p1": 0.002, "p2": 0.02}
+  },
+  "noise_definition": "Apply PennyLane DepolarizingChannel(p1) independently to the acted-on wire immediately after every RY and RZ. Immediately after each CNOT(q, q+1), apply DepolarizingChannel(p2) to q and then to q+1 (independent local two-wire-equivalent depolarization; no correlated two-qubit Pauli term). Do not noise the amplitude-embedding state preparation or final basis-change gates.",
+  "measurement_bases": ["X", "Y", "Z"],
+  "basis_measurement_definition": "Measure all five qubits simultaneously in each of the X, Y, and Z product bases; X uses H before computational measurement; Y uses adjoint(S) then H; each basis uses the same shot count. XYZ features are the per-qubit signed sample means concatenated in qubit-major X,Y,Z order.",
+  "threshold_fpr_target": 0.05,
+  "gates": {
+    "victim_ca_min": 0.95,
+    "victim_asr_min": 0.8,
+    "nominal_per_seed_auc_min": 0.95,
+    "nominal_mean_delta_auc_min": -0.02,
+    "nominal_pooled_tpr_min": 0.9,
+    "nominal_pooled_fpr_max": 0.05,
+    "clean_control_is_performance_gate": false
+  },
+  "random_seed": 20260929,
+  "bootstrap_repetitions": 2000,
+  "outputs": {
+    "scores": "per_sample_scores.csv",
+    "metrics": "per_seed_metrics.csv",
+    "summary": "paired_summary.json",
+    "manifest": "manifest.json"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "actions": [
+    {
+      "evidence": null,
+      "id": "A01_TARGET_JOURNAL",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A02_ETHICS",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A03_COMPETING_INTERESTS",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A04_FUNDING",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A05_CREDIT_ROLES",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A06_AI_DISCLOSURE",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A07_PROJECT_CODE_LICENSE",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A08_GENERATED_ARTIFACT_LICENSE",
+      "state": "UNRESOLVED",
+      "value": null
+    },
+    {
+      "evidence": null,
+      "id": "A09_REVIEWER_ACCESSION",
+      "state": "UNRESOLVED",
+      "value": null
+    }
+  ],
+  "instructions": [
+    "Copy this template to a private author-controlled record; do not insert identities or confidential declarations into the anonymous reviewer package.",
+    "Change a state only after the author or rights holder verifies the fact and supplies non-placeholder evidence.",
+    "Run src/verify_submission_author_actions.py --input <private-record.json> before submission.",
+    "A confirmed checklist does not close PathMNIST, novelty, or other scientific evidence gates."
+  ],
+  "blind_package_safe": true,
+  "schema": "paper14_submission_author_actions_v1"
+}

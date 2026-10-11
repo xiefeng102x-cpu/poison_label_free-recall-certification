@@ -1,0 +1,89 @@
+{
+  "protocol_id": "p6d_final_observable_adaptive_protocol_v2",
+  "version": 2,
+  "frozen_at": "2026-10-01",
+  "status": "PRE_REGISTERED_NOT_RUN",
+  "base_protocol_sha256": "0eb9316274c428c7893407fbd7bba6f7e1d9f379b9d6e5b28aaa172e56678225",
+  "source_audit": {
+    "v1_runner_sha256": "a9afe435f41c05605820b1692b178ec9289e4ba178f7c8a80caf00986d796d09",
+    "v1_verifier_sha256": "fb965e4849b58e1da33e7fc11bc3991c7ec4c19660cac0f63560797798780724",
+    "v2_runner_sha256": "df7f02b4e8280d3c075bf9f6276d9a163d49dab3cedd4861703582c85cafcbd5",
+    "v2_verifier_sha256": "d9147f8b3b043c212ecb66eb1442e0007b85cd6c0eba0c8354955e03c35a9e43",
+    "v2_runner": "src/run_p6d_final_observable_adaptive_v2.py",
+    "v2_verifier": "src/verify_p6d_final_observable_adaptive_v2.py",
+    "derivation": "The v2 entry points create isolated namespaces from the hash-pinned v1 implementation using declared AST substitutions for protocol identity/path, output root, seed locks, formal acknowledgement, and verifier module. No v1 source or global module state is changed. The v2 observable-row adapter adds one ordered trusted_sample_index column to every row before any CSV write."
+  },
+  "seed_audit": {
+    "scope": "Recovery after the formal v1 pre-test artifact failure; v1 seeds remain consumed and may not be reused.",
+    "v1_consumed_seeds": [95, 96, 97],
+    "v1_confirmation_seeds_permanently_closed": [98, 99, 100, 101, 102],
+    "reserved_for_pathmnist": [103, 104, 105, 106, 107],
+    "development_seeds": [108, 109, 110],
+    "confirmation_seeds": [111, 112, 113, 114, 115],
+    "replacement_seeds": [],
+    "rules": [
+      "Development and confirmation blocks are disjoint from each other and all prior audited seed blocks.",
+      "An ineligible, failed, or interrupted seed is not replaced.",
+      "Seeds 98--102 are permanently prohibited; they cannot be reopened under v2.",
+      "Synthetic fixtures use identifiers >=10000 and never touch seeds 108--115."
+    ]
+  },
+  "versioned_changes": {
+    "protocol_id": "p6d_final_observable_adaptive_protocol_v2",
+    "status": "PRE_REGISTERED_NOT_RUN",
+    "seed_audit": {
+      "scope": "Recovery after the formal v1 pre-test artifact failure; v1 seeds remain consumed and may not be reused.",
+      "already_used_or_reserved": [
+        {"seeds": "42--80", "reason": "MNIST/BloodMNIST development, confirmation, multiclass, and related evidence blocks"},
+        {"seeds": "81--85", "reason": "PathMNIST external-validation V1 confirmation"},
+        {"seeds": "86--87", "reason": "PathMNIST V2 development and warm-start pilot"},
+        {"seeds": "88--92", "reason": "PathMNIST external-validation V2 confirmation"},
+        {"seeds": "93--94", "reason": "PathMNIST standard-route formal victim seeds"},
+        {"seeds": "95--97", "reason": "Consumed by v1 formal development training; artifacts failed before test access"},
+        {"seeds": "98--102", "reason": "Permanently closed after v1 failure; never open under any protocol version"},
+        {"seeds": "103--107", "reason": "Reserved for PathMNIST"}
+      ],
+      "v1_consumed_seeds": [95, 96, 97],
+      "v1_confirmation_seeds_permanently_closed": [98, 99, 100, 101, 102],
+      "reserved_for_pathmnist": [103, 104, 105, 106, 107],
+      "development_seeds": [108, 109, 110],
+      "confirmation_seeds": [111, 112, 113, 114, 115],
+      "replacement_seeds": [],
+      "rules": [
+        "Development and confirmation blocks are disjoint from each other and every audited prior block.",
+        "An ineligible, failed, or interrupted seed is not replaced.",
+        "No formal seed is used for implementation debugging; synthetic fixtures use non-victim identifiers >=10000."
+      ]
+    },
+    "recovery_audit": {
+      "v1_failure": "Seeds 95--97 completed formal development training, then the pre-test write of observable_rows.csv failed in atomic_csv because _lossless_observable_rows added trusted_sample_index only to reference/calibration rows. The resulting rows did not share one ordered schema.",
+      "v1_seed_disposition": "Seeds 95, 96, and 97 are consumed. Their partial output and the v1 runner, protocol, and source hashes remain immutable and replayable as the historical failed attempt.",
+      "scientific_change": "None. P6-D scientific implementation and all hyperparameters are inherited unchanged from the exact hash-pinned v1 protocol and implementation.",
+      "delivery_change": "Only the lossless observable CSV delivery schema changes: trusted_sample_index is an ordered column in every row; it contains the local trusted-population index for reference/calibration rows and an empty value for clean/poison candidate rows.",
+      "v1_confirmation": "Seeds 98--102 are permanently unavailable and must never be opened."
+    },
+    "artifacts_and_cache": {
+      "planned_output_root": "results/p6d_final_observable_adaptive_v2",
+      "required_files": [
+        "manifest.json", "environment.json", "development_selection_receipt.json",
+        "confirmation_lock_receipt.json when authorized", "victim_metrics.csv",
+        "per_seed_metrics.csv", "epoch_history.csv", "per_sample_scores.csv",
+        "observable_rows.csv with a single ordered schema including trusted_sample_index",
+        "fold_receipts.json", "checkpoint_receipts.json", "EXPERIMENT_REPORT.md"
+      ]
+    }
+  },
+  "recovery_gates": {
+    "confirmation_lock_requires": [
+      "At least two of three eligible development victims pass the existing test gate (balanced CA >=0.90 and ASR >=0.80).",
+      "Independent replay passes for every selected development checkpoint.",
+      "Complete valid hashes cover the protocol, v2 runner, v2 verifier, immutable v1 source inputs, dataset, splits, checkpoints, and artifacts.",
+      "Exactly one validation-selected development configuration is test-evaluated.",
+      "No integrity failure, leakage, non-finite value, count mismatch, or unplanned change is present."
+    ],
+    "confirmation": "After a v2 confirmation-lock receipt exists, run all five seeds 111--115 once under the frozen selected weight. Any integrity stop prevents efficacy conclusions; no replacement or retuning is allowed.",
+    "minimum_eligible_confirmation_victims": 5,
+    "independent_replay": "Required for development and all five confirmation victims.",
+    "development_grid": [0.5, 2.0, 8.0]
+  }
+}

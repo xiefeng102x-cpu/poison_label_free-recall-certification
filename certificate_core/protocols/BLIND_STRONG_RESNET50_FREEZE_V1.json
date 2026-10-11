@@ -1,0 +1,19 @@
+{
+  "status": "FROZEN_BEFORE_UNBLINDING",
+  "freeze_date": "2026-10-08",
+  "experiment": "pathmnist_blind_strong_resnet50_certificate_v1",
+  "outcomes_opened_at_freeze": false,
+  "formal_seeds": [2201, 2202, 2203, 2204, 2205],
+  "hashes": {
+    "config_sha256": "2e67b4267889cadf4d48f12082162569c8c17c1c8ec68105e716bb1d6fbcb7ce",
+    "prereg_sha256": "422da0702360ce636ccee6311d1f5cb3c15b3a160f05fed541ec7f9e22d7a60d",
+    "runner_sha256": "944b4fecd313f6ff271e216508a2b9826c01f7f054e6b2192d7fbda99ad4001e",
+    "base_runner_sha256": "3fb3dc10c91720c245a11e2db7f006e3026eacdd1539b7f14e845647f0624fe7",
+    "certificate_runner_sha256": "657258e0bdb2cad740ce8f155225c841e7fa5c93b468ec311fd26b07c75db164",
+    "verifier_sha256": "df84407fa1c5428211622c0685754258cf7962e4cb3ccfc58b977f9d04879dc7",
+    "certificate_library_sha256": "890d00b4c8522ee352ef3b8bdeabf9b9fc0098783d7af0b3c51482c670652171",
+    "architecture_sha256": "754a297d6ac9cdb1766e4f530c30ede121ce54bb915b1e9e591c0c5cfa2aedad",
+    "weight_receipt_sha256": "303c1f61171d558eeb08a10aefd5d9daa32569bb5d3f6fb0019bf7d7f84bef63"
+  },
+  "interpretation": "This block was frozen before any formal seed outcome was opened. Any later change to a hashed file is a post-unblinding amendment."
+}

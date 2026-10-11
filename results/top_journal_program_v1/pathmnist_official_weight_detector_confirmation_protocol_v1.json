@@ -1,0 +1,162 @@
+{
+  "protocol_id": "pathmnist_official_weight_detector_confirmation_v1",
+  "frozen_before_detector_confirmation": true,
+  "status": "protocol_and_code_readiness_only_no_formal_execution",
+  "purpose": "Five-seed paired clean/suspect PathMNIST official-weight detector confirmation, conditional on every fixed victim meeting the prespecified CA/ASR eligibility gate.",
+  "prior_feasibility": {
+    "source": "paper14/results/pathmnist_official_weight_warmstart_v1/victim_metrics.csv",
+    "seeds": [93, 94],
+    "result": "both victims eligible: seed 93 CA=0.8807557575, ASR=0.9794854549; seed 94 CA=0.8661960678, ASR=0.9902471835",
+    "interpretation": "victim-feasibility evidence only; not detector efficacy evidence"
+  },
+  "seed_plan": {
+    "formal_confirmation_seeds": [103, 104, 105, 106, 107],
+    "official_weight_mapping": {
+      "103": "resnet18_28_1.pth",
+      "104": "resnet18_28_2.pth",
+      "105": "resnet18_28_1.pth",
+      "106": "resnet18_28_2.pth",
+      "107": "resnet18_28_1.pth"
+    },
+    "unit_of_independence": "training seed; paired clean/suspect victims within each seed form one block",
+    "formal_seed_policy": "fixed, ordered, no substitutions, no optional stopping, and no reuse of feasibility seeds 93/94 as detector confirmation seeds"
+  },
+  "dataset": {
+    "name": "PathMNIST",
+    "training_rows": 89996,
+    "training_scope": "all official training rows with natural class frequencies",
+    "validation_rows": 10004,
+    "test_rows": 7180,
+        "validation_roles": {
+            "reference": "512 target-class clean validation examples",
+            "calibration": "512 distinct target-class clean validation examples",
+            "SCAn_baseline_reference": "the full 10,004-row clean validation split with its original nine-class labels; used only by SCAn baseline",
+            "selection": "none"
+        },
+        "validation_index_selection": "Filter official validation rows to original label 8, sort by original dataset index, apply one NumPy default_rng permutation with seed 20271000, assign the first 512 indices to reference and the next 512 to calibration, and hash both ordered index lists before feature extraction.",
+    "test_policy": "test is unopened for detector thresholds, hyperparameters, features, checkpoints, or eligibility; after both fixed epoch-5 models are complete, it may be used only for victim CA/ASR eligibility reporting"
+  },
+  "victims": {
+    "architecture": "official 28x28 MedMNIST ResNet-18; existing strict-load-compatible implementation",
+    "initialization": "both members of a seed pair load the same official checkpoint selected by the frozen seed map; clean/suspect start states must be bit-identical",
+    "training": {
+      "paired_conditions": ["clean", "suspect"],
+      "epochs": 5,
+      "batch_size": 128,
+      "optimizer": "Adam",
+      "learning_rate": 0.0003,
+      "betas": [0.9, 0.999],
+      "epsilon": 1e-8,
+      "weight_decay": 0.0,
+      "scheduler": null,
+      "augmentation": "none",
+      "fine_tuning_scope": "all parameters",
+      "primary_checkpoint": "fixed final epoch 5",
+      "validation_role": "diagnostic only; no model selection or stopping"
+    },
+    "suspect_attack": {
+      "family": "BadNets all-to-one",
+      "target_class": 8,
+      "poison_count": 4500,
+      "selection_population": "non-target rows across all 89,996 training examples",
+      "selection": "uniform without replacement; preserve row count and original row identifiers",
+      "trigger": "solid white 4x4 bottom-right patch",
+      "selection_seed_formula": "20260930 + confirmation_seed"
+    },
+    "clean_control": "same initialization, full data, optimizer, schedule, seed-controlled data order; no trigger and no label changes"
+  },
+  "victim_eligibility": {
+        "clean_accuracy_metric": "balanced accuracy on untouched official test split, reported separately for the clean and suspect member of every pair",
+    "attack_metric": "ASR on patched official non-target test examples",
+    "thresholds": {
+      "balanced_accuracy_min": 0.75,
+      "attack_success_rate_min": 0.8
+    },
+        "population_rule": "all five seeds must have both paired victims complete, both clean and suspect victims reach balanced accuracy at least 0.75, and the suspect victim reach ASR at least 0.80 before the result may be called a five-seed detector confirmation; otherwise report feasibility and detector results by seed without the five-seed confirmation label"
+  },
+  "candidate_pool": {
+    "source": "all 89,996 training rows in original order",
+    "labels": "suspect labels after poison overwrite; clean-condition labels remain original",
+    "ground_truth": "is_poison from the frozen index set, never passed to detectors",
+    "paired_features": "extract penultimate 512-D hidden representations from both fixed epoch-5 clean and suspect checkpoints using the same realized suspect candidate inputs, including the frozen trigger on poisoned rows"
+  },
+  "detectors": {
+    "primary": {
+      "name": "CF-CMD-U (true unwhitened cross-fit mean direction)",
+      "view": "suspect hidden representation",
+      "scope": "score only candidates assigned to target class 8; unassigned-class rows receive no flag",
+      "feature_transform": "identity; subtract reference mean only for centering projections; no covariance estimation, whitening, PCA, SVD, learned projection, or feature normalization",
+      "direction": "two-fold cross-fit over target-assigned candidates: for each scoring half, unit-normalize the raw-space difference between the opposite candidate half mean and the 512-row target-clean reference mean",
+      "calibration": "one-sided finite-sample rank p-value against the 512 distinct target-clean validation calibration projections; flag at p<=0.05",
+      "partition_seed_formula": "20271001 + confirmation_seed",
+      "notes": "This is deliberately not the whitened cf_cmd_u implementation in pathmnist_external_validation.py. The unwhitened score is computed directly in the original 512-D hidden-feature coordinates."
+    },
+    "secondary": {
+      "name": "paired clean-to-suspect hidden drift CF-CMD-U",
+      "view": "suspect_hidden - clean_hidden for the same inputs",
+      "role": "secondary, descriptive mechanistic channel; it cannot replace a failed primary endpoint"
+    },
+    "baselines": [
+      {
+        "name": "SCAn",
+        "implementation": "pinned BackdoorBench feature adapter and recorded upstream commit",
+        "view": "suspect hidden representation",
+        "reference": "full 10,004-row clean validation split, all nine labels",
+        "threshold": "freeze adapter's prespecified/default scoring rule before confirmation; record receipt"
+      },
+      {
+        "name": "Spectral Signatures",
+        "implementation": "pinned BackdoorBench feature adapter and recorded upstream commit",
+        "view": "suspect hidden representation",
+        "threshold": "85th percentile within assigned class, strict greater-than flag, frozen before confirmation"
+      },
+      {
+        "name": "target-reference centroid distance",
+        "implementation": "Euclidean distance in raw hidden-feature coordinates from the 512-row target-clean reference centroid; one-sided rank calibration using the 512 calibration distances",
+        "view": "suspect hidden representation",
+        "threshold": "calibration rank p<=0.05"
+      }
+    ],
+    "leakage_rule": "detectors receive features, assigned labels, and frozen clean validation reference/calibration only; poison truth is joined after scores and flags are fixed"
+  },
+  "metrics": {
+    "primary_tpr": "poisons flagged divided by all 4,500 poison rows",
+    "all_clean_fpr": "non-poison candidates flagged divided by all non-poison rows in the 89,996-row training candidate pool",
+    "target_clean_fpr": "non-poison candidates assigned target class 8 and flagged divided by all non-poison candidates assigned target class 8",
+    "required_reporting": ["per-seed counts and rates", "micro-pooled TPR", "micro-pooled all-clean FPR", "micro-pooled target-clean FPR", "per-seed eligibility", "all five seeds including ineligible seeds", "95% seed-block bootstrap intervals"]
+  },
+  "primary_efficacy_gate": {
+    "population": "all five eligible victims only for a five-seed confirmation claim; all seed outcomes and eligibility failures remain reported",
+    "pooled_point_thresholds": {
+      "tpr_min": 0.9,
+      "all_clean_fpr_max": 0.05
+    },
+        "decision": "primary point gate passes only if all five clean/suspect pairs are eligible, pooled TPR>=0.90, and pooled all-clean FPR<=0.05. Pair eligibility requires both clean and suspect balanced accuracy>=0.75 plus suspect ASR>=0.80. Target-clean FPR is mandatory contextual reporting and is not substituted for the all-clean FPR gate.",
+    "uncertainty": "report two-sided 95% percentile bootstrap intervals with 20,000 deterministic replicates, resampling five seed blocks with replacement and retaining every row/count within each sampled block; no sample-level bootstrap",
+    "interpretation": "the seed-block interval describes between-seed uncertainty but five blocks provide limited resolution and are not evidence of broad population generality. Report point estimates, interval limits, each seed's rate, and 5/5 eligibility. Do not turn a boundary-crossing interval into a pass or claim high-precision population certainty.",
+    "secondary_and_baselines": "descriptive comparisons with the same per-seed and pooled metrics and intervals; no multiplicity-adjusted efficacy claims and no detector-driven expansion"
+  },
+    "artifacts": {
+    "per_sample": "scores, p-values/thresholds where defined, flags, assigned class, original label, poison truth joined after scoring, seed, method and view",
+    "receipts": "source/protocol/dataset/official-weight hashes, framework environment, train checkpoint hashes, split/index hashes, detector receipts, elapsed time and command line",
+        "write_policy": "atomic outputs; refuse existing formal output directory unless explicit supported resume behavior is separately implemented and verified"
+    },
+    "execution_environment": {
+        "primary_device": "Apple MPS",
+        "torch_version": "2.7.1",
+        "dtype": "float32",
+        "deterministic_algorithms": true,
+        "pair_rule": "Load and compare the official initializer on CPU, then transfer both clean and suspect members to the same MPS device; keep the frozen data order identical within the pair.",
+        "preformal_gate": "A non-confirmation real-input MPS smoke test must pass exact resume, checkpoint reload, 512-D feature extraction and metric replay before any seed 103-107 is opened.",
+        "fallback_rule": "No mixed-device confirmation is allowed. If MPS is unavailable before formal execution, issue a versioned protocol deviation and repeat the full dry-run before using CPU; after a formal seed opens, the device cannot change.",
+        "nonformal_microbenchmark_receipt": "results/top_journal_program_v1/pathmnist_mps_smoke_receipt.json",
+        "required_real_input_smoke_receipt": "results/pathmnist_real_input_mps_smoke_v1/smoke_receipt.json",
+        "observed_synthetic_step_speedup_cpu_over_mps": 11.7896508250194,
+        "speedup_interpretation": "short synthetic architecture benchmark only; not a formal end-to-end runtime guarantee"
+    },
+  "execution_firewall": {
+    "this_change": "MPS formal executor implemented with explicit seed-consumption ACK and independently verified real-input nonformal MPS smoke gate; implementation readiness does not imply smoke completion or formal execution",
+    "formal_runner_status": "implemented but locked until the real-input nonformal MPS smoke receipt independently verifies and the operator supplies CONSUME_PATHMNIST_FORMAL_SEEDS_103_107",
+    "success_is_not_performance": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "all_primary_intervals_valid": true,
+  "blind_scores_sha256": "b8a6e49914c360b76de07ea3bb60227cf9f47bd381758f20d8bd15a5bb363afe",
+  "certificate_cell_summary_sha256": "0bb1d192c68c1edc0d66b321762d361a9df978833a4f5114f9ac7f8fcd39bccb",
+  "certificate_decisions_blind_sha256": "a4ce8051591beaa6b209831024c010c9e00e3c2bc60c61dd079413a9bc07a0e0",
+  "certificate_decisions_evaluated_sha256": "a08acdad8b96ac2bc4892199f5325851f2413cea852df79ce734ab3ac44d0749",
+  "certificate_detector_summary_sha256": "8c6a1a16d9899d586a755d333820a90199fc89d879ec3d3ab0a23d1bdd071727",
+  "conventional_detector_metrics_sha256": "81639ecacc553bbd895d1608c984a89e5e94a1599fad46b9e84b7f1398421892",
+  "decision_rows": 60000,
+  "detectors": 5,
+  "evaluation_rows": 60000,
+  "extension_block": "strong",
+  "freeze_manifest_sha256": "9324df0c794a5b2b77e4b9cc621fe8c2972d762597e18c9958bc39ad9d4bd62a",
+  "primary_false_go_count": 162,
+  "primary_false_go_rate": 0.0054,
+  "primary_valid_draws": 30000,
+  "private_truth_sha256": "a7c87303beeebb3ad09ac29d4c2d2447583904e3b4676978f7a1ccbe5854de59",
+  "scope": "PathMNIST, official 28x28 ResNet-50, BadNets, five unseen seeds, five score families; no cross-domain universality claim",
+  "status": "COMPLETE_BLIND_END_TO_END_CERTIFICATE",
+  "victims": 5
+}

@@ -1,0 +1,27 @@
+{
+  "protocol_id": "cf_cmd_phase4_residual_reupload_v1",
+  "frozen_at": "2026-09-28",
+  "motivation": "Pure three-layer reupload transferred poorly across data seeds (only 1/3 eligible); evaluate a residual hybrid that retains an actual entangling branch without sacrificing the stable local-angle path.",
+  "pilot_seeds": [42, 46, 51],
+  "architecture": {
+    "local_branch": "sin of supervised local-angle projection",
+    "quantum_branch": "three-layer ring-entangled data-reupload Z expectations",
+    "fusion": "concatenation followed by a 16-to-32-to-2 classifier",
+    "warm_start": "90% local classifier weight on the local branch and 10% on the quantum branch",
+    "clean_finetuning_epochs": 10,
+    "clean_learning_rate": 0.001,
+    "local_teacher_distillation_weight": 10.0
+  },
+  "backdoor": "fixed PCA-additive trigger, 60 poisons",
+  "poisoned_adaptation": {
+    "epochs": 8,
+    "learning_rate": 0.01,
+    "backdoor_weight": 10.0,
+    "distillation_weight": 20.0,
+    "anchor_weight": 0.001,
+    "frozen_classifier": true
+  },
+  "detector_view": "actual X/Z expectations of the entangling branch, differenced against the matched clean residual checkpoint",
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "promotion_rule": "fresh confirmation only if at least two of three pilot victims are eligible"
+}

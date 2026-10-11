@@ -1,0 +1,50 @@
+{
+  "protocol_id": "cf_cmd_p2_counterexample_confirmation_v1",
+  "frozen_before_execution": true,
+  "seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "victim_eligibility": {
+    "minimum_balanced_clean_accuracy": 0.9,
+    "minimum_attack_success_rate": 0.8
+  },
+  "primary_detector_gate": {
+    "minimum_pooled_tpr": 0.9,
+    "maximum_pooled_fpr": 0.05
+  },
+  "trusted_reference": {
+    "split": "validation_target",
+    "reference_count": 120,
+    "calibration_count": 80
+  },
+  "badnets_cnn": {
+    "poison_count": 60,
+    "patch": "bottom_right_3x3_white",
+    "cnn_epochs": 30,
+    "primary_endpoint": "coherent_bonferroni_input_cnn_margin",
+    "development_observation": {
+      "seeds": [42, 46, 51],
+      "pooled_tpr": 1.0,
+      "pooled_fpr": 0.051666666666666666
+    }
+  },
+  "input_aware_style_cnn": {
+    "poison_ratio_per_batch": 0.1,
+    "candidate_count": 60,
+    "mask_density": 0.032,
+    "mask_epochs": 25,
+    "joint_attack_epochs": 60,
+    "classifier_epochs": 30,
+    "numerical_stabilization": {
+      "sqrt_epsilon": 1e-8,
+      "division_floor": 1e-4,
+      "ratio_cap": 100.0,
+      "gradient_clip": 5.0
+    },
+    "primary_endpoint": "coherent_bonferroni_input_cnn_margin",
+    "development_observation": {
+      "seeds": [42, 46, 51],
+      "pooled_tpr": 0.9944444444444445,
+      "pooled_fpr": 0.06222222222222222
+    }
+  },
+  "decision_rule": "report each attack separately; do not pool attacks; include only eligible victims; no threshold retuning"
+}

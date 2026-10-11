@@ -1,0 +1,20 @@
+# Paper 14 top-level replay dependencies recorded from the evidence host.
+# Runtime: CPython 3.9.23 on macOS arm64. These pins reproduce the tested
+# package interface; they are not a claim of bit identity across hardware.
+numpy==1.26.4
+scipy==1.11.4
+scikit-learn==1.6.1
+pandas==2.3.1
+matplotlib==3.9.4
+PennyLane==0.37.0
+torch==2.7.1
+torchvision==0.22.1
+Pillow==11.3.0
+PyYAML==6.0.2
+tqdm==4.67.1
+pytest==8.4.1
+
+# Acquisition/legacy BloodMNIST helpers used a local MedMNIST 3.0.2 source
+# tree. Current archived NPZ replays do not import it, but fresh acquisition
+# and selected historical runners do.
+medmnist==3.0.2

@@ -1,0 +1,54 @@
+{
+  "protocol_id": "cf_cmd_p2_cross_attack_confirmation_v1",
+  "frozen_before_execution": true,
+  "role": "selective_confirmation",
+  "seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "attacks": ["blended", "sig"],
+  "attack_parameters": {
+    "blended": {
+      "alpha": 0.2,
+      "pattern_distribution": "numpy_default_rng_uniform_0_1",
+      "pattern_seed": 14014,
+      "label_rule": "source_to_target"
+    },
+    "sig": {
+      "delta": "40/255",
+      "frequency": 6.0,
+      "label_rule": "target_class_clean_label_training; triggered_source_testing"
+    }
+  },
+  "poison_count": 60,
+  "trusted_reference": {
+    "split": "validation_target",
+    "reference_count": 120,
+    "calibration_count": 80
+  },
+  "victim_eligibility": {
+    "minimum_balanced_clean_accuracy": 0.9,
+    "minimum_attack_success_rate": 0.8
+  },
+  "primary_endpoints": {
+    "classical": "coherent_bonferroni_input_classical_margin",
+    "qml": "coherent_qml_xz_drift16"
+  },
+  "secondary_qml_endpoint": "coherent_bonferroni_input_qml_xz",
+  "primary_detector_gate": {
+    "minimum_pooled_tpr": 0.9,
+    "maximum_pooled_fpr": 0.05
+  },
+  "diagnostic_config_gate": {
+    "minimum_tpr": 0.8,
+    "maximum_fpr": 0.1
+  },
+  "fixed_training": {
+    "classical_epochs": 80,
+    "qml_adaptive_epochs": 5,
+    "reuse_clean_qml_root": "results/bloodmnist_xz16_fresh_confirmation_v1"
+  },
+  "exclusions": {
+    "badnets": "pilot victim eligibility 1/3; repair before scaling",
+    "wanet": "pilot victim eligibility 0/3; image-native victim required",
+    "input_aware": "joint generator training pending",
+    "label_consistent": "adversarial base generation pending"
+  }
+}

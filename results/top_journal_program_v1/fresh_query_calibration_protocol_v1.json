@@ -1,0 +1,70 @@
+{
+  "protocol_id": "fresh_query_calibration_protocol_v1",
+  "frozen_at": "2026-09-29",
+  "purpose": "P6-E calibration half: compare training-member clean candidates with fresh clean test queries under the same frozen score direction and validation calibration",
+  "dataset": {
+    "name": "BloodMNIST v2 NPZ",
+    "path": "<TMP>/blood-ca-data/bloodmnist.npz",
+    "sha256": "062023e186f537e26b3c21ea3b2614ddfc475e8a14825dfd20663bbb7e37bddc",
+    "classes": 8,
+    "split_policy": "preserve archived train/validation/test splits"
+  },
+  "victims": {
+    "source_protocol": "multiclass_backdoorbench_pilot_protocol.json",
+    "source_protocol_sha256": "9026dcc6a8349b21aa48147fbb4ba9bf079ebfc45c5c87a7b2b3ec805b356e46",
+    "source_runner_sha256": "81098cb7ea7cae3f49013080a1de8f0d78a1e838458f6f9b084e39999ebb5b6e",
+    "attack": "all-to-one 3x3 white BadNets patch",
+    "target_class": 6,
+    "poison_count": 600,
+    "architecture": "MulticlassBloodCNN",
+    "development_seeds": [72, 73],
+    "confirmation_seeds": [74, 75, 76, 77, 78],
+    "checkpoint_policy": "load and hash-check archived clean and suspect checkpoints; never retrain"
+  },
+  "views": {
+    "suspect_hidden64": "suspect checkpoint hidden64; no trusted clean checkpoint needed",
+    "paired_hidden64_drift": "suspect hidden64 minus archived clean hidden64; explicit oracle-clean-checkpoint counterfactual"
+  },
+  "score": {
+    "family": "two-fold unwhitened class-conditional coherent direction",
+    "candidate_scope": "all training candidates assigned to target class 6",
+    "candidate_fold_rng_seed": "20290929 + victim_seed",
+    "cross_fit": "queries in candidate fold A use the unit mean-shift direction estimated from fold B and conversely",
+    "reference": "96 clean validation rows with true class 6",
+    "calibration": "96 different clean validation rows with true class 6",
+    "reference_calibration_rng_seed": "20280929 + victim_seed; shuffle target-class validation indices, use first 96 as reference and next 96 as calibration",
+    "fresh_query": "all 666 true-class-6 test rows, assigned to score folds by a permutation from default_rng(20300929 + victim_seed) and an alternating fold allocation",
+    "member_query": "all 2330 original true-class-6 clean training rows; their candidate-fold membership determines the opposite direction used for scoring",
+    "raw_score": "inner product of (feature minus reference mean) with the cross-fitted unit direction",
+    "rank_pvalue": "(1 + number of same-fold calibration scores greater than or equal to the query score) / 97",
+    "rank_alpha": 0.05,
+    "finite_sample_null_rejection_probability_under_exchangeability": 0.041237113402061855,
+    "forbidden": [
+      "no poison truth in direction, score, threshold, or expansion decisions",
+      "no seed-specific representation, split, sign, threshold, or calibration-size tuning",
+      "no use of fresh test queries in direction or calibration fitting",
+      "no performance-driven expansion decision"
+    ]
+  },
+  "development_gate": {
+    "both_archived_victims_eligible": true,
+    "all_dataset_protocol_and_checkpoint_hashes_match": true,
+    "reference_calibration_and_query_indices_are_disjoint_by_source_split": true,
+    "both_views_have_finite_nonzero_directions_and_scores": true,
+    "all_per_query_flags_and_population_confusions_replay": true,
+    "runtime_per_seed_minutes_at_most": 5,
+    "expansion_rule": "run all five confirmation seeds only if every non-performance gate passes on both development seeds"
+  },
+  "reported_outputs": [
+    "victim balanced CA and ASR replay",
+    "per-view and per-seed member-clean FPR, fresh-test FPR, gap, calibration KS statistics, and exact counts",
+    "per-query source split, source index, fold, raw score, rank p-value, and flag",
+    "reference/calibration/candidate/fresh-query index hashes and checkpoint hashes",
+    "pooled population rates and seed-level ranges without performance-based selection"
+  ],
+  "interpretation": {
+    "fresh_query": "empirical calibration check where queries do not train either checkpoint or direction; official dataset splits may still differ, so exact exchangeability is an assumption rather than a proven fact",
+    "member_query": "membership-dependent screening condition; validation calibration is not automatically exchangeable because member queries trained the suspect checkpoint",
+    "allowed_claim": "report the measured membership/calibration shift by view and seed; do not call member-candidate rank p-values exact conformal inference"
+  }
+}

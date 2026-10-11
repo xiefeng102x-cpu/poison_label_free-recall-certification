@@ -1,0 +1,25 @@
+{
+  "protocol_id": "cf_cmd_phase4_mechanism_ablation_v1",
+  "frozen_at": "2026-09-28",
+  "dataset": "BloodMNIST",
+  "scenario": "fixed PCA-additive attack with local-angle QML",
+  "seeds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61],
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "ablations": [
+    "input_only",
+    "internal_xz16_only",
+    "bonferroni_input_plus_xz16",
+    "no_checkpoint_difference_absolute_xz16",
+    "candidate_reference_instead_of_disjoint_reference",
+    "no_sample_exclusion",
+    "no_whitening",
+    "gaussian_threshold_instead_of_conformal_rank",
+    "z8",
+    "xz16",
+    "z_plus_pairwise_zz_36",
+    "single_and_pairwise_xz_pauli_128"
+  ],
+  "external_reference": "validation target, 120 reference plus 80 calibration",
+  "alpha": 0.05,
+  "interpretation": "retrospective mechanism ablation; no new deployment rule is confirmed on these already-used seeds"
+}

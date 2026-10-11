@@ -1,0 +1,95 @@
+{
+  "protocol_id": "p6a_bloodmnist_multiclass_backdoorbench_v1",
+  "frozen_before_training": true,
+  "purpose": "Test whether pinned BackdoorBench feature detectors, especially SCAn, are applicable when the victim task has eight classes.",
+  "dataset": {
+    "name": "BloodMNIST",
+    "source_file": "bloodmnist.npz",
+    "classes": [0, 1, 2, 3, 4, 5, 6, 7],
+    "splits": "official train/val/test without class truncation",
+    "pixel_scaling": "uint8 divided by 255"
+  },
+  "attack": {
+    "family": "BadNets all-to-one",
+    "target_class": 6,
+    "poison_count": 600,
+    "selection": "uniform without replacement from all non-target training indices",
+    "selection_seed_formula": "20260929 + seed",
+    "construction": "replace selected training images in place, overwrite their labels with target class, and preserve original sample indices",
+    "trigger": {
+      "shape": "solid bottom-right square",
+      "patch_size": 3,
+      "value": 1.0
+    }
+  },
+  "victim": {
+    "architecture": "Conv3x3(3,16)-ReLU-MaxPool2-Conv3x3(16,32)-ReLU-MaxPool2-Linear(1568,64)-ReLU-Linear(64,8)",
+    "normalization": "channel mean/std computed once from the clean official training split",
+    "paired_training": "clean and suspect models use identical initialization and shuffled-index order for a seed",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 64,
+    "maximum_epochs": 10,
+    "early_stopping": {
+      "metric": "clean validation balanced accuracy",
+      "patience": 2,
+      "minimum_delta": 0.0001,
+      "restore_best_epoch": true
+    },
+    "checkpoint_policy": "save clean and suspect best-epoch state dictionaries, normalization values, seed, protocol hash and SHA-256 for every attempted development seed"
+  },
+  "evaluation": {
+    "clean_metric": "balanced accuracy on the untouched official test split",
+    "attack_metric": "target-class attack success rate on patched official non-target test images",
+    "eligibility": {
+      "balanced_clean_accuracy_min": 0.8,
+      "attack_success_rate_min": 0.8
+    }
+  },
+  "detector_pool": {
+    "trusted_reference": "all clean official validation samples with true labels",
+    "candidates": "the full in-place poisoned official training set with assigned training labels",
+    "poison_truth": "selected original training indices only"
+  },
+  "representations": [
+    "suspect_hidden64",
+    "clean_to_suspect_hidden64_drift"
+  ],
+  "methods": {
+    "backdoorbench_spectral": {
+      "percentile": 85.0
+    },
+    "backdoorbench_scan": {
+      "n_classes": 8,
+      "seed_formula": "seed + 1000 * view_index"
+    },
+    "backdoorbench_spectre_oracle_target": {
+      "pca_dimension": 16,
+      "contamination": "600 for class 6 and zero for every other class",
+      "oracle": true
+    },
+    "backdoorbench_spectre_uniform_5pct": {
+      "pca_dimension": 16,
+      "contamination": "floor(0.05 * candidate count) independently in every assigned class",
+      "oracle": false
+    }
+  },
+  "stages": {
+    "development": {
+      "seeds": [72, 73],
+      "maximum_runtime_seconds_per_seed": 600,
+      "expansion_gate": "both victims eligible; all eight classes present with at least two trusted samples; SCAn scores finite and class-score range greater than 1e-8 in both views; sample mappings and confusion counts replay; at least one seed is within runtime budget"
+    },
+    "confirmation": {
+      "seeds": [74, 75, 76, 77, 78],
+      "start_condition": "development expansion gate passes",
+      "ten_seed_expansion": "only after at least four of five confirmation victims are eligible and runtime remains practical"
+    }
+  },
+  "interpretation": {
+    "detection_performance_is_an_expansion_gate": false,
+    "negative_result_policy": "retain and report victim or detector applicability failure without retuning on confirmation seeds",
+    "scope": "P6-A upstream-baseline applicability; CF-CMD comparison is a later frozen add-on after this gate"
+  }
+}

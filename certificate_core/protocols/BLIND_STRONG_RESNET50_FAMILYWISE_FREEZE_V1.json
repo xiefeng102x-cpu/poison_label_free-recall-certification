@@ -1,0 +1,10 @@
+{
+  "status": "FROZEN_BEFORE_OUTCOME_INSPECTION",
+  "freeze_date": "2026-10-08",
+  "experiment": "pathmnist_blind_strong_resnet50_certificate_v1",
+  "error_allocation": "0.05 / (5 detectors * 2 folds) = 0.005",
+  "hashes": {
+    "prereg_sha256": "6db59b475c92e5793cc03fc83325f9796ac8ba8bf8ada19fbeb1d2a35d2b909f",
+    "runner_sha256": "151b8dff01d8c1cadff8faa662e3efd52207497bf2f37ee9e06a7f6fd6308624"
+  }
+}

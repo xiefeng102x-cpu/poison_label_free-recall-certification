@@ -1,0 +1,38 @@
+{
+  "protocol_id": "cf_cmd_phase4_reupload_architecture_v1",
+  "frozen_at": "2026-09-28",
+  "role": "development_cross_architecture_gate",
+  "dataset": "BloodMNIST",
+  "pilot_seeds": [42, 46, 51],
+  "clean_architecture_search": {
+    "development_seed": 42,
+    "candidates": ["reupload_1_layer", "reupload_2_layers", "reupload_3_layers"],
+    "learning_rate": 0.001,
+    "maximum_epochs": 60,
+    "selected": "reupload_3_layers",
+    "selection_evidence": {
+      "validation_balanced_ca": 0.9066176470588235,
+      "validation_auc": 0.9646176470588236
+    }
+  },
+  "backdoor": "fixed PCA-additive trigger, 60 training poisons",
+  "poisoned_adaptation": {
+    "epochs": 8,
+    "learning_rate": 0.01,
+    "backdoor_weight": 10.0,
+    "distillation_weight": 20.0,
+    "anchor_weight": 0.001,
+    "gradient_clip": 1.0,
+    "adapted_parameters": "projector plus three-layer quantum weights",
+    "frozen_parameters": "classifier"
+  },
+  "observables": "actual statevector X and Z expectations from the entangling reupload circuit; no local-angle latent proxy",
+  "detector": {
+    "primary": "bonferroni_input_plus_checkpoint_drift_reupload_xz16",
+    "trusted_pool": "disjoint validation target, 120 reference plus 80 calibration",
+    "candidate_pool": "600 training target samples plus 60 poisons",
+    "alpha": 0.05
+  },
+  "victim_gate": {"minimum_balanced_ca": 0.9, "minimum_asr": 0.8},
+  "promotion_rule": "run fresh seeds only when at least two pilot victims are eligible"
+}

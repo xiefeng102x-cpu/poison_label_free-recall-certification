@@ -1,0 +1,14 @@
+{
+  "certificate_decisions_sealed_sha256": "bee695c189b45af3ccabde241010971257b7b3dc60a1719144bb3cc5d937c19a",
+  "config_sha256": "94e4207a4b83bbad50276cfc9ba641f30998abb48f6e14d59b54207cc3c29faf",
+  "decision_rows": 60000,
+  "input_rows": 30000,
+  "input_schema_exactly_allowlisted": true,
+  "issuer_input_manifest_sha256": "9026064b594ee9423e37f212886cf7aefd0ce5a00940b103ba2dd3e60a81e600",
+  "issuer_observations_sha256": "f3c4c4fc1ad6aedeb8b37b0915f20a1bce0a4ac1306a31be50b07488d476256d",
+  "issuer_sha256": "5f9fd4ea3a8d042539507ecba20bc51b63166d0517217a69a28f5791631b6158",
+  "key_commitment_sha256": "da5061c58a4507561159895498a4103e28a686098a2c2f1ea7b35ab69c290b0a",
+  "protocol": "pathmnist_blind",
+  "sealed_unix": 1791542559.879702,
+  "status": "CERTIFICATE_DECISIONS_HASH_SEALED"
+}
