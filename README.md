@@ -35,6 +35,12 @@ python -m pip install -r certificate_core/requirements.txt
 python -m pytest certificate_core/tests -q
 ```
 
+On Windows PowerShell, replace the activation command with:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
 To regenerate the bundled statistical figures:
 
 ```bash
@@ -94,4 +100,4 @@ or other third-party component.
 
 ## Contact
 
-Zhihai Xie — xiefeng102x@gmail.com
+Zhihai Xie — xiezhihai@sptc.edu.cn
